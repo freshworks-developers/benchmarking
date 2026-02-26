@@ -105,17 +105,22 @@ class BenchmarkAutomation:
                     current_section = 'lint'
                 elif 'Please ensure that the following are addressed' in line:
                     current_section = 'warnings'
-                elif line.strip().startswith('✖'):
+                elif line.strip().startswith('✖') or line.strip().startswith('⨯'):
                     error_msg = line.strip()
                     if current_section == 'platform':
                         platform_errors.append(error_msg)
                     elif current_section == 'lint':
                         lint_errors.append(error_msg)
+                    elif current_section is None:
+                        # Errors before any section header are platform errors
+                        platform_errors.append(error_msg)
                 elif line.strip().startswith('⚠'):
                     warnings.append(line.strip())
             
+            # Check if validation actually failed (has errors, not just warnings)
+            has_errors = platform_errors or lint_errors
             validation_result = {
-                'success': result.returncode == 0,
+                'success': result.returncode == 0 and not has_errors,
                 'stdout': result.stdout,
                 'stderr': result.stderr,
                 'return_code': result.returncode,
@@ -151,8 +156,8 @@ class BenchmarkAutomation:
                 if result.stdout:
                     print(f"\nRaw Output:\n{result.stdout}")
             
-            # Record errors for automatic skill learning
-            if self.error_learner and (platform_errors or lint_errors):
+            # Record errors for automatic skill learning (only if there are actual errors)
+            if self.error_learner and has_errors:
                 try:
                     app_id = app_path.name
                     error_data = self.error_learner.parse_fdk_output(output)
@@ -239,15 +244,61 @@ class BenchmarkAutomation:
             common = modules.get('common', {})
             common_locations = common.get('location', {})
             
-            # Check if product-specific locations are NOT in common
-            invalid_locations = ['ticket_sidebar', 'asset_sidebar', 'deal_entity_menu']
-            has_invalid = any(loc in common_locations for loc in invalid_locations)
+            # Detect app type
+            has_ui_location = False
+            has_background_location = False
+            is_pure_serverless = True
             
-            if not has_invalid and modules:
+            # Background placeholders that are valid
+            background_placeholders = [
+                'ticket_background', 'contact_background', 'contact_list_background',
+                'asset_background', 'company_background', 'deal_background'
+            ]
+            
+            # Check all modules for locations
+            for module_name, module_config in modules.items():
+                if 'location' in module_config:
+                    locations = module_config.get('location', {})
+                    for loc_name in locations.keys():
+                        if loc_name in background_placeholders:
+                            has_background_location = True
+                        else:
+                            has_ui_location = True
+                            is_pure_serverless = False
+            
+            # Check common locations
+            if common_locations:
+                for loc_name in common_locations.keys():
+                    if loc_name in background_placeholders:
+                        has_background_location = True
+                    else:
+                        has_ui_location = True
+                        is_pure_serverless = False
+            
+            # If no locations at all, it's pure serverless (events/functions only)
+            if not has_ui_location and not has_background_location:
+                is_pure_serverless = True
+            
+            # Validate location placement
+            if is_pure_serverless:
+                # Pure serverless app - no location validation needed
                 compliance['correct_location_placement'] = True
-                print("✅ Correct location placement")
+                print("✅ Serverless app (no UI location required)")
+            elif has_background_location and not has_ui_location:
+                # Background placeholder app - location validation passes
+                compliance['correct_location_placement'] = True
+                print("✅ Background placeholder app (valid location)")
             else:
-                print("❌ Invalid location placement")
+                # UI app - check if product-specific locations are NOT in common
+                invalid_locations = ['ticket_sidebar', 'asset_sidebar', 'deal_entity_menu', 
+                                   'contact_sidebar', 'company_sidebar', 'deal_sidebar']
+                has_invalid = any(loc in common_locations for loc in invalid_locations)
+                
+                if not has_invalid and modules:
+                    compliance['correct_location_placement'] = True
+                    print("✅ Correct location placement")
+                else:
+                    print("❌ Invalid location placement (product-specific locations in common)")
         
         except json.JSONDecodeError:
             print("❌ Invalid JSON in manifest.json")
@@ -440,15 +491,149 @@ class BenchmarkAutomation:
         print(f"{'='*80}\n")
         
         return results
+    
+    def evaluate_existing_app(self, app_path, app_id=None, requirements=None):
+        """Evaluate an already-generated app without regeneration"""
+        app_path = Path(app_path)
+        
+        if not app_path.exists():
+            print(f"❌ App path not found: {app_path}")
+            return
+        
+        # Generate app_id if not provided
+        if not app_id:
+            app_id = f"EVAL_{app_path.name.upper()}"
+        
+        print(f"\n{'='*80}")
+        print(f"🔍 Evaluating existing app: {app_path.name}")
+        print(f"{'='*80}\n")
+        
+        # Try to load use case if app_id matches
+        use_case = None
+        if app_id.startswith('APP'):
+            use_cases = self.load_use_cases()
+            use_case = next((uc for uc in use_cases if uc['id'] == app_id), None)
+        
+        # Determine product from manifest or use case
+        product = 'freshdesk'  # default
+        manifest_path = app_path / 'manifest.json'
+        if manifest_path.exists():
+            try:
+                with open(manifest_path, 'r') as f:
+                    manifest = json.load(f)
+                    product = manifest.get('product', {}).get('freshdesk', 'freshdesk')
+                    # Extract first product if multiple
+                    if isinstance(product, dict):
+                        product = list(product.keys())[0] if product else 'freshdesk'
+            except:
+                pass
+        
+        if use_case:
+            product = use_case.get('product', product)
+        
+        # Parse requirements if provided
+        requirements_list = []
+        expected_files_from_criteria = []
+        
+        if requirements:
+            # Check if requirements is a file path
+            requirements_path = Path(requirements)
+            if requirements_path.exists() and requirements_path.suffix == '.json':
+                # Load from criteria file
+                print(f"📄 Loading requirements from: {requirements_path}\n")
+                try:
+                    with open(requirements_path, 'r') as f:
+                        criteria = json.load(f)
+                        requirements_list = criteria.get('requirements', [])
+                        expected_files_from_criteria = criteria.get('expected_files', [])
+                        if requirements_list:
+                            print(f"📋 Requirements ({len(requirements_list)}):")
+                            for req in requirements_list:
+                                print(f"   • {req}")
+                            print()
+                except Exception as e:
+                    print(f"⚠️  Could not load criteria file: {e}")
+                    print("Treating as comma-separated requirements instead.\n")
+                    requirements_list = [r.strip() for r in requirements.split(',')]
+            else:
+                # Parse as comma-separated string
+                requirements_list = [r.strip() for r in requirements.split(',')]
+                print(f"📋 Requirements: {', '.join(requirements_list)}\n")
+        
+        # Run validation checks
+        validation = self.validate_app(app_path, product=product)
+        
+        # Determine expected files
+        expected_files = []
+        if expected_files_from_criteria:
+            # Use expected files from criteria file
+            expected_files = expected_files_from_criteria
+        elif use_case:
+            expected_files = use_case['expected_files']
+        else:
+            # Auto-detect expected files based on app type
+            expected_files = ['manifest.json']
+            if (app_path / 'app').exists():
+                expected_files.extend(['app/index.html', 'app/scripts/app.js'])
+            if (app_path / 'server').exists():
+                expected_files.append('server/server.js')
+            if (app_path / 'config').exists():
+                if (app_path / 'config/iparams.json').exists():
+                    expected_files.append('config/iparams.json')
+                if (app_path / 'config/requests.json').exists():
+                    expected_files.append('config/requests.json')
+        
+        file_structure = self.check_file_structure(app_path, expected_files)
+        compliance = self.check_platform3_compliance(app_path)
+        crayons = self.check_crayons_usage(app_path)
+        
+        # Calculate score
+        score = self.calculate_score(validation, file_structure, compliance, crayons)
+        
+        # Compile results
+        results = {
+            'app_id': app_id,
+            'name': use_case['name'] if use_case else app_path.name,
+            'app_path': str(app_path),
+            'requirements': requirements_list,
+            'validation': validation,
+            'file_structure': file_structure,
+            'platform3_compliance': compliance,
+            'crayons_usage': crayons,
+            'score': score,
+            'evaluation_mode': True
+        }
+        
+        # Save results
+        self.save_results(app_id, results)
+        
+        # Print summary
+        print(f"\n{'='*80}")
+        print(f"📊 EVALUATION SUMMARY - {app_id}")
+        print(f"{'='*80}")
+        print(f"App: {app_path.name}")
+        if requirements_list:
+            print(f"Requirements: {', '.join(requirements_list)}")
+        print(f"Score: {score['total_score']}/{score['max_score']} ({score['percentage']}%)")
+        print(f"Grade: {score['grade']}")
+        print(f"{'='*80}\n")
+        
+        return results
 
 def main():
     """Main entry point"""
     import argparse
     
     parser = argparse.ArgumentParser(description='Automated Freshworks App Benchmarking')
-    parser.add_argument('app_id', nargs='?', default='APP001', help='App ID to test (e.g., APP001)')
+    parser.add_argument('app_id', nargs='?', help='App ID to test (e.g., APP001)')
     parser.add_argument('--benchmark-dir', default='/Users/dchatterjee/benchmark-test', 
                        help='Benchmark directory path')
+    parser.add_argument('--evaluate', type=str, metavar='PATH',
+                       help='Evaluate an existing app at the given path (relative or absolute)')
+    parser.add_argument('--app-id', type=str,
+                       help='App ID to use for evaluation (optional, auto-generated if not provided)')
+    parser.add_argument('--requirements', type=str,
+                       help='Comma-separated requirements OR path to criteria JSON file (e.g., test-criteria/APP001-criteria.json)')
     parser.add_argument('--generate-skill-updates', action='store_true',
                        help='Generate skill update suggestions from recorded errors')
     parser.add_argument('--show-stats', action='store_true',
@@ -458,13 +643,21 @@ def main():
     
     automation = BenchmarkAutomation(benchmark_dir=args.benchmark_dir)
     
-    # Run test
-    if not args.generate_skill_updates and not args.show_stats:
-        automation.run_test(args.app_id)
-    
-    # Generate skill updates if requested or after test if errors found
-    if ERROR_LEARNING_ENABLED and automation.error_learner:
-        if args.generate_skill_updates:
+    # Evaluate existing app mode
+    if args.evaluate:
+        # Convert relative path to absolute if needed
+        eval_path = Path(args.evaluate)
+        if not eval_path.is_absolute():
+            eval_path = Path(__file__).parent / eval_path
+        
+        automation.evaluate_existing_app(
+            app_path=eval_path,
+            app_id=args.app_id,
+            requirements=args.requirements
+        )
+    # Generate skill updates
+    elif args.generate_skill_updates:
+        if ERROR_LEARNING_ENABLED and automation.error_learner:
             print("\n" + "="*80)
             print("🔍 Analyzing error patterns and generating skill updates...")
             print("="*80 + "\n")
@@ -477,8 +670,9 @@ def main():
                 print(f"📄 See: .dev/planning/AUTO_SKILL_UPDATES.md")
             else:
                 print("\n✅ No new error patterns detected - skill is up to date!")
-        
-        elif args.show_stats:
+    # Show statistics
+    elif args.show_stats:
+        if ERROR_LEARNING_ENABLED and automation.error_learner:
             stats = automation.error_learner.get_statistics()
             
             print("\n" + "="*80)
@@ -495,6 +689,13 @@ def main():
             
             if stats['unfixed_patterns'] > 0:
                 print(f"\n💡 Run with --generate-skill-updates to create suggestions for fixing these patterns")
+    # Run normal test
+    elif args.app_id:
+        automation.run_test(args.app_id)
+    else:
+        parser.print_help()
+        print("\n❌ Error: Please provide either --app APP_ID, --evaluate PATH, --show-stats, or --generate-skill-updates")
+        sys.exit(1)
 
 if __name__ == '__main__':
     main()

@@ -1,0 +1,16 @@
+{
+  "requirements": [
+    "OAuth 2.0",
+    "Webhooks",
+    "Platform 3.0",
+    "Crayons UI"
+  ],
+  "expected_files": [
+    "manifest.json",
+    "server/server.js",
+    "config/iparams.json",
+    "config/oauth_config.json",
+    "config/requests.json"
+  ],
+  "description": "Example criteria for testing setup script"
+}
