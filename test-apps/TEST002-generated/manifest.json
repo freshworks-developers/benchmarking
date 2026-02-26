@@ -1,0 +1,24 @@
+{
+  "platform-version": "3.0",
+  "product": {
+    "freshservice": {
+      "location": {
+        "ticket_sidebar": {
+          "url": "ticket_sidebar.html",
+          "icon": "styles/images/icon.svg"
+        }
+      }
+    }
+  },
+  "modules": {
+    "common": {
+      "requests": {
+        "getTeamsPresence": {}
+      }
+    }
+  },
+  "engines": {
+    "node": "18.16.0",
+    "fdk": "9.1.0"
+  }
+}

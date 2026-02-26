@@ -1,0 +1,9 @@
+{
+  "msGraphToken": {
+    "display_name": "Microsoft Graph API Token",
+    "description": "Bearer token for Microsoft Graph API with Presence.Read permission",
+    "type": "text",
+    "required": true,
+    "secure": true
+  }
+}

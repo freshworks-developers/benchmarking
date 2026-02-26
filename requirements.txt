@@ -1,0 +1,11 @@
+# Python Standard Library Only - No external dependencies required
+# All scripts use built-in modules:
+# - os, sys, json, subprocess, pathlib, datetime, collections, re, argparse
+
+# Optional: For enhanced terminal output (already available on most systems)
+# colorama>=0.4.6  # Cross-platform colored terminal text (optional)
+
+# System Requirements:
+# - Python 3.7+
+# - FDK: npm install -g @freshworks/fdk
+# - Cursor CLI (optional, for open_test.sh)

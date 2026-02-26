@@ -1,0 +1,9 @@
+{
+  "zapier_webhook_url": {
+    "display_name": "Zapier Webhook URL",
+    "description": "Enter your Zapier webhook URL. You can find this in your Zapier Zap configuration.",
+    "type": "text",
+    "required": true,
+    "secure": false
+  }
+}

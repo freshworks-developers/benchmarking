@@ -1,0 +1,109 @@
+{
+  "version": "1.0.0",
+  "description": "Platform 3.0 Use Cases for Benchmarking - Includes prompts and expected files",
+  "use_cases": [
+    {
+      "id": "APP001",
+      "name": "MS Teams Presence Checker",
+      "app_type": "Frontend",
+      "product": "freshservice",
+      "prompt": "Please build a Freshservice front-end application (ticket_sidebar) that has a button \"Get status\" which, when clicked, uses the requester's email address to get their presence on Microsoft Teams using the Microsoft Graph API and displays the result.",
+      "expected_files": [
+        "manifest.json",
+        "app/index.html",
+        "app/scripts/app.js",
+        "app/styles/style.css",
+        "app/styles/images/icon.svg",
+        "config/iparams.json",
+        "config/requests.json"
+      ]
+    },
+    {
+      "id": "APP002",
+      "name": "Freshservice-Asana Sync",
+      "app_type": "Serverless",
+      "product": "freshservice",
+      "prompt": "Track Ticket Progress: The app synchronizes comments and updates between Freshservice tickets and Asana tasks.",
+      "expected_files": [
+        "manifest.json",
+        "server/server.js",
+        "config/iparams.json",
+        "config/requests.json"
+      ]
+    },
+    {
+      "id": "APP003",
+      "name": "Freshdesk-GitHub Integration",
+      "app_type": "Frontend",
+      "product": "freshdesk",
+      "prompt": "Create a Freshdesk-GitHub integration that enables users to create GitHub issues directly from Freshdesk tickets and fetch issue lists on-demand.",
+      "expected_files": [
+        "manifest.json",
+        "app/index.html",
+        "app/scripts/app.js",
+        "app/styles/style.css",
+        "app/styles/images/icon.svg",
+        "config/iparams.json",
+        "config/oauth_config.json",
+        "config/requests.json",
+        "server/server.js"
+      ]
+    },
+    {
+      "id": "APP004",
+      "name": "Password Generator with PWPush",
+      "app_type": "Frontend",
+      "product": "freshservice",
+      "prompt": "In Freshservice, I want a passporter app available in every ticket. Clicking \"Random Password\" should generate a 12-character string, create a secure URL using pwpush.com, and display it in an internal note.",
+      "expected_files": [
+        "manifest.json",
+        "app/index.html",
+        "app/scripts/app.js",
+        "app/styles/style.css",
+        "app/styles/images/icon.svg",
+        "config/requests.json",
+        "server/server.js"
+      ]
+    },
+    {
+      "id": "APP005",
+      "name": "Freshdesk-Zapier Contact Sync",
+      "app_type": "Serverless",
+      "product": "freshdesk",
+      "prompt": "Create a freshdesk app to regularly synchronize contacts with Zapier",
+      "expected_files": [
+        "manifest.json",
+        "server/server.js",
+        "config/iparams.json",
+        "config/requests.json"
+      ]
+    },
+    {
+      "id": "APP006",
+      "name": "Jira-Freshdesk OAuth Sync",
+      "app_type": "Serverless",
+      "product": "freshdesk",
+      "prompt": "Create an oauth app to sync jira tickets with freshdesk or freshservice tickets with mapping between the two systems configurable during installation",
+      "expected_files": [
+        "manifest.json",
+        "server/server.js",
+        "config/iparams.json",
+        "config/iparams.html",
+        "config/oauth_config.json",
+        "config/requests.json",
+        "config/assets/iparams.js"
+      ]
+    },
+    {
+      "id": "APP007",
+      "name": "Ticket Field Validation",
+      "app_type": "Frontend",
+      "product": "freshdesk",
+      "prompt": "I want an app that prevents agents from replying to a ticket unless a required ticket field (e.g., \"Type\") is set.",
+      "expected_files": [
+        "manifest.json",
+        "app/scripts/app.js"
+      ]
+    }
+  ]
+}

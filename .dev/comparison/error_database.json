@@ -1,0 +1,153 @@
+{
+  "errors": [
+    {
+      "app_id": "TEST001",
+      "timestamp": "2026-02-25T23:45:00.000000",
+      "platform_errors": [
+        {
+          "raw_message": "Platform version >= 3.0 does not support \"product\" in manifest.json",
+          "file": "manifest.json",
+          "line": null,
+          "error_type": "manifest_structure",
+          "message": "Platform version >= 3.0 does not support \"product\" in manifest.json",
+          "pattern": "product_field_deprecated"
+        },
+        {
+          "raw_message": "Request template 'freshdesk_get_contacts' must have required property 'schema'",
+          "file": "config/requests.json",
+          "line": null,
+          "error_type": "request_config",
+          "message": "Request template 'freshdesk_get_contacts' must have required property 'schema'",
+          "pattern": "request_schema_error"
+        },
+        {
+          "raw_message": "Request template 'freshdesk_get_contacts' must NOT have additional properties 'protocol'",
+          "file": "config/requests.json",
+          "line": null,
+          "error_type": "request_config",
+          "message": "Request template 'freshdesk_get_contacts' must NOT have additional properties 'protocol'",
+          "pattern": "request_schema_error"
+        },
+        {
+          "raw_message": "Request template 'zapier_sync_contact' must have required property 'schema'",
+          "file": "config/requests.json",
+          "line": null,
+          "error_type": "request_config",
+          "message": "Request template 'zapier_sync_contact' must have required property 'schema'",
+          "pattern": "request_schema_error"
+        },
+        {
+          "raw_message": "server/server.js::16: get is no longer supported in Request API",
+          "file": "server/server.js",
+          "line": 16,
+          "error_type": "deprecated_api",
+          "message": "get is no longer supported in Request API",
+          "pattern": "deprecated_request_api"
+        },
+        {
+          "raw_message": "server/server.js::24: post is no longer supported in Request API",
+          "file": "server/server.js",
+          "line": 24,
+          "error_type": "deprecated_api",
+          "message": "post is no longer supported in Request API",
+          "pattern": "deprecated_request_api"
+        }
+      ],
+      "lint_errors": [
+        {
+          "raw_message": "server/server.js::10: Async function 'syncContactsToZapier' has no 'await' expression",
+          "file": "server/server.js",
+          "line": 10,
+          "error_type": "async_pattern",
+          "message": "Async function 'syncContactsToZapier' has no 'await' expression",
+          "pattern": "async_no_await"
+        },
+        {
+          "raw_message": "app/scripts/app.js::1: Async function has no 'await' expression",
+          "file": "app/scripts/app.js",
+          "line": 1,
+          "error_type": "async_pattern",
+          "message": "Async function has no 'await' expression",
+          "pattern": "async_no_await"
+        }
+      ],
+      "warnings": [],
+      "summary": {
+        "platform_errors": 6,
+        "lint_errors": 2
+      }
+    },
+    {
+      "app_id": "TEST002",
+      "timestamp": "2026-02-26T00:15:51.625872",
+      "platform_errors": [],
+      "lint_errors": [],
+      "warnings": [],
+      "summary": {}
+    }
+  ],
+  "patterns": {
+    "product_field_deprecated": {
+      "count": 1,
+      "first_seen": "2026-02-25T23:45:00.000000",
+      "examples": [
+        {
+          "app_id": "TEST001",
+          "message": "Platform version >= 3.0 does not support \"product\" in manifest.json"
+        }
+      ],
+      "fixed": false
+    },
+    "request_schema_error": {
+      "count": 3,
+      "first_seen": "2026-02-25T23:45:00.000000",
+      "examples": [
+        {
+          "app_id": "TEST001",
+          "message": "Request template 'freshdesk_get_contacts' must have required property 'schema'"
+        },
+        {
+          "app_id": "TEST001",
+          "message": "Request template 'freshdesk_get_contacts' must NOT have additional properties 'protocol'"
+        },
+        {
+          "app_id": "TEST001",
+          "message": "Request template 'zapier_sync_contact' must have required property 'schema'"
+        }
+      ],
+      "fixed": false
+    },
+    "deprecated_request_api": {
+      "count": 2,
+      "first_seen": "2026-02-25T23:45:00.000000",
+      "examples": [
+        {
+          "app_id": "TEST001",
+          "message": "server/server.js::16: get is no longer supported in Request API"
+        },
+        {
+          "app_id": "TEST001",
+          "message": "server/server.js::24: post is no longer supported in Request API"
+        }
+      ],
+      "fixed": false
+    },
+    "async_no_await": {
+      "count": 2,
+      "first_seen": "2026-02-25T23:45:00.000000",
+      "examples": [
+        {
+          "app_id": "TEST001",
+          "message": "server/server.js::10: Async function 'syncContactsToZapier' has no 'await' expression"
+        },
+        {
+          "app_id": "TEST001",
+          "message": "app/scripts/app.js::1: Async function has no 'await' expression"
+        }
+      ],
+      "fixed": false
+    }
+  },
+  "skill_updates": [],
+  "last_updated": "2026-02-26T00:15:51.625937"
+}

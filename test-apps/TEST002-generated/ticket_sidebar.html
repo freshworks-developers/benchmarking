@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teams Presence</title>
+  <link rel="stylesheet" type="text/css" href="styles/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <h2>Microsoft Teams Presence</h2>
+    <button id="getStatusBtn" class="btn-primary">Get Status</button>
+    <div id="statusContainer" class="status-container hidden">
+      <h3>Presence Status</h3>
+      <div id="statusResult" class="status-result"></div>
+    </div>
+    <div id="errorContainer" class="error-container hidden">
+      <p id="errorMessage" class="error-message"></p>
+    </div>
+    <div id="loadingContainer" class="loading-container hidden">
+      <p>Loading...</p>
+    </div>
+  </div>
+  <script src="{{{appclient}}}"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "platform-version": "3.0",
+  "modules": {
+    "common": {
+      "location": {
+        "full_page_app": {
+          "url": "index.html",
+          "icon": "styles/images/icon.svg"
+        }
+      },
+      "events": {
+        "onAppInstall": {
+          "handler": "onAppInstallHandler"
+        },
+        "onAppUninstall": {
+          "handler": "onAppUninstallHandler"
+        }
+      },
+      "requests": {
+        "zapierWebhook": {}
+      }
+    },
+    "support_contact": {
+      "events": {
+        "onContactCreate": {
+          "handler": "onContactCreateHandler"
+        },
+        "onContactUpdate": {
+          "handler": "onContactUpdateHandler"
+        },
+        "onContactDelete": {
+          "handler": "onContactDeleteHandler"
+        }
+      }
+    }
+  },
+  "engines": {
+    "node": "18.20.8",
+    "fdk": "9.7.4"
+  },
+  "dependencies": {}
+}

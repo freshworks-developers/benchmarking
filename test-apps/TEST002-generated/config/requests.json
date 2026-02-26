@@ -1,0 +1,14 @@
+{
+  "getTeamsPresence": {
+    "schema": {
+      "protocol": "https",
+      "method": "GET",
+      "host": "graph.microsoft.com",
+      "path": "/v1.0/users/{{email}}/presence",
+      "headers": {
+        "Authorization": "Bearer <%= iparam.msGraphToken %>",
+        "Content-Type": "application/json"
+      }
+    }
+  }
+}
