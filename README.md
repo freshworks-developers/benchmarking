@@ -77,6 +77,371 @@ python3 automate_test.py --show-stats
 python3 automate_test.py --generate-skill-updates
 ```
 
+## 📝 How to Test - Step by Step
+
+### Option 1: Test a New App (Generate & Validate)
+
+**Step 1: Choose or Create a Use Case**
+
+```bash
+# View available use cases
+cat use-cases/use_cases.json | grep '"id"'
+
+# Available: APP001, APP002, APP003, APP004, APP005, APP006, APP007
+```
+
+**Step 2: Run the Test Command**
+
+```bash
+python3 automate_test.py --app APP003
+```
+
+**Step 3: Generate the App**
+
+The script will:
+- Display the prompt for the app
+- Wait for you to generate the app in a separate Cursor window
+- Prompt you to press ENTER when ready
+
+**Step 4: Press ENTER to Validate**
+
+The script will automatically:
+- Run FDK validation
+- Check Platform 3.0 compliance
+- Detect Crayons usage
+- Calculate score and grade
+
+**Step 5: Review Results**
+
+```bash
+# View results
+cat results/APP003_result.json
+
+# Check for errors
+python3 automate_test.py --show-stats
+```
+
+---
+
+### Option 2: Test an Existing App (Quick Setup)
+
+**Step 1: Run Setup Script**
+
+```bash
+python3 setup_test.py APP001
+```
+
+**Step 2: Paste Your Criteria**
+
+You can paste either plain text OR JSON:
+
+**Plain Text (Easiest):**
+```
+Requirements:
+- OAuth 2.0
+- Webhooks
+- Platform 3.0
+
+Features:
+- Request templates
+- Data methods
+
+Description:
+Ticket automation app
+
+END
+```
+
+**Or JSON:**
+```json
+{
+  "requirements": ["OAuth 2.0", "Webhooks", "Platform 3.0"],
+  "expected_files": ["manifest.json", "server/server.js"],
+  "description": "Ticket automation app"
+}
+END
+```
+
+**Step 3: Copy Your App**
+
+```bash
+# Copy your existing app to test-apps/
+cp -r /path/to/your/app/* test-apps/APP001/
+```
+
+**Step 4: Run Evaluation**
+
+```bash
+# Use the command provided by setup script
+python3 automate_test.py --evaluate test-apps/APP001 --app-id APP001 --requirements test-criteria/APP001-criteria.json
+```
+
+**Step 5: Review Results**
+
+```bash
+cat results/APP001_result.json
+```
+
+---
+
+### Option 3: Test an Existing App (Direct)
+
+**Step 1: Copy App to test-apps/**
+
+```bash
+cp -r /path/to/my-freshdesk-app test-apps/my-app
+```
+
+**Step 2: Run Evaluation**
+
+```bash
+# Basic evaluation
+python3 automate_test.py --evaluate test-apps/my-app
+
+# With custom requirements
+python3 automate_test.py --evaluate test-apps/my-app --requirements "OAuth 2.0,Webhooks,Crayons UI"
+
+# With custom app ID
+python3 automate_test.py --evaluate test-apps/my-app --app-id MY_APP_001
+```
+
+**Step 3: Review Results**
+
+```bash
+# Results saved as EVAL_MY-APP_result.json or MY_APP_001_result.json
+cat results/EVAL_MY-APP_result.json
+```
+
+---
+
+### Option 4: Batch Testing Multiple Apps
+
+**Step 1: Prepare Apps**
+
+```bash
+# Copy multiple apps
+cp -r /path/to/app1 test-apps/app1
+cp -r /path/to/app2 test-apps/app2
+cp -r /path/to/app3 test-apps/app3
+```
+
+**Step 2: Test Each App**
+
+```bash
+python3 automate_test.py --evaluate test-apps/app1 --app-id APP_001
+python3 automate_test.py --evaluate test-apps/app2 --app-id APP_002
+python3 automate_test.py --evaluate test-apps/app3 --app-id APP_003
+```
+
+**Step 3: View Statistics**
+
+```bash
+# View error patterns across all tests
+python3 automate_test.py --show-stats
+
+# Generate improvement suggestions
+python3 automate_test.py --generate-skill-updates
+```
+
+**Step 4: Compare Results**
+
+```bash
+# View all results
+ls -lh results/
+
+# Compare scores
+grep -A 3 '"score"' results/APP_00*.json
+```
+
+---
+
+### Understanding Test Results
+
+**What Gets Checked:**
+
+1. ✅ **FDK Validation** (20 points)
+   - Runs `fdk validate`
+   - Checks for syntax errors
+   - Validates manifest.json structure
+
+2. ✅ **File Structure** (20 points)
+   - Verifies required files exist
+   - Checks manifest.json, server.js (if serverless), app files
+
+3. ✅ **Platform 3.0 Compliance** (40 points)
+   - Platform version 3.0 (8 pts)
+   - Uses 'modules' structure (8 pts)
+   - No whitelisted-domains (8 pts)
+   - Engines block present (8 pts)
+   - Correct location placement (8 pts)
+
+4. ✅ **Crayons Usage** (20 points)
+   - Detects fw-* components
+   - Checks for Crayons imports
+
+**Result File Structure:**
+
+```json
+{
+  "app_id": "APP001",
+  "timestamp": "2026-02-26T10:30:00",
+  "score": {
+    "total_score": 85.0,
+    "percentage": 85.0,
+    "grade": "B",
+    "breakdown": {
+      "fdk_validation": 20,
+      "file_structure": 20,
+      "platform3_compliance": 32,
+      "crayons_usage": 13
+    }
+  },
+  "validation": {
+    "success": true,
+    "errors": [],
+    "warnings": []
+  },
+  "platform3_compliance": {
+    "platform_version_3_0": true,
+    "modules_structure": true,
+    "no_whitelisted_domains": true,
+    "engines_present": true,
+    "correct_location_placement": true
+  },
+  "requirements_met": {
+    "OAuth 2.0": true,
+    "Webhooks": true,
+    "Platform 3.0": true
+  }
+}
+```
+
+---
+
+### Common Testing Scenarios
+
+**Scenario 1: Test Before Deployment**
+
+```bash
+# Copy production app
+cp -r /path/to/prod-app test-apps/prod-app
+
+# Validate
+python3 automate_test.py --evaluate test-apps/prod-app --app-id PROD_V1
+
+# Check score (should be A or B)
+grep '"grade"' results/PROD_V1_result.json
+```
+
+**Scenario 2: Compare Two Versions**
+
+```bash
+# Test version 1
+python3 automate_test.py --evaluate test-apps/app-v1 --app-id APP_V1
+
+# Test version 2
+python3 automate_test.py --evaluate test-apps/app-v2 --app-id APP_V2
+
+# Compare scores
+diff results/APP_V1_result.json results/APP_V2_result.json
+```
+
+**Scenario 3: Track Improvements**
+
+```bash
+# Test 1: Initial version
+python3 automate_test.py --evaluate test-apps/my-app --app-id TEST_001
+# Result: Grade C (75%)
+
+# Fix issues based on results
+# ... make changes ...
+
+# Test 2: After fixes
+python3 automate_test.py --evaluate test-apps/my-app --app-id TEST_002
+# Result: Grade B (85%)
+
+# Compare
+diff results/TEST_001_result.json results/TEST_002_result.json
+```
+
+**Scenario 4: Validate Specific Requirements**
+
+```bash
+# Test with specific requirements
+python3 automate_test.py --evaluate test-apps/oauth-app \
+  --requirements "OAuth 2.0,Token refresh,Error handling,Crayons UI,Platform 3.0"
+
+# Check which requirements were met
+grep -A 10 '"requirements_met"' results/EVAL_OAUTH-APP_result.json
+```
+
+---
+
+### Troubleshooting Test Failures
+
+**Low Score? Check These:**
+
+1. **FDK Validation Failed (0/20 points)**
+   ```bash
+   # Run FDK validate manually to see errors
+   cd test-apps/my-app
+   fdk validate
+   ```
+
+2. **Missing Files (0/20 points)**
+   ```bash
+   # Check what files are expected
+   cat test-criteria/APP001-criteria.json | grep expected_files
+   
+   # List what you have
+   ls -la test-apps/APP001/
+   ```
+
+3. **Platform 3.0 Issues (0-32/40 points)**
+   ```bash
+   # Check manifest.json
+   cat test-apps/my-app/manifest.json | grep platform
+   cat test-apps/my-app/manifest.json | grep modules
+   cat test-apps/my-app/manifest.json | grep engines
+   ```
+
+4. **No Crayons (0/20 points)**
+   ```bash
+   # Search for Crayons components
+   grep -r "fw-" test-apps/my-app/app/
+   grep -r "crayons" test-apps/my-app/
+   ```
+
+---
+
+### Quick Reference Commands
+
+```bash
+# Test predefined use case
+python3 automate_test.py --app APP003
+
+# Setup new test
+python3 setup_test.py APP001
+
+# Evaluate existing app
+python3 automate_test.py --evaluate test-apps/my-app
+
+# Evaluate with requirements
+python3 automate_test.py --evaluate test-apps/my-app --requirements "OAuth,Webhooks"
+
+# View statistics
+python3 automate_test.py --show-stats
+
+# Generate suggestions
+python3 automate_test.py --generate-skill-updates
+
+# View results
+cat results/APP001_result.json
+
+# List all results
+ls -lh results/
+```
+
 ## 📊 Scoring System
 
 Apps are scored on a **100-point scale** with letter grades (A-F):

@@ -138,13 +138,13 @@ class ErrorLearner:
     
     def identify_error_pattern(self, message):
         """Identify the error pattern for categorization using comprehensive patterns"""
-        # Import comprehensive patterns
+        # Try to use comprehensive patterns first
         try:
             from error_patterns_comprehensive import get_pattern_for_error
             pattern_name, pattern_data = get_pattern_for_error(message)
             return pattern_name
         except ImportError:
-            # Fallback to basic patterns
+            # Fallback to basic patterns if comprehensive module not available
             patterns = {
                 'deprecated_request_api': r'(post|get|put|delete) is no longer supported in Request API',
                 'async_no_await': r'Async function .* has no .await. expression',
