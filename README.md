@@ -21,19 +21,23 @@ Validates Platform 3.0 compliance, Crayons UI usage, and learns from validation 
 - ✅ Custom requirements tracking
 - ✅ 100-point scoring with letter grades (A-F)
 
+**Benchmark agents:** Three sub-agents (planning, building, evaluating) help with planning app criteria, implementing or fixing apps, and running the evaluation framework. See [docs/BENCHMARK_AGENTS.md](docs/BENCHMARK_AGENTS.md) for roles and how to invoke them.
+
 ## 📁 Project Structure
 
 ```
 benchmarking/
-├── automate_test.py           # Main automation script
-├── setup_test.py              # Quick setup for criteria & apps
-├── convert_criteria.py        # Plain text to JSON converter (NEW!)
+├── bin/                        # Agent- and human-facing CLI (eval, setup, learn, etc.)
+├── lib/                        # Shared logic (resolve, history, criteria_convert)
+├── tests/                      # Pytest tests for bin and lib
+├── automate_test.py            # Main automation script (used by bin/eval)
+├── setup_test.py               # Quick setup for criteria & apps
+├── convert_criteria.py         # Plain text to JSON converter
 ├── error_learner.py            # Error pattern detection & learning
-├── requirements.txt            # Python dependencies
-├── example-criteria.json       # Example criteria template
+├── docs/                       # ARCHITECTURE_AND_FLOW.md, AGENT_BENCHMARK_PLAN.md, SLASH_COMMANDS.md
 ├── use-cases/                  # Test case definitions
 ├── test-criteria/              # Validation criteria per app
-├── results/                    # Benchmarking scores & reports
+├── results/                    # Benchmarking scores & eval_history.jsonl
 ├── test-apps/                  # Sample test applications
 └── .dev/                       # Error learning data
     ├── comparison/error_database.json
@@ -461,6 +465,32 @@ Apps are scored on a **100-point scale** with letter grades (A-F):
 5. Correct location placement (auto-pass for background/serverless apps)
 
 **Grade Scale**: A (90-100) • B (80-89) • C (70-79) • D (60-69) • F (<60)
+
+---
+
+## For agents
+
+Agents (and automation) should use the **bin** scripts and follow the execution plan so that evaluation is consistent and results are machine-parseable.
+
+- **Execution plan**: [docs/AGENT_BENCHMARK_PLAN.md](docs/AGENT_BENCHMARK_PLAN.md) – purpose, prerequisites, all bin commands, input/output contract, how to analyze over time.
+- **Slash commands**: [docs/SLASH_COMMANDS.md](docs/SLASH_COMMANDS.md) – mapping from slash-style commands to CLI invocations (e.g. `/eval results` → `python3 bin/eval-results.py`).
+
+**One-line examples:**
+
+```bash
+# Run evaluation (minimal input: app ID or path)
+python3 bin/eval.py run APP001
+python3 bin/eval.py run test-apps/MyApp --app-id MYAPP
+
+# Show result path or history
+python3 bin/eval-results.py APP001
+python3 bin/eval-history.py --last 10
+python3 bin/eval-status.py
+```
+
+Results are written to `results/<app_id>_result.json`; history is appended to `results/eval_history.jsonl`. Exit codes: 0 = success, 1 = failure, 2 = invalid args.
+
+---
 
 ### Interpreting Results
 

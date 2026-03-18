@@ -13,7 +13,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# Repo Python package lives at ./lib (resolve, history, criteria_convert). Do not use a venv named "lib" at repo root.
 lib64/
 parts/
 sdist/

@@ -2,6 +2,9 @@
 # All scripts use built-in modules:
 # - os, sys, json, subprocess, pathlib, datetime, collections, re, argparse
 
+# Testing
+pytest>=7.0.0
+
 # Optional: For enhanced terminal output (already available on most systems)
 # colorama>=0.4.6  # Cross-platform colored terminal text (optional)
 

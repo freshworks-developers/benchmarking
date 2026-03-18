@@ -26,15 +26,16 @@ except ImportError:
     print("⚠️  Error learning disabled (error_learner.py not found)")
 
 class BenchmarkAutomation:
-    def __init__(self, benchmark_dir='/Users/dchatterjee/benchmark-test'):
-        self.benchmark_dir = Path(benchmark_dir)
-        self.use_cases_file = Path(__file__).parent / 'use-cases' / 'use_cases.json'
-        self.results_dir = Path(__file__).parent / 'results'
+    def __init__(self, benchmark_dir=None):
+        repo_root = Path(__file__).parent
+        self.benchmark_dir = Path(benchmark_dir) if benchmark_dir else repo_root / 'test-apps'
+        self.use_cases_file = repo_root / 'use-cases' / 'use_cases.json'
+        self.results_dir = repo_root / 'results'
         self.results_dir.mkdir(exist_ok=True)
         
-        # Initialize error learner for automatic skill updates
+        # Initialize error learner for automatic skill updates (skill_root = repo root)
         if ERROR_LEARNING_ENABLED:
-            skill_root = Path(__file__).parent.parent.parent
+            skill_root = repo_root
             self.error_learner = ErrorLearner(skill_root)
             print("✅ Error learning enabled - Will track validation failures")
         else:
@@ -546,6 +547,17 @@ class BenchmarkAutomation:
                         criteria = json.load(f)
                         requirements_list = criteria.get('requirements', [])
                         expected_files_from_criteria = criteria.get('expected_files', [])
+                        # Backward compatibility: TEST001-style (expected_features / expected_instances)
+                        if not expected_files_from_criteria and 'expected_features' in criteria:
+                            expected_files_from_criteria = ['manifest.json']
+                            if criteria.get('expected_instances', {}).get('request_templates'):
+                                expected_files_from_criteria.append('config/requests.json')
+                            if criteria.get('expected_instances', {}).get('iparams') or criteria.get('expected_instances', {}).get('custom_iparam'):
+                                expected_files_from_criteria.append('config/iparams.json')
+                            if criteria.get('expected_instances', {}).get('scheduled_events'):
+                                expected_files_from_criteria.append('server/server.js')
+                        if not requirements_list and 'expected_features' in criteria:
+                            requirements_list = list(criteria.get('expected_features', []))
                         if requirements_list:
                             print(f"📋 Requirements ({len(requirements_list)}):")
                             for req in requirements_list:
@@ -626,8 +638,8 @@ def main():
     
     parser = argparse.ArgumentParser(description='Automated Freshworks App Benchmarking')
     parser.add_argument('app_id', nargs='?', help='App ID to test (e.g., APP001)')
-    parser.add_argument('--benchmark-dir', default='/Users/dchatterjee/benchmark-test', 
-                       help='Benchmark directory path')
+    parser.add_argument('--benchmark-dir', default=None,
+                       help='Benchmark directory path (default: repo test-apps/)')
     parser.add_argument('--evaluate', type=str, metavar='PATH',
                        help='Evaluate an existing app at the given path (relative or absolute)')
     parser.add_argument('--app-id', type=str,
@@ -650,11 +662,17 @@ def main():
         if not eval_path.is_absolute():
             eval_path = Path(__file__).parent / eval_path
         
-        automation.evaluate_existing_app(
+        results = automation.evaluate_existing_app(
             app_path=eval_path,
             app_id=args.app_id,
             requirements=args.requirements
         )
+        if results is None:
+            sys.exit(1)
+        # Exit 1 if validation failed
+        if not results.get('validation', {}).get('success', True):
+            sys.exit(1)
+        sys.exit(0)
     # Generate skill updates
     elif args.generate_skill_updates:
         if ERROR_LEARNING_ENABLED and automation.error_learner:
@@ -691,11 +709,14 @@ def main():
                 print(f"\n💡 Run with --generate-skill-updates to create suggestions for fixing these patterns")
     # Run normal test
     elif args.app_id:
-        automation.run_test(args.app_id)
+        results = automation.run_test(args.app_id)
+        if results is None:
+            sys.exit(1)
+        sys.exit(0)
     else:
         parser.print_help()
         print("\n❌ Error: Please provide either --app APP_ID, --evaluate PATH, --show-stats, or --generate-skill-updates")
-        sys.exit(1)
+        sys.exit(2)
 
 if __name__ == '__main__':
     main()
