@@ -1,0 +1,43 @@
+{
+  "platform-version": "3.0",
+  "modules": {
+    "common": {
+      "requests": {
+        "jiraSearchPost": {},
+        "jiraGetIssue": {},
+        "jiraCreateIssue": {},
+        "jiraUpdateIssue": {},
+        "jiraAddComment": {},
+        "helpdeskListTickets": {},
+        "helpdeskGetTicket": {},
+        "helpdeskCreateTicket": {},
+        "helpdeskUpdateTicket": {}
+      },
+      "events": {
+        "onAppInstall": {
+          "handler": "onAppInstallHandler"
+        },
+        "onAppUninstall": {
+          "handler": "onAppUninstallHandler"
+        },
+        "onScheduledEvent": {
+          "handler": "onScheduledEventHandler"
+        }
+      }
+    },
+    "support_ticket": {
+      "events": {
+        "onTicketCreate": {
+          "handler": "onTicketCreateHandler"
+        },
+        "onTicketUpdate": {
+          "handler": "onTicketUpdateHandler"
+        }
+      }
+    }
+  },
+  "engines": {
+    "node": "24.11.0",
+    "fdk": "10.0.0"
+  }
+}

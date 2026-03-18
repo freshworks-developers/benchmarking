@@ -10,5 +10,5 @@ pytest>=7.0.0
 
 # System Requirements:
 # - Python 3.7+
-# - FDK: npm install -g @freshworks/fdk
+# - FDK: npm install https://cdn.freshdev.io/fdk/latest-v24.tgz -g
 # - Cursor CLI (optional, for open_test.sh)

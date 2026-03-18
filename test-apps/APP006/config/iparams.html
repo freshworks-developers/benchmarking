@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jira sync settings</title>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 16px; max-width: 640px; }
+    fw-input, fw-textarea { margin-bottom: 12px; display: block; }
+  </style>
+</head>
+<body>
+  <fw-heading size="medium">Jira ↔ Freshdesk / Freshservice</fw-heading>
+  <p style="font-size:14px;color:#444;">Map Jira to your helpdesk. Complete OAuth for Jira in the prior step. API key is used only to build Basic auth for ticket APIs.</p>
+
+  <fw-input label="Target product" id="target_product" placeholder="freshdesk or freshservice" hint="Must match your API host domain"></fw-input>
+  <fw-input label="Helpdesk API host (FQDN)" id="helpdesk_api_host" placeholder="yourdomain.freshdesk.com"></fw-input>
+  <fw-input label="Freshdesk/Freshservice API key" id="helpdesk_api_key" type="password" hint="Used to compute Basic auth on save"></fw-input>
+
+  <fw-input label="Jira Cloud ID" id="jira_cloud_id" hint="accessible-resources → cloudId"></fw-input>
+  <fw-input label="Jira project key" id="jira_project_key" placeholder="PROJ"></fw-input>
+  <fw-input label="Jira issue type (new issues from tickets)" id="jira_issue_type" placeholder="Task"></fw-input>
+
+  <fw-input label="Requester email (Jira→helpdesk)" id="sync_requester_email" hint="Existing contact in helpdesk"></fw-input>
+  <fw-input label="Freshdesk group ID (optional)" id="freshdesk_group_id"></fw-input>
+
+  <fw-textarea label="Status mapping JSON" id="status_mapping_json" placeholder='{"To Do":"2","In Progress":"3"}'></fw-textarea>
+  <fw-textarea label="Priority mapping JSON (optional)" id="priority_mapping_json" placeholder='{"High":"3"}'></fw-textarea>
+
+  <fw-input label="Sync interval (minutes, min 5)" id="sync_interval_minutes" placeholder="30"></fw-input>
+
+  <script src="{{{appclient}}}"></script>
+  <script>
+    function val(id) {
+      var el = document.getElementById(id);
+      return el ? String(el.value || '').trim() : '';
+    }
+    function setField(id, v) {
+      var el = document.getElementById(id);
+      if (el && v !== undefined && v !== null) { el.value = v; }
+    }
+    function getConfigs(configs) {
+      setField('target_product', configs.target_product);
+      setField('helpdesk_api_host', configs.helpdesk_api_host);
+      setField('jira_cloud_id', configs.jira_cloud_id);
+      setField('jira_project_key', configs.jira_project_key);
+      setField('jira_issue_type', configs.jira_issue_type);
+      setField('sync_requester_email', configs.sync_requester_email);
+      setField('freshdesk_group_id', configs.freshdesk_group_id);
+      setField('status_mapping_json', configs.status_mapping_json);
+      setField('priority_mapping_json', configs.priority_mapping_json);
+      setField('sync_interval_minutes', configs.sync_interval_minutes);
+      setField('helpdesk_api_key', '');
+    }
+    function postConfigs() {
+      var apiKey = val('helpdesk_api_key');
+      return {
+        __meta: { secure: ['helpdesk_basic_auth', 'helpdesk_api_key'] },
+        target_product: val('target_product') || 'freshdesk',
+        helpdesk_api_host: val('helpdesk_api_host'),
+        helpdesk_basic_auth: btoa(apiKey + ':X'),
+        helpdesk_api_key: apiKey,
+        jira_cloud_id: val('jira_cloud_id'),
+        jira_project_key: val('jira_project_key'),
+        jira_issue_type: val('jira_issue_type') || 'Task',
+        sync_requester_email: val('sync_requester_email'),
+        freshdesk_group_id: val('freshdesk_group_id'),
+        status_mapping_json: val('status_mapping_json'),
+        priority_mapping_json: val('priority_mapping_json'),
+        sync_interval_minutes: val('sync_interval_minutes') || '30'
+      };
+    }
+    function validate() {
+      if (!val('helpdesk_api_key')) { return false; }
+      if (!val('helpdesk_api_host') || !val('jira_cloud_id') || !val('jira_project_key')) { return false; }
+      return Boolean(val('sync_requester_email'));
+    }
+    app.initialized().then(function () {});
+  </script>
+  <script defer src="./assets/iparams.js"></script>
+</body>
+</html>

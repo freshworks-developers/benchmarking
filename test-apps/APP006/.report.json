@@ -1,0 +1,34 @@
+{
+  "lints": [
+    {
+      "severity": 1,
+      "value": "server/server.js::11: possible deprecated API usage detected",
+      "type": "custom-js-lint"
+    },
+    {
+      "severity": 1,
+      "value": "server/server.js::23: possible deprecated API usage detected",
+      "type": "custom-js-lint"
+    },
+    {
+      "severity": 1,
+      "value": "server/server.js::79: possible deprecated API usage detected",
+      "type": "custom-js-lint"
+    },
+    {
+      "severity": 1,
+      "value": "server/server.js::84: possible deprecated API usage detected",
+      "type": "custom-js-lint"
+    },
+    {
+      "severity": 1,
+      "value": "server/server.js::91: possible deprecated API usage detected",
+      "type": "custom-js-lint"
+    },
+    {
+      "severity": 1,
+      "value": "server/server.js::96: possible deprecated API usage detected",
+      "type": "custom-js-lint"
+    }
+  ]
+}

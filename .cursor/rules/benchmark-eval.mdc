@@ -1,0 +1,21 @@
+---
+description: Use the benchmarking bin scripts and execution plan when evaluating Freshworks apps in this repo.
+globs: 
+alwaysApply: true
+---
+
+# Benchmark evaluation
+
+When evaluating Freshworks Platform 3.0 apps in this repo:
+
+0. **FDK** must be on PATH for full validation. If missing: `npm install https://cdn.freshdev.io/fdk/latest-v24.tgz -g`
+
+1. Use the **bin** scripts as the primary interface:
+   - Run evaluation: `python3 bin/eval.py run <app_id_or_path>` (e.g. `python3 bin/eval.py run APP001` or `python3 bin/eval.py run test-apps/MyApp --app-id MYAPP`).
+   - Show results: `python3 bin/eval-results.py [APP_ID]`.
+   - Show history: `python3 bin/eval-history.py [--app-id ID] [--last N]`.
+   - Show status: `python3 bin/eval-status.py [APP_ID]`.
+
+2. Follow the full execution plan: [docs/AGENT_BENCHMARK_PLAN.md](docs/AGENT_BENCHMARK_PLAN.md) for prerequisites, all commands, input/output contract, and how to analyze results over time.
+
+3. After changing an app, run evaluation and check the result file or exit code; if validation fails or grade is low, iterate. When errors recur, run `python3 bin/learn-suggest.py` and consider applying suggestions from `.dev/planning/AUTO_SKILL_UPDATES.md`.

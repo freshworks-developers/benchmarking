@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "skills": {
+    "app-dev": {
+      "source": "freshworks-developers/marketplace",
+      "sourceType": "github",
+      "computedHash": "632e81af3f7634e978fa48f1edf5537628934b2937717e010b45ab8d76f93013"
+    },
+    "freshworks-fdk-setup-skill": {
+      "source": "freshworks-developers/marketplace",
+      "sourceType": "github",
+      "computedHash": "92826891f1073bff87f21483ac27b6c78a32e2bc181512879155a4d3e2c93af4"
+    },
+    "freshworks-publish-skill": {
+      "source": "freshworks-developers/marketplace",
+      "sourceType": "github",
+      "computedHash": "6ea3e86082478dd6c7c249c42b896e2c5b859377234698356227bb68bc9749ea"
+    }
+  }
+}

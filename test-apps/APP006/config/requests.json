@@ -1,0 +1,120 @@
+{
+  "jiraSearchPost": {
+    "schema": {
+      "method": "POST",
+      "host": "api.atlassian.com",
+      "path": "/ex/jira/<%= iparam.jira_cloud_id %>/rest/api/3/search",
+      "headers": {
+        "Authorization": "Bearer <%= access_token %>",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    },
+    "options": {
+      "oauth": "jira"
+    }
+  },
+  "jiraGetIssue": {
+    "schema": {
+      "method": "GET",
+      "host": "api.atlassian.com",
+      "path": "/ex/jira/<%= iparam.jira_cloud_id %>/rest/api/3/issue/<%= context.issueKey %>",
+      "headers": {
+        "Authorization": "Bearer <%= access_token %>",
+        "Accept": "application/json"
+      }
+    },
+    "options": {
+      "oauth": "jira"
+    }
+  },
+  "jiraCreateIssue": {
+    "schema": {
+      "method": "POST",
+      "host": "api.atlassian.com",
+      "path": "/ex/jira/<%= iparam.jira_cloud_id %>/rest/api/3/issue",
+      "headers": {
+        "Authorization": "Bearer <%= access_token %>",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    },
+    "options": {
+      "oauth": "jira"
+    }
+  },
+  "jiraUpdateIssue": {
+    "schema": {
+      "method": "PUT",
+      "host": "api.atlassian.com",
+      "path": "/ex/jira/<%= iparam.jira_cloud_id %>/rest/api/3/issue/<%= context.issueKey %>",
+      "headers": {
+        "Authorization": "Bearer <%= access_token %>",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    },
+    "options": {
+      "oauth": "jira"
+    }
+  },
+  "jiraAddComment": {
+    "schema": {
+      "method": "POST",
+      "host": "api.atlassian.com",
+      "path": "/ex/jira/<%= iparam.jira_cloud_id %>/rest/api/3/issue/<%= context.issueKey %>/comment",
+      "headers": {
+        "Authorization": "Bearer <%= access_token %>",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    },
+    "options": {
+      "oauth": "jira"
+    }
+  },
+  "helpdeskListTickets": {
+    "schema": {
+      "method": "GET",
+      "host": "<%= iparam.helpdesk_api_host %>",
+      "path": "/api/v2/tickets?per_page=30",
+      "headers": {
+        "Authorization": "Basic <%= iparam.helpdesk_basic_auth %>",
+        "Content-Type": "application/json"
+      }
+    }
+  },
+  "helpdeskGetTicket": {
+    "schema": {
+      "method": "GET",
+      "host": "<%= iparam.helpdesk_api_host %>",
+      "path": "/api/v2/tickets/<%= context.ticketId %>",
+      "headers": {
+        "Authorization": "Basic <%= iparam.helpdesk_basic_auth %>",
+        "Content-Type": "application/json"
+      }
+    }
+  },
+  "helpdeskCreateTicket": {
+    "schema": {
+      "method": "POST",
+      "host": "<%= iparam.helpdesk_api_host %>",
+      "path": "/api/v2/tickets",
+      "headers": {
+        "Authorization": "Basic <%= iparam.helpdesk_basic_auth %>",
+        "Content-Type": "application/json"
+      }
+    }
+  },
+  "helpdeskUpdateTicket": {
+    "schema": {
+      "method": "PUT",
+      "host": "<%= iparam.helpdesk_api_host %>",
+      "path": "/api/v2/tickets/<%= context.ticketId %>",
+      "headers": {
+        "Authorization": "Basic <%= iparam.helpdesk_basic_auth %>",
+        "Content-Type": "application/json"
+      }
+    }
+  }
+}

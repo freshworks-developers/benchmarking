@@ -1,0 +1,22 @@
+{
+  "requirements": [
+    "OAuth 2.0 for Jira (and Freshworks account as needed)",
+    "Jira REST API: read/update issues for sync",
+    "Freshdesk and/or Freshservice ticket APIs for create/update/read",
+    "Configurable field and status mapping between Jira and Freshdesk/Freshservice during installation (iparams)",
+    "Platform 3.0 serverless app (manifest, serverless functions)",
+    "Scheduled events for periodic bidirectional or incremental sync",
+    "App webhooks or product webhooks where appropriate for near-real-time or event-triggered sync",
+    "Request templates (requests.json) for Jira and Freshdesk/Freshservice calls",
+    "OAuth config (oauth_config.json) aligned with Jira OAuth app settings"
+  ],
+  "expected_files": [
+    "manifest.json",
+    "server/server.js",
+    "config/iparams.html",
+    "config/oauth_config.json",
+    "config/requests.json",
+    "config/assets/iparams.js"
+  ],
+  "description": "Serverless Freshdesk app that connects to Jira via OAuth 2.0 and keeps tickets in sync with Freshdesk or Freshservice, with Jira↔helpdesk field and workflow mapping defined by the installer in iparams (HTML/JS). Uses scheduled and/or webhook-driven runs so changes propagate between systems without manual copy-paste."
+}

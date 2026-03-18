@@ -173,7 +173,10 @@ class BenchmarkAutomation:
             print("⚠️  Validation timeout")
             return {'success': False, 'error': 'Timeout', 'product': product}
         except FileNotFoundError:
-            print("⚠️  FDK not found. Install with: npm install -g @freshworks/fdk")
+            print(
+                "⚠️  FDK not found. Install with: "
+                "npm install https://cdn.freshdev.io/fdk/latest-v24.tgz -g"
+            )
             return {'success': False, 'error': 'FDK not installed', 'product': product}
     
     def check_file_structure(self, app_path, expected_files):

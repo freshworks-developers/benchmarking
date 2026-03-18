@@ -1,0 +1,30 @@
+{
+  "integrations": {
+    "jira": {
+      "display_name": "Jira Cloud",
+      "client_id": "<%= oauth_iparams.client_id %>",
+      "client_secret": "<%= oauth_iparams.client_secret %>",
+      "authorize_url": "https://auth.atlassian.com/authorize",
+      "token_url": "https://auth.atlassian.com/oauth/token",
+      "token_type": "account",
+      "options": {
+        "scope": "read:jira-work write:jira-work offline_access read:jira-user"
+      },
+      "oauth_iparams": {
+        "client_id": {
+          "display_name": "Atlassian OAuth Client ID",
+          "description": "From your Atlassian developer app (OAuth 2.0 3LO). Use placeholder until you register the app.",
+          "type": "text",
+          "required": true
+        },
+        "client_secret": {
+          "display_name": "Atlassian OAuth Client Secret",
+          "description": "From your Atlassian developer app. Keep secret.",
+          "type": "text",
+          "required": true,
+          "secure": true
+        }
+      }
+    }
+  }
+}

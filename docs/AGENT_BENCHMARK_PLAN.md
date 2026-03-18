@@ -8,7 +8,7 @@ This repo is the **Freshworks Platform 3.0 evaluation framework**. Agents and hu
 
 - Python 3.7+
 - `pip install -r requirements.txt`
-- FDK on PATH: `npm install -g @freshworks/fdk`
+- FDK on PATH: `npm install https://cdn.freshdev.io/fdk/latest-v24.tgz -g`
 - Run commands from the **benchmarking repo root** (directory containing `bin/`, `lib/`, `automate_test.py`).
 
 ## Simple input

@@ -50,7 +50,7 @@ benchmarking/
 
 ```bash
 pip install -r requirements.txt
-npm install -g @freshworks/fdk
+npm install https://cdn.freshdev.io/fdk/latest-v24.tgz -g
 ```
 
 ### Run Tests
@@ -1039,7 +1039,7 @@ python3 automate_test.py --generate-skill-updates
 **Issue: "FDK not found"**
 ```bash
 # Solution: Install FDK globally
-npm install -g @freshworks/fdk
+npm install https://cdn.freshdev.io/fdk/latest-v24.tgz -g
 ```
 
 **Issue: "Use case not found"**
