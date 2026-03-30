@@ -1,195 +1,111 @@
 # Freshworks Platform 3.0 benchmarking suite
 
-This repository provides automated validation and scoring for Freshworks marketplace apps: FDK checks, Platform 3.0 compliance, Crayons usage, file structure, optional custom requirements, and tooling to learn from repeated failures.
-
-## Repository layout
-
-```
-benchmarking/
-├── bin/                 # Recommended CLI (eval, setup, learn, convert)
-├── lib/                 # Shared Python helpers (gitignored; see Prerequisites)
-├── tests/               # Pytest for bin/ and lib/
-├── automate_test.py     # Legacy / interactive driver (generation + evaluate)
-├── setup_test.py        # Interactive criteria and app directory setup
-├── convert_criteria.py  # Plain-text criteria → JSON (see also bin/convert-criteria.py)
-├── error_learner.py     # Error patterns (see also bin/learn-*.py)
-├── docs/                # AGENT_BENCHMARK_PLAN.md, architecture, slash-command mapping
-├── use-cases/           # Definitions for generate-and-test flows
-├── test-criteria/       # Per-app criteria JSON
-├── results/             # Output JSON and eval_history.jsonl (gitignored)
-├── test-apps/           # Apps under test
-└── .dev/                # Error learning artifacts
-```
-
-## Prerequisites
-
-- Python 3.7+
-- Dependencies: `pip install -r requirements.txt`
-- **FDK on PATH** (required for validation):  
-  `npm install https://cdn.freshdev.io/fdk/latest-v24.tgz -g`
-- Run all commands from the **repository root** (the directory that contains `bin/` and `automate_test.py`).
-- **`lib/` directory:** This path is listed in `.gitignore` per repository policy. You need a local `lib/` tree (same layout as before: `resolve.py`, `history.py`, `criteria_convert.py`, `__init__.py`) for `bin/*.py` and tests to import successfully. Obtain it from your team or an internal package source if your clone does not include it.
+This repository is set up for **AI agent learners** and **Cursor (or similar) workflows**: you clone the project, open it in your editor, and drive **planning, building, and evaluation through agents**—not by memorizing shell commands first. Human reviewers can still run the same checks manually; those steps are in the appendix at the bottom.
 
 ---
 
-## Running evaluations (recommended)
+## 1. Install and open the repo (everyone)
 
-For day-to-day and CI-style runs, use the **`bin`** scripts. They wrap the same engine as `automate_test.py` but give stable entrypoints, predictable result paths, and exit codes.
+Do this once so the agent can run validation and scoring.
 
-| Command | Purpose |
-|--------|---------|
-| `python3 bin/eval.py run <app_id_or_path> [--app-id ID] [--learn]` | Run evaluation; append to history; optional `--learn` to refresh skill-update suggestions. |
-| `python3 bin/eval-results.py [APP_ID] [--json]` | Print result file path or list result files. |
-| `python3 bin/eval-history.py [--app-id ID] [--last N] [--json]` | Show evaluation history. |
-| `python3 bin/eval-status.py [APP_ID] [--json]` | Last run status (grade, pass/fail). |
-| `python3 bin/setup.py <app_id> --criteria-file <path> [--app-path PATH]` | Non-interactive criteria / test-apps setup. |
-| `python3 bin/convert-criteria.py --file <path> --output <path>` | Convert plain-text criteria to JSON (`-` for stdin). |
-| `python3 bin/learn-stats.py` | Error-learner statistics. |
-| `python3 bin/learn-suggest.py` | Write suggestions to `.dev/planning/AUTO_SKILL_UPDATES.md`. |
+1. **Clone** this repository and **open the repo root** in Cursor (or your IDE). The bundled **`.cursor/rules/benchmark-eval.mdc`** applies in this workspace and steers the AI toward the correct evaluation flow.
+2. **Python:** `pip install -r requirements.txt`
+3. **FDK** (required for real validation):  
+   `npm install https://cdn.freshdev.io/fdk/latest-v24.tgz -g`  
+   Confirm `fdk` is on your `PATH`.
+4. **`lib/`:** The `lib/` directory is **gitignored**. Your environment still needs those Python modules at the repo root for tools to run. If your clone has no `lib/`, get the folder from your instructor or internal instructions and place it next to `bin/`.
 
-**Examples:**
-
-```bash
-# Evaluate by app ID (resolves test-apps/<ID> and optional criteria file)
-python3 bin/eval.py run APP001
-
-# Evaluate by path, with explicit result id
-python3 bin/eval.py run test-apps/MyApp --app-id MYAPP
-
-# Inspect outputs
-python3 bin/eval-results.py APP001
-python3 bin/eval-history.py --last 10
-python3 bin/eval-status.py
-```
-
-**Outputs**
-
-- Result file: `results/<app_id>_result.json`
-- Append-only history: `results/eval_history.jsonl`
-- Exit codes: `0` success, `1` failure (validation or runtime error), `2` invalid arguments
-
-Full contract, optional Promptfoo usage, and agent workflow: **[docs/AGENT_BENCHMARK_PLAN.md](docs/AGENT_BENCHMARK_PLAN.md)**. Slash-style command mapping: **[docs/SLASH_COMMANDS.md](docs/SLASH_COMMANDS.md)**. Benchmark agent roles: **[docs/BENCHMARK_AGENTS.md](docs/BENCHMARK_AGENTS.md)**.
+Tell the agent: *“We’re in the benchmarking repo root; follow AGENT_BENCHMARK_PLAN and use the evaluation agents.”*
 
 ---
 
-## Alternative: `automate_test.py`
+## 2. Primary workflow: benchmark agents (plan → build → evaluate)
 
-Use this when you need **generate-and-test** (wait for human generation, then validate) or you prefer the older single-script interface.
+Three roles mirror how you should work through an exercise. Full detail: **[docs/BENCHMARK_AGENTS.md](docs/BENCHMARK_AGENTS.md)**. Agent prompts live under **`.cursor/agents/`**.
 
-**Generate from a predefined use case**
+| Agent | File to @-mention or paste | Role |
+|-------|-----------------------------|------|
+| **Planning** | `.cursor/agents/benchmark-planning.md` | Turn requirements or a use-case id into criteria (`test-criteria/…`), expected files, optional planning notes. |
+| **Building** | `.cursor/agents/benchmark-building.md` | Implement or fix the app (Platform 3.0, Crayons, manifest). Does not substitute for the evaluation step. |
+| **Evaluating** | `.cursor/agents/benchmark-evaluating.md` | Run the benchmark, interpret scores, suggest fixes; may use learning outputs. |
 
-```bash
-python3 automate_test.py --app APP003
-```
+**Typical chat pattern in Cursor**
 
-The script prints the prompt, waits while you generate the app (for example in another editor), then continues on Enter and runs validation.
+1. Start a thread and **attach the agent file** you need (e.g. type `@` and choose `benchmark-evaluating.md`), *or* paste that file’s contents into your first message so the model stays in role.
+2. Say what you want in plain language, for example:
+   - *“Using the evaluating agent: run a full benchmark for app id `APP001` and summarize grade and failures.”*
+   - *“Plan criteria for use-case `APP006` from `use-cases/use_cases.json`.”*
+   - *“After this eval result, suggest concrete manifest and file fixes.”*
+3. If your course uses a **Task** or **subagent** feature, request the matching type when documented (e.g. `benchmark-evaluating`) as described in [BENCHMARK_AGENTS.md](docs/BENCHMARK_AGENTS.md).
 
-**Evaluate an existing app tree**
+**Pipeline:** plan (criteria) → build (app under `test-apps/`) → evaluate → iterate from the result JSON and suggestions.
 
-```bash
-python3 automate_test.py --evaluate test-apps/APP001 --app-id APP001 \
-  --requirements test-criteria/APP001-criteria.json
-
-# Or comma-separated requirements
-python3 automate_test.py --evaluate test-apps/my-app --requirements "OAuth,Webhooks"
-```
-
-**Error learning (via automate_test)**
-
-```bash
-python3 automate_test.py --show-stats
-python3 automate_test.py --generate-skill-updates
-```
-
-Prefer `bin/learn-stats.py` and `bin/learn-suggest.py` for the same behavior with clearer naming.
-
-**Help**
-
-```bash
-python3 automate_test.py --help
-```
+Execution contract (inputs, outputs, history files, exit codes): **[docs/AGENT_BENCHMARK_PLAN.md](docs/AGENT_BENCHMARK_PLAN.md)**.
 
 ---
 
-## Interactive setup (`setup_test.py`)
+## 3. Slash-style commands and validation requests
 
-Creates criteria under `test-criteria/` and a directory under `test-apps/`. Accepts pasted plain text or JSON (terminate input with a line `END`).
+Courses and rules often phrase work as **slash commands** or **“run validation”**. Those are *names for intents*; your agent should map them to the repo tooling. Official mapping table: **[docs/SLASH_COMMANDS.md](docs/SLASH_COMMANDS.md)**.
 
-```bash
-python3 setup_test.py APP001
-# Optional: copy app in one step
-python3 setup_test.py APP001 --app-path /path/to/your/app
-```
+| You say (examples) | What the agent should do (repo root) |
+|--------------------|--------------------------------------|
+| `/eval run APP001` | Run evaluation for that app id. |
+| `/eval run test-apps/MyApp` | Run evaluation for that path (optionally set `--app-id`). |
+| `/eval run APP001 --learn` | Run evaluation, then refresh skill-update suggestions. |
+| `/eval results` / `/eval results APP001` | Show where results live or list them. |
+| `/eval history` / `/eval history --last 10` | Show evaluation history. |
+| `/eval status` / `/eval status APP001` | Show last run status (grade, pass/fail). |
 
-Then run evaluation with `bin/eval.py run APP001` or the matching `automate_test.py --evaluate` command shown by the script.
+**In Cursor:** You can define **custom slash commands** or rules that expand `/eval …` into the matching command from [SLASH_COMMANDS.md](docs/SLASH_COMMANDS.md). If you have not wired slashes yet, ask the agent in natural language: *“Run the same thing as `/eval run APP001`”*—it should still execute the mapped tooling from the plan.
 
----
-
-## Scoring overview
-
-Apps are scored on a **100-point** scale with letter grades **A–F**.
-
-| Area | Points | Notes |
-|------|--------|--------|
-| FDK validation | 20 | Pass/fail style contribution |
-| File structure | 20 | Expected files present |
-| Platform 3.0 compliance | 40 | Five checks (8 pts each where applicable) |
-| Crayons usage | 20 | `fw-*` / Crayons usage signals |
-
-**Grade bands:** A 90–100, B 80–89, C 70–79, D 60–69, F below 60.
-
-Result JSON includes `score`, `validation`, `platform3_compliance`, `requirements_met` (when criteria apply), and related fields. Inspect `results/<id>_result.json` after each run.
+**@ validation / “validate this app”:** Point the agent at the app path or id and ask for a **full benchmark** (not only `fdk validate`). The evaluating agent should follow **AGENT_BENCHMARK_PLAN** and the workspace rule **benchmark-eval**.
 
 ---
 
-## Predefined use cases (generation mode)
+## 4. What gets produced
 
-| ID | Name | Type | Product |
-|----|------|------|---------|
-| APP001 | MS Teams Presence Checker | Frontend | Freshservice |
-| APP002 | Freshservice-Asana Sync | Serverless | Freshservice |
-| APP003 | Freshdesk-GitHub Integration | Frontend | Freshdesk |
-| APP004 | Password Generator | Frontend | Freshservice |
-| APP005 | Freshdesk-Zapier Contact Sync | Serverless | Freshdesk |
-| APP006 | Jira-Freshdesk OAuth Sync | Serverless | Freshdesk |
-| APP007 | Ticket Field Validation | Frontend | Freshdesk |
+- **Scores and detail:** `results/<app_id>_result.json` (gitignored locally when generated).
+- **History:** `results/eval_history.jsonl`.
+- **Learning suggestions:** `.dev/planning/AUTO_SKILL_UPDATES.md` (when you run suggest / `--learn` flows).
 
-List IDs from `use-cases/use_cases.json` if the table drifts.
+**Scoring (summary):** 100-point scale, letter grades A–F; categories include FDK validation, file structure, Platform 3.0 compliance, Crayons usage. Details remain in result JSON.
+
+**Predefined use-case ids** (for generation-style exercises): `APP001`–`APP007` in `use-cases/use_cases.json` (Freshdesk / Freshservice mix; see table in earlier course materials or that file).
 
 ---
 
-## Error learning
+## 5. Documentation map
 
-Failures can be recorded for pattern analysis. Data lives under `.dev/` (for example `.dev/comparison/error_database.json`, `.dev/planning/AUTO_SKILL_UPDATES.md`).
-
-```bash
-python3 bin/learn-stats.py
-python3 bin/learn-suggest.py
-# Legacy equivalents:
-python3 error_learner.py stats
-python3 error_learner.py suggest
-```
+| Doc | Use |
+|-----|-----|
+| [docs/AGENT_BENCHMARK_PLAN.md](docs/AGENT_BENCHMARK_PLAN.md) | Single source for prerequisites, commands the agent may run, I/O contract, history analysis. |
+| [docs/SLASH_COMMANDS.md](docs/SLASH_COMMANDS.md) | Slash phrase → exact command mapping. |
+| [docs/BENCHMARK_AGENTS.md](docs/BENCHMARK_AGENTS.md) | Agent roles, pipeline, how to invoke. |
+| [docs/ARCHITECTURE_AND_FLOW.md](docs/ARCHITECTURE_AND_FLOW.md) | Deeper architecture (optional). |
 
 ---
 
-## Tests
+## 6. Troubleshooting (for you or the agent)
 
-```bash
-pytest tests/
-```
+| Symptom | Check |
+|---------|--------|
+| FDK errors | Install FDK globally; run from repo root. |
+| Import / `lib` errors | `lib/` present at repo root (ignored by git). |
+| Wrong app path | Paths relative to repo root: `test-apps/<id>` or as given in criteria. |
+| Agent ignores benchmark flow | Ensure workspace is **this** repo so `.cursor/rules/benchmark-eval.mdc` applies; @-mention **benchmark-evaluating.md**. |
 
 ---
 
-## Troubleshooting
+## Appendix A: Manual CLI (optional)
 
-| Issue | What to try |
-|-------|-------------|
-| FDK not found | Install FDK globally (see Prerequisites) and ensure `fdk` is on `PATH`. |
-| Import errors from `lib` | Ensure a local `lib/` package exists at repo root (ignored by git; see Prerequisites). |
-| Use case not found | Confirm `id` in `use-cases/use_cases.json`. |
-| Evaluate path errors | Use paths relative to repo root or absolute paths to the app directory. |
+Use this if you are **not** going through an agent or you are debugging.
 
-For low scores, run `fdk validate` inside the app directory and compare manifest and file layout to criteria and Platform 3.0 expectations.
+The **dispatcher** is `python3 bin/eval.py` with subcommands `run`, `results`, `history`, `status`. Other `bin/*.py` scripts cover setup, criteria conversion, and learning. Copy-paste examples and flags: **[docs/AGENT_BENCHMARK_PLAN.md](docs/AGENT_BENCHMARK_PLAN.md)** and **[docs/SLASH_COMMANDS.md](docs/SLASH_COMMANDS.md)**.
+
+**Legacy interactive driver:** `automate_test.py` (generate-and-wait flows, `--evaluate`, `--show-stats`). **Interactive criteria:** `setup_test.py`.
+
+**Tests:** `python3 -m pytest tests/`
 
 ---
 
