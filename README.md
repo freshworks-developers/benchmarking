@@ -26,14 +26,45 @@ Phrases like `/eval run …` in **[docs/SLASH_COMMANDS.md](docs/SLASH_COMMANDS.m
 This repo documents **running and interpreting the benchmark**.
 
 - **Agent prompt:** **`.cursor/agents/benchmark-evaluating.md`** — `@`-mention it in Cursor (or paste its contents) and ask for an evaluation. Details: **[docs/BENCHMARK_AGENTS.md](docs/BENCHMARK_AGENTS.md)**.
-- **App input:** See **§5** — you can use a **bare app id** or **any path** to app source; not limited to `test-apps/`.
-- **Outputs:** Scores and history are written under **`results/` inside this repo** (see §4), regardless of where the app lives on disk.
+- **App input:** See **§6** — you can use a **bare app id** or **any path** to app source; not limited to `test-apps/`.
+- **Outputs:** Scores and history are written under **`results/` inside this repo** (see §5), regardless of where the app lives on disk.
 
 **Contract:** prerequisites, commands, exit codes — **[docs/AGENT_BENCHMARK_PLAN.md](docs/AGENT_BENCHMARK_PLAN.md)**.
 
 ---
 
-## 3. Slash-style eval intents
+## 3. How evaluation and scoring work
+
+A run executes the same pipeline used by **`automate_test.py`** (invoked via **`bin/eval.py run`**): FDK validation on the app directory, checks against expected files, Platform 3.0 manifest rules, and Crayons usage signals in `app/**/*.html`. The outcome is written to **`results/<app_id>_result.json`** with `validation`, `file_structure`, `platform3_compliance`, `crayons_usage`, and **`score`**.
+
+### Weights (points on a 100-point scale)
+
+When all four buckets apply, **maximum raw score is 100**. **`percentage`** = `(total_score / max_score) × 100` (see result JSON). **`grade`** is derived from **percentage** only.
+
+| Category | Max points | % of total | How it is scored |
+|----------|------------|------------|------------------|
+| **FDK validation** | 20 | 20% | **20** if `fdk validate` succeeds; **0** if it fails. |
+| **File structure** | 20 | 20% | **Proportional:** `(files present / expected files) × 20`. Expected files come from criteria JSON, a matching use case, or auto-detection from the app layout (`manifest.json`, `app/`, `server/`, `config/`, etc.). |
+| **Platform 3.0 compliance** | 40 | 40% | **8 points each** (up to five checks), all from `manifest.json`: `platform-version` **3.0**, **`modules`** present, **no** `whitelisted-domains` / `whitelisted_domains`, **`engines`** present, **correct location placement** (serverless/background vs UI locations per implementation rules). |
+| **Crayons usage** | 20 | 20% | **10** if Crayons CDN pattern is detected (`cdn.jsdelivr.net` + crayons); **+5** if `<fw-button` appears; **+5** if no “plain” `<button>` without `fw-button` in the same file logic (implementation detail in `automate_test.py`). |
+
+If the file-structure check has **no expected file list**, that **20**-point block may not be added to **`max_score`** (see `calculate_score` in `automate_test.py`); in typical evaluate flows a list is always derived.
+
+### Letter grades
+
+| Grade | Percentage |
+|-------|------------|
+| **A** | ≥ 90% |
+| **B** | 80–89% |
+| **C** | 70–79% |
+| **D** | 60–69% |
+| **F** | below 60% |
+
+**Custom requirements** from criteria (when provided) are tracked in the result payload (e.g. `requirements_met`); they do not change the numeric breakdown above unless extended in code.
+
+---
+
+## 4. Slash-style eval intents
 
 Phrases like `/eval run …` are **intent labels**; map them to the repo CLI from **[docs/SLASH_COMMANDS.md](docs/SLASH_COMMANDS.md)**. Configure Cursor custom commands or rely on the agent + `benchmark-eval` rule to run the equivalent `python3 bin/eval.py …` from the **repo root**.
 
@@ -41,7 +72,7 @@ Phrases like `/eval run …` are **intent labels**; map them to the repo CLI fro
 
 ---
 
-## 4. Outputs
+## 5. Outputs
 
 All benchmark artifacts below are created **under this repository’s root** (not next to the app folder):
 
@@ -53,13 +84,13 @@ All benchmark artifacts below are created **under this repository’s root** (no
 
 `<app_id>` is the resolved id for the run (from your argument or inferred from the app directory name; use **`--app-id`** on `bin/eval.py run` when you want a stable name).
 
-**Scoring:** 100-point scale, grades A–F; breakdown in each result file.
+**Scoring:** Weights, percentage, and grades are described in **§3**; the same fields appear under `score` in each result file.
 
-**Sample packaged use-case ids:** `APP001`–`APP007` in `use-cases/use_cases.json` — typically used with apps under `test-apps/<id>/`, but evaluation itself accepts any valid app path (§5).
+**Sample packaged use-case ids:** `APP001`–`APP007` in `use-cases/use_cases.json` — typically used with apps under `test-apps/<id>/`, but evaluation itself accepts any valid app path (§6).
 
 ---
 
-## 5. Apps and criteria on disk
+## 6. Apps and criteria on disk
 
 **How you point at app code**
 
@@ -80,7 +111,7 @@ So the app **does not** have to live under `test-apps/` unless you use the short
 
 ---
 
-## 6. Documentation index
+## 7. Documentation index
 
 | Document | Purpose |
 |----------|---------|
@@ -91,7 +122,7 @@ So the app **does not** have to live under `test-apps/` unless you use the short
 
 ---
 
-## 7. Troubleshooting
+## 8. Troubleshooting
 
 | Symptom | Check |
 |---------|--------|
