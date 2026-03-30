@@ -39,6 +39,10 @@ test-results/
 # Generated Apps (optional - uncomment to ignore)
 # usecase-to-app/generated_apps/
 
+# Local-only Cursor prompts (not part of published eval suite)
+.cursor/agents/benchmark-planning.md
+.cursor/agents/benchmark-building.md
+
 # IDE
 .vscode/
 .idea/
