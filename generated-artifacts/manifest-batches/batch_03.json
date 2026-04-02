@@ -1,0 +1,453 @@
+[
+  {
+    "app_id": "9545",
+    "zip_file": "app_9545_v692164.zip",
+    "error": null,
+    "platform_version": "3.0",
+    "engines": {
+      "node": "18.19.1",
+      "fdk": "9.2.0"
+    },
+    "manifest_summary": {
+      "products": [],
+      "locations_by_product": {},
+      "events_by_product": {},
+      "requests_by_product": {},
+      "functions_by_product": {},
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [
+        "support_ticket",
+        "support_email",
+        "common"
+      ],
+      "locations_by_module": {
+        "support_ticket": [
+          "ticket_background"
+        ],
+        "support_email": [
+          "new_email_background"
+        ],
+        "common": []
+      },
+      "events_by_module": {
+        "support_ticket": [],
+        "support_email": [],
+        "common": []
+      },
+      "requests_by_module": {
+        "support_ticket": [],
+        "support_email": [],
+        "common": [
+          "getConversations",
+          "getEmailConfigs",
+          "getEmailConfigsIparams",
+          "getTicketFields",
+          "verifyAPIKey"
+        ]
+      },
+      "functions_by_module": {
+        "support_ticket": [],
+        "support_email": [],
+        "common": []
+      },
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": "## Freshdesk App Project Congratulations on creating your App Project! Feel free to replace this text with your project description. ### Project folder structure explained . ├── README.md This file. ├── config Installation parameter configs. │ ├── iparams.json Installation parameter config in English language. │ └── iparam_test_data.json Installation parameter data for local testing. └── manifest.json Project manifest. └── server Business logic for remote request and event handlers. ├── lib │ └── handle-response.js ├── server.js └── test_data ├── onAppInstall.json ├── onAppUninstall.json ├── onContactCreate.json ├── onContactUpdate.json ├── onConversationCreate.json ├── onExternalEvent.json ├── onTicketCreate.json └── onTicketUpdate.json"
+    }
+  },
+  {
+    "app_id": "9817",
+    "zip_file": "app_9817_v715138.zip",
+    "error": null,
+    "platform_version": "3.0",
+    "engines": {
+      "node": "18.20.5",
+      "fdk": "9.6.0"
+    },
+    "manifest_summary": {
+      "products": [],
+      "locations_by_product": {},
+      "events_by_product": {},
+      "requests_by_product": {},
+      "functions_by_product": {},
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [
+        "support_ticket",
+        "support_email",
+        "common"
+      ],
+      "locations_by_module": {
+        "support_ticket": [
+          "new_ticket_background",
+          "ticket_background"
+        ],
+        "support_email": [
+          "new_email_background"
+        ],
+        "common": []
+      },
+      "events_by_module": {
+        "support_ticket": [],
+        "support_email": [],
+        "common": []
+      },
+      "requests_by_module": {
+        "support_ticket": [],
+        "support_email": [],
+        "common": [
+          "getAdminTicketFields",
+          "getTicketFields",
+          "getTicketFieldsInApp"
+        ]
+      },
+      "functions_by_module": {
+        "support_ticket": [],
+        "support_email": [],
+        "common": []
+      },
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "9822",
+    "zip_file": "app_9822_v686029.zip",
+    "error": null,
+    "platform_version": "2.3",
+    "engines": {
+      "node": "18.18.2",
+      "fdk": "9.5.0"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "new_email_background",
+          "new_ticket_background",
+          "ticket_background"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": []
+      },
+      "requests_by_product": {
+        "freshdesk": [
+          "getAdminTicketFields",
+          "getTicketFields",
+          "getUserRoles"
+        ]
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "9955",
+    "zip_file": "app_9955_v673264.zip",
+    "error": null,
+    "platform_version": "3.0",
+    "engines": {
+      "node": "18.19.1",
+      "fdk": "9.7.0"
+    },
+    "manifest_summary": {
+      "products": [],
+      "locations_by_product": {},
+      "events_by_product": {},
+      "requests_by_product": {},
+      "functions_by_product": {},
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [
+        "common",
+        "service_user"
+      ],
+      "locations_by_module": {
+        "common": [],
+        "service_user": []
+      },
+      "events_by_module": {
+        "common": [
+          "onAppInstall",
+          "onAppUninstall"
+        ],
+        "service_user": []
+      },
+      "requests_by_module": {
+        "common": [
+          "activateConfig",
+          "deleteConfig"
+        ],
+        "service_user": []
+      },
+      "functions_by_module": {
+        "common": [],
+        "service_user": []
+      },
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": "## SCIM FreshService App ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshservice_logo.png The Freshservice logo that is displayed in the app │ ├── style.css Style sheet for the app │ ├── template.html Contains the HTML required for the app’s UI ├── config Contains the installation parameters and OAuth configuration │ ├── iparams.json Contains the parameters that will be collected during installation │ └── iparam_test_data.json Contains sample Iparam values that will used during testing └── manifest.json Contains app meta data and configuration information"
+    }
+  },
+  {
+    "app_id": "10450",
+    "zip_file": "app_10450_v355094.zip",
+    "error": null,
+    "platform_version": "2.3",
+    "engines": {
+      "node": "18.14.2",
+      "fdk": "9.1.0"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "new_email_background",
+          "new_ticket_background",
+          "ticket_background"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": []
+      },
+      "requests_by_product": {
+        "freshdesk": [
+          "verifyAPIkey"
+        ]
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": "## Your First App Congratulations on creating your first app! Feel free to replace this text with your app's actual description. ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshdesk_logo.png The Freshdesk logo that is displayed in the app │ ├── style.css Style sheet for the app │ ├── template.html Contains the HTML required for the app’s UI ├── config Contains the installation parameters and OAuth configuration │ ├── iparams.json Contains the parameters that will be collected during installation │ └── iparam_test_data.json Contains sample Iparam values that will used during testing └── manifest.json Contains app meta data and configuration information"
+    }
+  },
+  {
+    "app_id": "12097",
+    "zip_file": "app_12097_v657849.zip",
+    "error": null,
+    "platform_version": "3.1",
+    "engines": {
+      "node": "18.20.5",
+      "fdk": "9.6.0"
+    },
+    "manifest_summary": {
+      "products": [],
+      "locations_by_product": {},
+      "events_by_product": {},
+      "requests_by_product": {},
+      "functions_by_product": {},
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [
+        "common",
+        "service_ticket"
+      ],
+      "locations_by_module": {
+        "common": [],
+        "service_ticket": []
+      },
+      "events_by_module": {
+        "common": [],
+        "service_ticket": [
+          "onConversationCreate",
+          "onTicketUpdate"
+        ]
+      },
+      "requests_by_module": {
+        "common": [
+          "get_related_tickets",
+          "post_note_request",
+          "update_parent_ticket_status"
+        ],
+        "service_ticket": []
+      },
+      "functions_by_module": {
+        "common": [],
+        "service_ticket": []
+      },
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "13203",
+    "zip_file": "app_13203_v107425.zip",
+    "error": null,
+    "platform_version": "2.0",
+    "engines": null,
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "new_email_requester_info",
+          "ticket_background",
+          "ticket_conversation_editor",
+          "ticket_sidebar"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": []
+      },
+      "requests_by_product": {
+        "freshdesk": []
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": [
+        "https://*.freshdesk.com"
+      ],
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "13241",
+    "zip_file": "app_13241_v688594.zip",
+    "error": null,
+    "platform_version": "3.0",
+    "engines": {
+      "node": "18.16.0",
+      "fdk": "9.7.0"
+    },
+    "manifest_summary": {
+      "products": [],
+      "locations_by_product": {},
+      "events_by_product": {},
+      "requests_by_product": {},
+      "functions_by_product": {},
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [
+        "common",
+        "service_ticket",
+        "service_change"
+      ],
+      "locations_by_module": {
+        "common": [],
+        "service_ticket": [
+          "ticket_background"
+        ],
+        "service_change": [
+          "change_background"
+        ]
+      },
+      "events_by_module": {
+        "common": [],
+        "service_ticket": [],
+        "service_change": []
+      },
+      "requests_by_module": {
+        "common": [
+          "changeFields",
+          "changeTimer",
+          "ticketFields",
+          "ticketTimer"
+        ],
+        "service_ticket": [],
+        "service_change": []
+      },
+      "functions_by_module": {
+        "common": [],
+        "service_ticket": [],
+        "service_change": []
+      },
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": "## Your First App Congratulations on creating your first app! Feel free to replace this text with your app's actual description. ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshservice_logo.png The Freshservice logo that is displayed in the app │ ├── style.css Style sheet for the app │ ├── template.html Contains the HTML required for the app’s UI ├── config Contains the installation parameters and OAuth configuration │ ├── iparams.json Contains the parameters that will be collected during installation │ └── iparam_test_data.json Contains sample Iparam values that will used during testing └── manifest.json Contains app meta data and configuration information"
+    }
+  }
+]

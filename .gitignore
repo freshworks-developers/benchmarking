@@ -58,3 +58,9 @@ Thumbs.db
 *.tmp
 *.bak
 *.backup
+
+# Local downloaded app archives (large binaries; not part of source tree)
+downloaded-zips/
+
+# Redundant zip of generated-artifacts/ (directory is canonical)
+generated-artifacts.zip

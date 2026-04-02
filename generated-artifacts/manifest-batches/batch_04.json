@@ -1,0 +1,442 @@
+[
+  {
+    "app_id": "13306",
+    "zip_file": "app_13306_v692218.zip",
+    "error": null,
+    "platform_version": "3.0",
+    "engines": {
+      "node": "18.20.6",
+      "fdk": "9.8.1"
+    },
+    "manifest_summary": {
+      "products": [],
+      "locations_by_product": {},
+      "events_by_product": {},
+      "requests_by_product": {},
+      "functions_by_product": {},
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [
+        "support_ticket",
+        "common"
+      ],
+      "locations_by_module": {
+        "support_ticket": [],
+        "common": [
+          "full_page_app"
+        ]
+      },
+      "events_by_module": {
+        "support_ticket": [],
+        "common": [
+          "onAppInstall"
+        ]
+      },
+      "requests_by_module": {
+        "support_ticket": [],
+        "common": [
+          "getAgent",
+          "getAgents",
+          "getAgentsListForSettings",
+          "getAllTickets",
+          "getGroupList",
+          "getStatusList",
+          "getTicketCompany",
+          "getTicketDetails",
+          "getTicketFields",
+          "getTicketFieldsForSettings",
+          "getTicketRequester",
+          "updateTicket",
+          "validateFd"
+        ]
+      },
+      "functions_by_module": {
+        "support_ticket": [],
+        "common": [
+          "serverMethod"
+        ]
+      },
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": "## Kabana Congratulations on creating your Kabana! Feel free to replace this text with your app's actual description. ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshdesk_logo.png The Freshdesk logo that is displayed in the app │ ├── style.css Style sheet for the app │ ├── template.html Contains the HTML required for the app’s UI ├── config Contains the installation parameters and OAuth configuration │ ├── iparams.json Contains the parameters that will be collected during installation │ └── iparam_test_data.json Contains sample Iparam values that will used during testing └── manifest.json Contains app meta data and configuration information"
+    }
+  },
+  {
+    "app_id": "14882",
+    "zip_file": "app_14882_v140978.zip",
+    "error": null,
+    "platform_version": "2.2",
+    "engines": {
+      "node": "12.18.3",
+      "fdk": "7.1.0"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshchat"
+      ],
+      "locations_by_product": {
+        "freshchat": [
+          "conversation_user_info"
+        ]
+      },
+      "events_by_product": {
+        "freshchat": []
+      },
+      "requests_by_product": {
+        "freshchat": []
+      },
+      "functions_by_product": {
+        "freshchat": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": [
+        "https://webapi.teamviewer.com"
+      ],
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": true,
+    "has_iparams_html": false,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": "## Teamviewer We are updating the exsisting app as from Teamviewer side in for OAUTH authorization options field added and that is mandatory."
+    }
+  },
+  {
+    "app_id": "15015",
+    "zip_file": "app_15015_v672737.zip",
+    "error": null,
+    "platform_version": "3.0",
+    "engines": {
+      "node": "18.19.1",
+      "fdk": "9.4.2"
+    },
+    "manifest_summary": {
+      "products": [],
+      "locations_by_product": {},
+      "events_by_product": {},
+      "requests_by_product": {},
+      "functions_by_product": {},
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [
+        "common",
+        "service_ticket"
+      ],
+      "locations_by_module": {
+        "common": [],
+        "service_ticket": []
+      },
+      "events_by_module": {
+        "common": [
+          "afterAppUpdate",
+          "onAppInstall",
+          "onAppUninstall"
+        ],
+        "service_ticket": []
+      },
+      "requests_by_module": {
+        "common": [],
+        "service_ticket": []
+      },
+      "functions_by_module": {
+        "common": [],
+        "service_ticket": []
+      },
+      "scheduled_events_by_module": {
+        "common": [
+          "onScheduledEvent"
+        ]
+      }
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": "# Freshservice App for HP Warranty ## A serverless app for faciliating bulk warranty update (for items) for HP and Dell. ### **Features:** - Installer fetches the following details - Freshservice API Key (to fetch/update items, product details) - HP API Key and Secret (to fetch HP Warranty details) - Dell API credentials is common to all accounts and has been provided to the SI team - New fetch frequency - New fetch means fetching and updating new items' warranty details - **For the first \"New fetch\" job, all items are new** - As soon as app is installed, a \"New fetch\" job is scheduled within next 24 hours - Another \"New fetch\" job is scheduled after the \"New fetch frequency\" days - Refresh frequency - **Refresh jobs updates all jobs** - On app installation, a refresh job is scheduled after the *refreshFrequency* days - Once the job is completed, refresh job is rescheduled after the *refreshFrequency* days - If a job fails, the same job is rescheduled for the next day - On app installation, `onAppInstall` takes care of sending the installation credentials to middleware - Since there's no `onAppUpdate` event, a recurring job takes c"
+    }
+  },
+  {
+    "app_id": "16826",
+    "zip_file": "app_16826_v640043.zip",
+    "error": null,
+    "platform_version": "2.3",
+    "engines": {
+      "node": "18.19.0",
+      "fdk": "9.5.0"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "full_page_app"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": [
+          "onConversationCreate",
+          "onTicketUpdate"
+        ]
+      },
+      "requests_by_product": {
+        "freshdesk": [
+          "createFdTicket",
+          "getAgent",
+          "getData",
+          "getDatas",
+          "getGroupDetails",
+          "getModalAgent",
+          "getModalData",
+          "getTicketFields"
+        ]
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": "## Out Of Office Agents can choose when they are going out of office, Admin can define what should be done when the agent is not avaialable. ### Folder structure explained . ├── README.md This file ├── server │ ├── server.js Server side code. ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshdesk_logo.png The Freshdesk logo that is displayed in the app │ ├── style.css Style sheet for the app │ ├── template.html Contains the HTML required for the app’s UI ├── config Contains the installation parameters and OAuth configuration │ ├── iparams.json Contains the parameters that will be collected during installation │ └── iparam_test_data.json Contains sample Iparam values that will used during testing └── manifest.json Contains app meta data and configuration information"
+    }
+  },
+  {
+    "app_id": "20740",
+    "zip_file": "app_20740_v120406.zip",
+    "error": null,
+    "platform_version": "2.0",
+    "engines": null,
+    "manifest_summary": {
+      "products": [
+        "freshcaller"
+      ],
+      "locations_by_product": {
+        "freshcaller": [
+          "conversation_card",
+          "notification_card",
+          "widget_conversation_card",
+          "widget_notification_card"
+        ]
+      },
+      "events_by_product": {
+        "freshcaller": []
+      },
+      "requests_by_product": {
+        "freshcaller": []
+      },
+      "functions_by_product": {
+        "freshcaller": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": [
+        "https://*.freshdesk.com"
+      ],
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": "## Your First App Congratulations on creating your first app! Feel free to replace this text with your app's actual description. ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshcaller_logo.png The Freshcaller logo that is displayed in the app │ ├── style.css Style sheet for the app │ ├── template.html Contains the HTML required for the app’s UI ├── config Contains the installation parameters and OAuth configuration │ ├── iparams.json Contains the parameters that will be collected during installation │ └── iparam_test_data.json Contains sample Iparam values that will used during testing └── manifest.json Contains app meta data and configuration information"
+    }
+  },
+  {
+    "app_id": "20878",
+    "zip_file": "app_20878_v711942.zip",
+    "error": null,
+    "platform_version": "2.3",
+    "engines": {
+      "node": "18.20.8",
+      "fdk": "9.8.2"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": []
+      },
+      "events_by_product": {
+        "freshdesk": [
+          "onAppUninstall",
+          "onCompanyCreate",
+          "onCompanyDelete",
+          "onCompanyUpdate",
+          "onContactCreate",
+          "onContactUpdate"
+        ]
+      },
+      "requests_by_product": {
+        "freshdesk": []
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": true,
+    "has_iparams_html": false,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": "## Freshdesk Backend app for all pods in IPaaS Backend app which listens to freshdesk's product events. ### Project folder structure explained . ├── README.md This file. ├── config │ ├── iparams.json Installation parameter config. │ └── iparam_test_data.json Installation parameter data for local testing. └── manifest.json Project manifest and add the dependecies here. └── server Business logic for remote request and event handlers. ├── lib │ └── freshpipe-config.js IPaaS Lambda configurations │ └── log-lib.js Log configuration ├── server.js Has Event configurations and respective callbacks. Also ipaas lambda invocation."
+    }
+  },
+  {
+    "app_id": "20880",
+    "zip_file": "app_20880_v711906.zip",
+    "error": null,
+    "platform_version": "2.3",
+    "engines": {
+      "node": "18.20.8",
+      "fdk": "9.8.2"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshsales",
+        "freshworks_crm"
+      ],
+      "locations_by_product": {
+        "freshsales": [],
+        "freshworks_crm": []
+      },
+      "events_by_product": {
+        "freshsales": [
+          "onAppUninstall",
+          "onContactCreate",
+          "onContactDelete",
+          "onContactUpdate",
+          "onLeadCreate",
+          "onLeadDelete",
+          "onLeadUpdate",
+          "onSalesAccountCreate",
+          "onSalesAccountDelete",
+          "onSalesAccountUpdate"
+        ],
+        "freshworks_crm": [
+          "onAppUninstall",
+          "onContactCreate",
+          "onContactDelete",
+          "onContactUpdate",
+          "onSalesAccountCreate",
+          "onSalesAccountDelete",
+          "onSalesAccountUpdate"
+        ]
+      },
+      "requests_by_product": {
+        "freshsales": [],
+        "freshworks_crm": []
+      },
+      "functions_by_product": {
+        "freshsales": [],
+        "freshworks_crm": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": true,
+    "has_iparams_html": false,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": "## Freshsales Backend app for all pods in IPaaS Backend app which listens to freshsales's product events. ### Project folder structure explained . ├── README.md This file. ├── config │ ├── iparams.json Installation parameter config. │ └── iparam_test_data.json Installation parameter data for local testing. └── manifest.json Project manifest and add the dependecies here. └── server Business logic for remote request and event handlers. ├── lib │ └── freshpipe-config.js IPaaS Lambda configurations │ └── log-lib.js Log configuration ├── server.js Has Event configurations and respective callbacks. Also ipaas lambda invocation."
+    }
+  },
+  {
+    "app_id": "23344",
+    "zip_file": "app_23344_v64344.zip",
+    "error": null,
+    "platform_version": "2.0",
+    "engines": null,
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": []
+      },
+      "events_by_product": {
+        "freshdesk": []
+      },
+      "requests_by_product": {
+        "freshdesk": []
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": true,
+    "has_iparams_html": false,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  }
+]

@@ -1,0 +1,1352 @@
+"Sl. No","App ID","Zip File","App Name","Product","App Features","Expected Folders","Prompt","Functional Requirements","Success Criteria","Expected Platform Features","Complexity","Reference Links","Picked By"
+"1","493","app_493_v711945.zip","Hubspot Frontend app with all pod support","freshsales / freshworks_crm","## Hubspot Frontend app with all pod support Based on the region value from app args,this app will route the request to pod based IPaaS Url ### Folder structure explained . ├── README.md This file ├── server │ ├── server.js JS to encrypt the installation data that has to be passed to IPaaS. Also to determine the podBased URL ├── config │ ├── iparams.html Contains the parameters that will be collected during installation or initialization.Also the rendering logic of IPaaS's UI in the marketplace…
+
+Goals
+- Deliver the packaged workflow reliably in freshsales / freshworks_crm.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for freshsales / freshworks_crm (Hubspot Frontend app with all pod support). Package reference: app_493_v711945.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- When events onAppUninstall fire (product freshsales), run the declared server handlers (Must)
+- When events onAppUninstall fire (product freshworks_crm), run the declared server handlers (Must)
+- Expose SMI functions generateEncryptedParams, getAppUrl where declared (product freshsales) (Must)
+- Expose SMI functions generateEncryptedParams, getAppUrl where declared (product freshworks_crm) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- SMI function invocations complete within platform timeouts and return structured errors on failure
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Serverless events (freshsales): onAppUninstall
+SMI functions (freshsales): generateEncryptedParams, getAppUrl
+Serverless events (freshworks_crm): onAppUninstall
+SMI functions (freshworks_crm): generateEncryptedParams, getAppUrl
+iparams (installation / configuration parameters)","Medium","",""
+"2","1033","app_1033_v711914.zip","Mailchimp Frontend app with all pod support","freshsales / freshworks_crm","## Mailchimp Frontend app with all pod support Based on the region value from app args,this app will route the request to pod based IPaaS Url ### Folder structure explained . ├── README.md This file ├── server │ ├── server.js JS to encrypt the installation data that has to be passed to IPaaS. Also to determine the podBased URL ├── config │ ├── iparams.html Contains the parameters that will be collected during installation or initialization.Also the rendering logic of IPaaS's UI in the marketplac…
+
+Goals
+- Deliver the packaged workflow reliably in freshsales / freshworks_crm.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for freshsales / freshworks_crm (Mailchimp Frontend app with all pod support). Package reference: app_1033_v711914.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- When events onAppUninstall fire (product freshsales), run the declared server handlers (Must)
+- When events onAppUninstall fire (product freshworks_crm), run the declared server handlers (Must)
+- Expose SMI functions generateEncryptedParams, getAppUrl where declared (product freshsales) (Must)
+- Expose SMI functions generateEncryptedParams, getAppUrl where declared (product freshworks_crm) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- SMI function invocations complete within platform timeouts and return structured errors on failure
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Serverless events (freshsales): onAppUninstall
+SMI functions (freshsales): generateEncryptedParams, getAppUrl
+Serverless events (freshworks_crm): onAppUninstall
+SMI functions (freshworks_crm): generateEncryptedParams, getAppUrl
+iparams (installation / configuration parameters)","Medium","",""
+"3","1844","app_1844_v618481.zip","Hubspot Latest App 2020 Dec 11","Modules: common, support_ticket","## Hubspot Latest App 2020 Dec 11 App timeline templates changed to display correct date.
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, support_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config, server","Build a Freshworks Platform app for Modules: common, support_ticket (Hubspot Latest App 2020 Dec 11). Package reference: app_1844_v618481.zip. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_sidebar (module support_ticket) (Must)
+- When events onConversationCreate, onTicketCreate, onTicketUpdate fire (module support_ticket), run the declared server handlers (Must)
+- Handle scheduled events onScheduledEvent for module common (Must)
+- Use request templates FDAgents, FDCSAT, FDContactById, FDConversations, FDSurveys, FDTicket, HSAccount, HSContactProfileEmail, HSCreateContact, HSCreateDeal, HSDealById, HSDealForContact… for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Hubspot Latest App 2020 Dec 11
+- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (module support_ticket): ticket_sidebar
+Serverless events (module support_ticket): onConversationCreate, onTicketCreate, onTicketUpdate
+Scheduled events (module common): onScheduledEvent
+Request templates (module common): FDAgents, FDCSAT, FDContactById, FDConversations, FDSurveys, FDTicket, HSAccount, HSContactProfileEmail, HSCreateContact, HSCreateDeal, HSDealById, HSDealForContact, HSList, HSOwner, HSOwners, HSPipeLineDeals, HSTimeLine
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Medium","",""
+"4","1915","app_1915_v116852.zip","Freshdesk App Project","freshdesk","## Freshdesk App Project Congratulations on creating your App Project! Feel free to replace this text with your project description. ### Project folder structure explained . ├── README.md This file. ├── config Installation parameter configs. │ ├── iparams.json Installation parameter config in English language. │ └── iparam_test_data.json Installation parameter data for local testing. └── manifest.json Project manifest. └── server Business logic for remote request and event handlers. ├── lib │ └─…
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for freshdesk (Freshdesk App Project). Package reference: app_1915_v116852.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","iparams (installation / configuration parameters)","Low","",""
+"5","1996","app_1996_v162374.zip","App 1996","freshdesk","App 1996 extends freshdesk with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config, server","Build a Freshworks Platform app for freshdesk (App 1996). Package reference: app_1996_v162374.zip. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_background, ticket_sidebar (product freshdesk) (Must)
+- When events onConversationCreate, onTicketCreate fire (product freshdesk), run the declared server handlers (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Only call domains allowed by whitelisted-domains / request templates (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 1996
+- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Whitelisted domains (external API / product hosts)
+App locations (freshdesk): ticket_background, ticket_sidebar
+Serverless events (freshdesk): onConversationCreate, onTicketCreate
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"6","2627","app_2627_v78560.zip","App 2627","freshdesk","App 2627 extends freshdesk with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshdesk (App 2627). Package reference: app_2627_v78560.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_background, ticket_conversation_editor (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Only call domains allowed by whitelisted-domains / request templates (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 2627
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Whitelisted domains (external API / product hosts)
+App locations (freshdesk): ticket_background, ticket_conversation_editor
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"7","2634","app_2634_v7381.zip","App 2634","freshdesk","App 2634 extends freshdesk with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshdesk (App 2634). Package reference: app_2634_v7381.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_background (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Only call domains allowed by whitelisted-domains / request templates (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 2634
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Whitelisted domains (external API / product hosts)
+App locations (freshdesk): ticket_background
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"8","3105","app_3105_v627396.zip","FD-Custom-3189-AutoTimer-SDK-Backend","freshdesk","# FD-Custom-3189-AutoTimer-SDK-Backend ## Getting started To make it easy for you to get started with GitLab, here's a list of recommended next steps. Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)! ## Add your files - [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file)…
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config, server","Build a Freshworks Platform app for freshdesk (FD-Custom-3189-AutoTimer-SDK-Backend). Package reference: app_3105_v627396.zip. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_background (product freshdesk) (Must)
+- When events onAppInstall, onExternalEvent fire (product freshdesk), run the declared server handlers (Must)
+- Use request templates ticketFields, updateTimer, viewTimer for outbound calls (product freshdesk) (Must)
+- Expose SMI functions stopTimer where declared (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for FD-Custom-3189-AutoTimer-SDK-Backend
+- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- SMI function invocations complete within platform timeouts and return structured errors on failure
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (freshdesk): ticket_background
+Serverless events (freshdesk): onAppInstall, onExternalEvent
+Request templates (freshdesk): ticketFields, updateTimer, viewTimer
+SMI functions (freshdesk): stopTimer
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"9","3385","app_3385_v145212.zip","App 3385","freshdesk","App 3385 extends freshdesk with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshdesk (App 3385). Package reference: app_3385_v145212.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_sidebar (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Only call domains allowed by whitelisted-domains / request templates (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 3385
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Whitelisted domains (external API / product hosts)
+App locations (freshdesk): ticket_sidebar
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Medium","",""
+"10","3832","app_3832_v566126.zip","Parent Child Synchronization","Modules: common, support_ticket","## Parent Child Synchronization Synchronize the Notes and Replies between parent and child ticket(s) and vice versa. ### Description Missing conversations when dealing with parent and child tickets? Worry not! This application synchronizes all notes and replies from a parent to child ticket and vice versa as a private note.
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, support_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for Modules: common, support_ticket (Parent Child Synchronization). Package reference: app_3832_v566126.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- When events onConversationCreate, onTicketUpdate fire (module support_ticket), run the declared server handlers (Must)
+- Use request templates getAssociatedTickets, getTicketDetails, getTickets, updateConversation, updateTicket for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Request templates (module common): getAssociatedTickets, getTicketDetails, getTickets, updateConversation, updateTicket
+Serverless events (module support_ticket): onConversationCreate, onTicketUpdate
+iparams (installation / configuration parameters)","Low","",""
+"11","4139","app_4139_v689758.zip","Auto ticket merger","Modules: common, support_ticket","# Auto ticket merger This app merges tickets that were raised by the same customer within a configured window of time into the first ticket raised by the customer during the same window. It merges these tickets by 1. Adding a private note to the first ticket with the contents of the second ticket. 2. Adding a private note to the second ticket stating that its been merged with first ticket. 3. Closing the second ticket. It needs the following installation parameters. 1. Freshdesk API Key - needed…
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, support_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for Modules: common, support_ticket (Auto ticket merger). Package reference: app_4139_v689758.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- When events onTicketCreate, onTicketUpdate fire (module support_ticket), run the declared server handlers (Must)
+- Use request templates getTicket, mergeTickets for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Request templates (module common): getTicket, mergeTickets
+Serverless events (module support_ticket): onTicketCreate, onTicketUpdate
+iparams (installation / configuration parameters)","Low","",""
+"12","4239","app_4239_v3992.zip","App 4239","freshdesk","App 4239 extends freshdesk with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshdesk (App 4239). Package reference: app_4239_v3992.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_conversation_editor (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 4239
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (freshdesk): ticket_conversation_editor
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"13","5416","app_5416_v20763.zip","App 5416","freshdesk","App 5416 extends freshdesk with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshdesk (App 5416). Package reference: app_5416_v20763.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations new_ticket_background, ticket_background (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Only call domains allowed by whitelisted-domains / request templates (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 5416
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Whitelisted domains (external API / product hosts)
+App locations (freshdesk): new_ticket_background, ticket_background
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"14","7016","app_7016_v220066.zip","App 7016","freshservice","App 7016 extends freshservice with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in freshservice.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshservice (App 7016). Package reference: app_7016_v220066.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_background (product freshservice) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 7016
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (freshservice): ticket_background
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"15","7656","app_7656_v711097.zip","App 7656","Modules: common, support_ticket","App 7656 extends Modules: common, support_ticket with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, support_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config, server","Build a Freshworks Platform app for Modules: common, support_ticket (App 7656). Package reference: app_7656_v711097.zip. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_sidebar (module support_ticket) (Must)
+- When events onAppInstall, onAppUninstall, onExternalEvent fire (module common), run the declared server handlers (Must)
+- When events onConversationCreate, onTicketUpdate fire (module support_ticket), run the declared server handlers (Must)
+- Use request templates addAttachment, addComment, addNote, agentDetails, allProjectsIssueTypes, assignableUsers, autoComplete, bulkUserDetails, commentProperties, contactDetails, contactsDetails, createConfigWebhook… for outbound calls (module common) (Must)
+- Expose SMI functions CreateJiraIssue, CreateJiraWebhook, DeleteJiraIssue, GetAllProjectsIssueTypesFields, GetAssignableUsers, JiraAddAttachmentOnIssueLink, RemoveWebhookURL, SearchJiraIssue, UpdateFDTicket, UpdateWebhookEvents, ValidateAndFixWebhooks, getEpicLinks, getGroupValues, getSprintDetails, makeAutoCompleteApi, syncMappedFieldsToCreateIssue, updateJiraFieldsOnSync where declared (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 7656
+- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- SMI function invocations complete within platform timeouts and return structured errors on failure
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Serverless events (module common): onAppInstall, onAppUninstall, onExternalEvent
+Request templates (module common): addAttachment, addComment, addNote, agentDetails, allProjectsIssueTypes, assignableUsers, autoComplete, bulkUserDetails, commentProperties, contactDetails, contactsDetails, createConfigWebhook, createContact, createIssue, createWebhook, createWebhookLegacy, customTicketFieldsDetails, deleteIssue, deletedContacts, domainExists, fieldsDetailsWithDefaultStatus, getAgent, getAllJiraStatus, getContact, getFreshdeskRoles, getIssue, getJiraIssueCf, getJiraIssueTypes, getJiraPriority, getJiraProject, getJiraProjectById, getJiraProjectFields, getJiraProjectFieldsById, getJiraStatusTypes, getTicketDetails, getTicketFields, groupValues, issueTransitions, jiraPriority, jiraProjects, jiraSearch, jiraSearchNew, makeTransitions, projectFields, projectStatus, removeFDOnJira, removeWebhook, restoreContact, sendReply, serverInfo, ticketDetailsWithRequester, ticketFieldValue, ticketFieldsDetails, updateFDTicket, updateIssue, updateNote, updatePriority, updateWebhook, upmToken
+SMI functions (module common): CreateJiraIssue, CreateJiraWebhook, DeleteJiraIssue, GetAllProjectsIssueTypesFields, GetAssignableUsers, JiraAddAttachmentOnIssueLink, RemoveWebhookURL, SearchJiraIssue, UpdateFDTicket, UpdateWebhookEvents, ValidateAndFixWebhooks, getEpicLinks, getGroupValues, getSprintDetails, makeAutoCompleteApi, syncMappedFieldsToCreateIssue, updateJiraFieldsOnSync
+App locations (module support_ticket): ticket_sidebar
+Serverless events (module support_ticket): onConversationCreate, onTicketUpdate
+Crayons UI (components referenced in app assets)
+iparams (installation / configuration parameters)","Low","",""
+"16","8033","app_8033_v12045.zip","App 8033","freshdesk","App 8033 extends freshdesk with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshdesk (App 8033). Package reference: app_8033_v12045.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_background (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 8033
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (freshdesk): ticket_background
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"17","9545","app_9545_v692164.zip","Freshdesk App Project","Modules: common, support_email, support_ticket","## Freshdesk App Project Congratulations on creating your App Project! Feel free to replace this text with your project description. ### Project folder structure explained . ├── README.md This file. ├── config Installation parameter configs. │ ├── iparams.json Installation parameter config in English language. │ └── iparam_test_data.json Installation parameter data for local testing. └── manifest.json Project manifest. └── server Business logic for remote request and event handlers. ├── lib │ └─…
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, support_email, support_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for Modules: common, support_email, support_ticket (Freshdesk App Project). Package reference: app_9545_v692164.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_background (module support_ticket) (Must)
+- Render UI in locations new_email_background (module support_email) (Must)
+- Use request templates getConversations, getEmailConfigs, getEmailConfigsIparams, getTicketFields, verifyAPIKey for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Freshdesk App Project
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (module support_ticket): ticket_background
+App locations (module support_email): new_email_background
+Request templates (module common): getConversations, getEmailConfigs, getEmailConfigsIparams, getTicketFields, verifyAPIKey
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"18","9817","app_9817_v715138.zip","App 9817","Modules: common, support_email, support_ticket","App 9817 extends Modules: common, support_email, support_ticket with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, support_email, support_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for Modules: common, support_email, support_ticket (App 9817). Package reference: app_9817_v715138.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations new_ticket_background, ticket_background (module support_ticket) (Must)
+- Render UI in locations new_email_background (module support_email) (Must)
+- Use request templates getAdminTicketFields, getTicketFields, getTicketFieldsInApp for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 9817
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (module support_ticket): new_ticket_background, ticket_background
+App locations (module support_email): new_email_background
+Request templates (module common): getAdminTicketFields, getTicketFields, getTicketFieldsInApp
+Crayons UI (components referenced in app assets)
+iparams (installation / configuration parameters)","Low","",""
+"19","9822","app_9822_v686029.zip","App 9822","freshdesk","App 9822 extends freshdesk with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshdesk (App 9822). Package reference: app_9822_v686029.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations new_email_background, new_ticket_background, ticket_background (product freshdesk) (Must)
+- Use request templates getAdminTicketFields, getTicketFields, getUserRoles for outbound calls (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 9822
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (freshdesk): new_email_background, new_ticket_background, ticket_background
+Request templates (freshdesk): getAdminTicketFields, getTicketFields, getUserRoles
+Crayons UI (components referenced in app assets)
+iparams (installation / configuration parameters)","Low","",""
+"20","9955","app_9955_v673264.zip","SCIM FreshService App","Modules: common, service_user","## SCIM FreshService App ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshservice_logo.png The Freshservice logo that is displayed in the app │ ├── style.css Style sheet for the app │ ├── template.html Contains the HTML required for the app’s UI ├── config Contain…
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, service_user.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for Modules: common, service_user (SCIM FreshService App). Package reference: app_9955_v673264.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- When events onAppInstall, onAppUninstall fire (module common), run the declared server handlers (Must)
+- Use request templates activateConfig, deleteConfig for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Serverless events (module common): onAppInstall, onAppUninstall
+Request templates (module common): activateConfig, deleteConfig
+iparams (installation / configuration parameters)","Low","",""
+"21","10450","app_10450_v355094.zip","Your First App","freshdesk","## Your First App Congratulations on creating your first app! Feel free to replace this text with your app's actual description. ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshdesk_logo.png The Freshdesk logo that is displayed in the app │ ├── style.css Style sh…
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshdesk (Your First App). Package reference: app_10450_v355094.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations new_email_background, new_ticket_background, ticket_background (product freshdesk) (Must)
+- Use request templates verifyAPIkey for outbound calls (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Your First App
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (freshdesk): new_email_background, new_ticket_background, ticket_background
+Request templates (freshdesk): verifyAPIkey
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"22","12097","app_12097_v657849.zip","App 12097","Modules: common, service_ticket","App 12097 extends Modules: common, service_ticket with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, service_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for Modules: common, service_ticket (App 12097). Package reference: app_12097_v657849.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- When events onConversationCreate, onTicketUpdate fire (module service_ticket), run the declared server handlers (Must)
+- Use request templates get_related_tickets, post_note_request, update_parent_ticket_status for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Request templates (module common): get_related_tickets, post_note_request, update_parent_ticket_status
+Serverless events (module service_ticket): onConversationCreate, onTicketUpdate
+iparams (installation / configuration parameters)","Medium","",""
+"23","13203","app_13203_v107425.zip","App 13203","freshdesk","App 13203 extends freshdesk with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config, server","Build a Freshworks Platform app for freshdesk (App 13203). Package reference: app_13203_v107425.zip. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations new_email_requester_info, ticket_background, ticket_conversation_editor, ticket_sidebar (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Only call domains allowed by whitelisted-domains / request templates (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 13203
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Whitelisted domains (external API / product hosts)
+App locations (freshdesk): new_email_requester_info, ticket_background, ticket_conversation_editor, ticket_sidebar
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"24","13241","app_13241_v688594.zip","Your First App","Modules: common, service_change, service_ticket","## Your First App Congratulations on creating your first app! Feel free to replace this text with your app's actual description. ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshservice_logo.png The Freshservice logo that is displayed in the app │ ├── style.css St…
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, service_change, service_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for Modules: common, service_change, service_ticket (Your First App). Package reference: app_13241_v688594.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_background (module service_ticket) (Must)
+- Render UI in locations change_background (module service_change) (Must)
+- Use request templates changeFields, changeTimer, ticketFields, ticketTimer for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Your First App
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Request templates (module common): changeFields, changeTimer, ticketFields, ticketTimer
+App locations (module service_ticket): ticket_background
+App locations (module service_change): change_background
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Medium","",""
+"25","13306","app_13306_v692218.zip","Kabana","Modules: common, support_ticket","## Kabana Congratulations on creating your Kabana! Feel free to replace this text with your app's actual description. ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshdesk_logo.png The Freshdesk logo that is displayed in the app │ ├── style.css Style sheet for the…
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, support_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config, server","Build a Freshworks Platform app for Modules: common, support_ticket (Kabana). Package reference: app_13306_v692218.zip. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations full_page_app (module common) (Must)
+- When events onAppInstall fire (module common), run the declared server handlers (Must)
+- Use request templates getAgent, getAgents, getAgentsListForSettings, getAllTickets, getGroupList, getStatusList, getTicketCompany, getTicketDetails, getTicketFields, getTicketFieldsForSettings, getTicketRequester, updateTicket… for outbound calls (module common) (Must)
+- Expose SMI functions serverMethod where declared (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Kabana
+- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- SMI function invocations complete within platform timeouts and return structured errors on failure
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (module common): full_page_app
+Serverless events (module common): onAppInstall
+Request templates (module common): getAgent, getAgents, getAgentsListForSettings, getAllTickets, getGroupList, getStatusList, getTicketCompany, getTicketDetails, getTicketFields, getTicketFieldsForSettings, getTicketRequester, updateTicket, validateFd
+SMI functions (module common): serverMethod
+Crayons UI (components referenced in app assets)
+iparams (installation / configuration parameters)","Low","",""
+"26","14882","app_14882_v140978.zip","Teamviewer","freshchat","## Teamviewer We are updating the exsisting app as from Teamviewer side in for OAUTH authorization options field added and that is mandatory.
+
+Goals
+- Deliver the packaged workflow reliably in freshchat.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshchat (Teamviewer). Package reference: app_14882_v140978.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations conversation_user_info (product freshchat) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Only call domains allowed by whitelisted-domains / request templates (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Teamviewer
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Whitelisted domains (external API / product hosts)
+App locations (freshchat): conversation_user_info
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Medium","",""
+"27","15015","app_15015_v672737.zip","Freshservice App for HP Warranty","Modules: common, service_ticket","# Freshservice App for HP Warranty ## A serverless app for faciliating bulk warranty update (for items) for HP and Dell. ### **Features:** - Installer fetches the following details - Freshservice API Key (to fetch/update items, product details) - HP API Key and Secret (to fetch HP Warranty details) - Dell API credentials is common to all accounts and has been provided to the SI team - New fetch frequency - New fetch means fetching and updating new items' warranty details - **For the first ""New f…
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, service_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for Modules: common, service_ticket (Freshservice App for HP Warranty). Package reference: app_15015_v672737.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- When events afterAppUpdate, onAppInstall, onAppUninstall fire (module common), run the declared server handlers (Must)
+- Handle scheduled events onScheduledEvent for module common (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Serverless events (module common): afterAppUpdate, onAppInstall, onAppUninstall
+Scheduled events (module common): onScheduledEvent
+iparams (installation / configuration parameters)","Low","",""
+"28","16826","app_16826_v640043.zip","Out Of Office","freshdesk","## Out Of Office Agents can choose when they are going out of office, Admin can define what should be done when the agent is not avaialable. ### Folder structure explained . ├── README.md This file ├── server │ ├── server.js Server side code. ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshdesk_logo.png The Freshdesk l…
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config, server","Build a Freshworks Platform app for freshdesk (Out Of Office). Package reference: app_16826_v640043.zip. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations full_page_app (product freshdesk) (Must)
+- When events onConversationCreate, onTicketUpdate fire (product freshdesk), run the declared server handlers (Must)
+- Use request templates createFdTicket, getAgent, getData, getDatas, getGroupDetails, getModalAgent, getModalData, getTicketFields for outbound calls (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Out Of Office
+- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (freshdesk): full_page_app
+Serverless events (freshdesk): onConversationCreate, onTicketUpdate
+Request templates (freshdesk): createFdTicket, getAgent, getData, getDatas, getGroupDetails, getModalAgent, getModalData, getTicketFields
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"29","20740","app_20740_v120406.zip","Your First App","freshcaller","## Your First App Congratulations on creating your first app! Feel free to replace this text with your app's actual description. ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshcaller_logo.png The Freshcaller logo that is displayed in the app │ ├── style.css Styl…
+
+Goals
+- Deliver the packaged workflow reliably in freshcaller.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshcaller (Your First App). Package reference: app_20740_v120406.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations conversation_card, notification_card, widget_conversation_card, widget_notification_card (product freshcaller) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Only call domains allowed by whitelisted-domains / request templates (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Your First App
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Whitelisted domains (external API / product hosts)
+App locations (freshcaller): conversation_card, notification_card, widget_conversation_card, widget_notification_card
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"30","20878","app_20878_v711942.zip","Freshdesk Backend app for all pods in IPaaS","freshdesk","## Freshdesk Backend app for all pods in IPaaS Backend app which listens to freshdesk's product events. ### Project folder structure explained . ├── README.md This file. ├── config │ ├── iparams.json Installation parameter config. │ └── iparam_test_data.json Installation parameter data for local testing. └── manifest.json Project manifest and add the dependecies here. └── server Business logic for remote request and event handlers. ├── lib │ └── freshpipe-config.js IPaaS Lambda configurations │…
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for freshdesk (Freshdesk Backend app for all pods in IPaaS). Package reference: app_20878_v711942.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- When events onAppUninstall, onCompanyCreate, onCompanyDelete, onCompanyUpdate, onContactCreate, onContactUpdate fire (product freshdesk), run the declared server handlers (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Serverless events (freshdesk): onAppUninstall, onCompanyCreate, onCompanyDelete, onCompanyUpdate, onContactCreate, onContactUpdate
+iparams (installation / configuration parameters)","Low","",""
+"31","20880","app_20880_v711906.zip","Freshsales Backend app for all pods in IPaaS","freshsales / freshworks_crm","## Freshsales Backend app for all pods in IPaaS Backend app which listens to freshsales's product events. ### Project folder structure explained . ├── README.md This file. ├── config │ ├── iparams.json Installation parameter config. │ └── iparam_test_data.json Installation parameter data for local testing. └── manifest.json Project manifest and add the dependecies here. └── server Business logic for remote request and event handlers. ├── lib │ └── freshpipe-config.js IPaaS Lambda configurations…
+
+Goals
+- Deliver the packaged workflow reliably in freshsales / freshworks_crm.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for freshsales / freshworks_crm (Freshsales Backend app for all pods in IPaaS). Package reference: app_20880_v711906.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- When events onAppUninstall, onContactCreate, onContactDelete, onContactUpdate, onLeadCreate, onLeadDelete, onLeadUpdate, onSalesAccountCreate, onSalesAccountDelete, onSalesAccountUpdate fire (product freshsales), run the declared server handlers (Must)
+- When events onAppUninstall, onContactCreate, onContactDelete, onContactUpdate, onSalesAccountCreate, onSalesAccountDelete, onSalesAccountUpdate fire (product freshworks_crm), run the declared server handlers (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Serverless events (freshsales): onAppUninstall, onContactCreate, onContactDelete, onContactUpdate, onLeadCreate, onLeadDelete, onLeadUpdate, onSalesAccountCreate, onSalesAccountDelete, onSalesAccountUpdate
+Serverless events (freshworks_crm): onAppUninstall, onContactCreate, onContactDelete, onContactUpdate, onSalesAccountCreate, onSalesAccountDelete, onSalesAccountUpdate
+iparams (installation / configuration parameters)","Medium","",""
+"32","23344","app_23344_v64344.zip","App 23344","freshdesk","App 23344 extends freshdesk with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for freshdesk (App 23344). Package reference: app_23344_v64344.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","iparams (installation / configuration parameters)","Low","",""
+"33","23516","app_23516_v291542.zip","Your First App","freshchat","## Your First App Congratulations on creating your first app! Feel free to replace this text with your app's actual description. ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshchat_logo.png The Freshchat logo that is displayed in the app │ ├── style.css Style sh…
+
+Goals
+- Deliver the packaged workflow reliably in freshchat.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshchat (Your First App). Package reference: app_23516_v291542.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations conversation_user_info (product freshchat) (Must)
+- Use request templates requestTemplateAU, requestTemplateEU, requestTemplateIN, requestTemplateUS for outbound calls (product freshchat) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Your First App
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (freshchat): conversation_user_info
+Request templates (freshchat): requestTemplateAU, requestTemplateEU, requestTemplateIN, requestTemplateUS
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"34","25380","app_25380_v695792.zip","Freshdesk App Project","Modules: common, support_email, support_ticket","## Freshdesk App Project Congratulations on creating your App Project! Feel free to replace this text with your project description. ### Project folder structure explained . ├── README.md This file. ├── config Installation parameter configs. │ ├── iparams.json Installation parameter config in English language. │ └── iparam_test_data.json Installation parameter data for local testing. └── manifest.json Project manifest. └── server Business logic for remote request and event handlers. ├── lib │ └─…
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, support_email, support_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for Modules: common, support_email, support_ticket (Freshdesk App Project). Package reference: app_25380_v695792.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations new_ticket_background, ticket_background (module support_ticket) (Must)
+- Render UI in locations new_email_background (module support_email) (Must)
+- Use request templates getAdminTicketFields, getTicketFields, getUserRoles for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Freshdesk App Project
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (module support_ticket): new_ticket_background, ticket_background
+App locations (module support_email): new_email_background
+Request templates (module common): getAdminTicketFields, getTicketFields, getUserRoles
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"35","27401","app_27401_v690250.zip","App 27401","Modules: common, support_ticket","App 27401 extends Modules: common, support_ticket with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, support_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for Modules: common, support_ticket (App 27401). Package reference: app_27401_v690250.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- When events onConversationCreate, onTicketCreate fire (module support_ticket), run the declared server handlers (Must)
+- Use request templates createNotes, getTicketDetailsById, getTicketFields, searchTickets, searchTicketsByRequester, updateTicket for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Request templates (module common): createNotes, getTicketDetailsById, getTicketFields, searchTickets, searchTicketsByRequester, updateTicket
+Serverless events (module support_ticket): onConversationCreate, onTicketCreate
+iparams (installation / configuration parameters)","Low","",""
+"36","30493","app_30493_v248732.zip","App 30493","Freshworks Platform","App 30493 extends Freshworks Platform with behaviors declared in manifest (see Expected Platform Features).
+
+Goals
+- Deliver the packaged workflow reliably in Freshworks Platform.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config, server, src","Build a Freshworks Platform app for Freshworks Platform (App 30493). Package reference: app_30493_v248732.zip. Match folder layout: app, config, server, src. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations conversation_message_editor (product freshchat) (Must)
+- When events onAppInstall, onAppUninstall fire (product freshchat), run the declared server handlers (Must)
+- Expose SMI functions sendTranscript where declared (product freshchat) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Only call domains allowed by whitelisted-domains / request templates (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for App 30493
+- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- SMI function invocations complete within platform timeouts and return structured errors on failure
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Whitelisted domains (external API / product hosts)
+App locations (freshchat): conversation_message_editor
+Serverless events (freshchat): onAppInstall, onAppUninstall
+SMI functions (freshchat): sendTranscript
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"37","34538","app_34538_v666193.zip","Freshdesk App Project","Modules: common, service_ticket","## Freshdesk App Project Congratulations on creating your App Project! Feel free to replace this text with your project description. ### Project folder structure explained . ├── README.md This file. ├── config Installation parameter configs. │ ├── iparams.json Installation parameter config in English language. │ └── iparam_test_data.json Installation parameter data for local testing. └── manifest.json Project manifest. └── server Business logic for remote request and event handlers. ├── lib │ └─…
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, service_ticket.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for Modules: common, service_ticket (Freshdesk App Project). Package reference: app_34538_v666193.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_background (module service_ticket) (Must)
+- Use request templates getTicketFields, verifyAPIKey for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Freshdesk App Project
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Request templates (module common): getTicketFields, verifyAPIKey
+App locations (module service_ticket): ticket_background
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Medium","",""
+"38","35073","app_35073_v432403.zip","Clone Ticket","freshdesk","# Clone Ticket FreshDesk marketplace app to clone a ticket https://www.freshworks.com/apps/freshdesk/clone_ticket_1 ## Setup 1. Install nvm: `brew install nvm`. Verify installation: `nvm --version` 2. Install node: `nvm install 18.16.0`. Verify installation: `node --version` 3. Install xcode: `xcode-select --install`. Verify installation: `xcode-select -p` 4. Install fdk: `npm install https://cdn.freshdev.io/fdk/latest.tgz -g`. Verify installation: `fdk version` 5. Install packages: `npm install…
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config, server","Build a Freshworks Platform app for freshdesk (Clone Ticket). Package reference: app_35073_v432403.zip. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_sidebar (product freshdesk) (Must)
+- Use request templates addNote, createTicket, getTicket for outbound calls (product freshdesk) (Must)
+- Expose SMI functions addAttachments, addLog where declared (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Clone Ticket
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- SMI function invocations complete within platform timeouts and return structured errors on failure
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (freshdesk): ticket_sidebar
+Request templates (freshdesk): addNote, createTicket, getTicket
+SMI functions (freshdesk): addAttachments, addLog
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"39","44069","app_44069_v677869.zip","SCIM FreshService App","Modules: common, service_user","## SCIM FreshService App ### Folder structure explained . ├── README.md This file ├── app Contains the files that are required for the front end component of the app │ ├── app.js JS to render the dynamic portions of the app │ ├── icon.svg Sidebar icon SVG file. Should have a resolution of 64x64px. │ ├── freshservice_logo.png The Freshservice logo that is displayed in the app │ ├── style.css Style sheet for the app │ ├── template.html Contains the HTML required for the app’s UI ├── config Contain…
+
+Goals
+- Deliver the packaged workflow reliably in Modules: common, service_user.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","config, server","Build a Freshworks Platform app for Modules: common, service_user (SCIM FreshService App). Package reference: app_44069_v677869.zip. Match folder layout: config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- When events onAppInstall, onAppUninstall fire (module common), run the declared server handlers (Must)
+- Use request templates activateConfig, deleteConfig for outbound calls (module common) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Serverless events (module common): onAppInstall, onAppUninstall
+Request templates (module common): activateConfig, deleteConfig
+iparams (installation / configuration parameters)","Low","",""
+"40","45061","app_45061_v160650.zip","Bulk Ticket Manager Light","freshdesk","# Bulk Ticket Manager Light ## Description * Full page front-end Freshdesk app for bulk [updating](https://developer.freshdesk.com/api/#bulk_update_tickets) or [deleting](https://developer.freshdesk.com/api/#delete_a_ticket) existing tickets using the Freshdesk Bulk API methods. * The tickets ids are provided with a XLS(X)/CSV file that should contain ticket ids only in 1 single column. Sample is available in the app. * The Freshdesk ticket fields and their values are configured in the UI. ## In…
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config, src","Build a Freshworks Platform app for freshdesk (Bulk Ticket Manager Light). Package reference: app_45061_v160650.zip. Match folder layout: app, config, src. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations full_page_app (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Only call domains allowed by whitelisted-domains / request templates (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Bulk Ticket Manager Light
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Whitelisted domains (external API / product hosts)
+App locations (freshdesk): full_page_app
+iparams (installation / configuration parameters)","Low","",""
+"41","51392","app_51392_v152672.zip","Schedule Reply App","freshdesk","## Schedule Reply App This app enables agents to schedule the replies to send at a later time,to better manage your workflow, and your customers’ expectations.
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config, server","Build a Freshworks Platform app for freshdesk (Schedule Reply App). Package reference: app_51392_v152672.zip. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations ticket_conversation_editor (product freshdesk) (Must)
+- Handle scheduled events onScheduledEvent for product freshdesk (Must)
+- Expose SMI functions createSchedule, deleteSchedule, fetchSchedule, updateSchedule where declared (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Only call domains allowed by whitelisted-domains / request templates (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Schedule Reply App
+- Configured serverless / scheduled handlers run when triggers fire without unhandled exceptions
+- SMI function invocations complete within platform timeouts and return structured errors on failure
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","Whitelisted domains (external API / product hosts)
+App locations (freshdesk): ticket_conversation_editor
+Scheduled events (freshdesk): onScheduledEvent
+SMI functions (freshdesk): createSchedule, deleteSchedule, fetchSchedule, updateSchedule
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"42","202397","app_202397_v672423.zip","Your First App","freshdesk","## Your First App This app displays the name of the requester of a freshdesk ticket in the ticket_sidebar placeholder ### Files and Folders . ├── README.md A file for your future self and developer friends to learn about app ├── app A folder to place all assets required for frontend components │ ├── index.html A landing page for the user to use the app │ ├── scripts JavaScript to place files frontend components business logic │ │ └── app.js │ └── styles A folder to place all the styles for app │…
+
+Goals
+- Deliver the packaged workflow reliably in freshdesk.
+- Keep configuration and side effects observable and safe.
+- Meet the functional requirements without blocking validation issues.
+
+User Stories
+- As an admin, I want to install and configure the app with clear parameters.
+- As an agent, I want the app to behave correctly in its declared UI or event surfaces.
+- As an operator, I want failures to surface in logs or UI without silent drops.","app, config","Build a Freshworks Platform app for freshdesk (Your First App). Package reference: app_202397_v672423.zip. Match folder layout: app, config. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Render UI in locations new_email_background, ticket_background, ticket_conversation_editor (product freshdesk) (Must)
+- Use request templates getEmailConfigs, getGroups, getProducts, getTicketFields for outbound calls (product freshdesk) (Must)
+- Collect and validate installation parameters via iparams (Must)
+- Log serverless and request failures with enough context to debug (Should)","- Declared app surfaces load in-product without console errors for Your First App
+- Request templates return expected HTTP outcomes; API/auth errors are surfaced clearly
+- Installation parameters save correctly and are used on subsequent runs
+- App passes fdk validate for the declared platform-version
+- Invalid configuration or upstream failures do not leave the app in a silent broken state","App locations (freshdesk): new_email_background, ticket_background, ticket_conversation_editor
+Request templates (freshdesk): getEmailConfigs, getGroups, getProducts, getTicketFields
+Crayons UI (components referenced in app assets)
+Data methods (client.data / interface usage in frontend)
+iparams (installation / configuration parameters)","Low","",""
+"43","WSHOP-01","","Discord Ticket Notifier","Freshdesk
+Freshservice","Sends ticket create/update events to a Discord channel; configurable webhook per install; optional filters (e.g. high-priority)
+
+Goals
+ - Improve ticket visibility for support and ops teams via Discord.
+ - Enable real-time ticket updates without leaving Discord.
+
+User Stories
+- As a team lead, I want new tickets posted in Discord so the team can triage quickly.
+ - As an agent, I want escalated tickets in Discord so I can react in time.
+ - As an admin, I want to configure which events and channels receive notifications.","config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named Discord Ticket Notifier. Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- On ticket create, send a Discord webhook with subject, requester, priority, status (Must)
+- On ticket update, send a webhook when status or priority changes (Must)
+- Configure Discord webhook URL in iparams during install (Must)
+- Optionally filter by priority (e.g. only high/urgent) (Should)
+- Include ticket ID and link to ticket in Freshdesk/FS (Must)
+- Embed format: subject, requester email, priority, status, created date(Must)
+- Handle webhook failures (log, optional retry) (Should)","- All configured ticket create events result in Discord message
+- Webhook delivers within 30 seconds of event
+- Configurable webhook URL saved and used correctly
+- App passes fdk validate
+- App installs and runs without runtime errors","Serverless events
+Request templates
+iparams (webhook URL)
+App Setup event - onAppInstall","Low","Webhook Resource
+Intro to Discord Apps",""
+"44","WSHOP-02","","Telegram Ticket Alerts","Freshdesk
+Freshservice","Sends high-priority or all ticket alerts to a Telegram group/channel; optional daily digest; bot replies
+
+Goals
+- Enable mobile-first ticket alerts via Telegram.
+- Support both instant alerts and optional daily digest.
+
+User Stories
+- As an on-call agent, I want ticket alerts on my phone via Telegram.
+- As a team, we want a daily digest of new tickets.
+- As an admin, I want to configure priority/type filters.","config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named Telegram Ticket Alerts. Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- Send Telegram message for new tickets using Bot API (Must)
+- Store bot token and chat ID in iparams (Must)
+- Message includes subject, requester, priority, link to ticket (Must)
+- Optional filter by priority (high/urgent only)
+- Optional daily digest of new tickets in last 24h
+- Validate bot token on install (Custom Iparam)","- Each new ticket results in Telegram message
+- Message appears in Telegram within 60 seconds
+- Invalid bot token surfaced at install time, Install fails with clear error
+- App passes fdk validate
+- Priority filter works when configured. Only high/urgent sent when filter enabled","Serverless events
+Request templates (Telegram Bot API)
+iparams (bot token, chat ID)","Low","Telegram Bot API
+Bot Tutorial
+@BotFather",""
+"45","WSHOP-03","","Google Sheets Ticket Logger","Freshdesk
+Freshservice","Logs ticket data (requester, subject, status, tags, created date) to a configurable Sheet tab; runs on create and/or update
+
+Goals
+- Create a simple ticket log in Google Sheets.
+- Support light reporting and auditing without a data warehouse.
+
+User Stories
+- As a manager, I want a Sheet of all new tickets for reporting.
+- As an auditor, I want a timestamped record of ticket changes.
+- As an admin, I want to choose the sheet and tab.","app,config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named Google Sheets Ticket Logger. Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- OAuth with Google during install (Must)
+- Store sheet ID and optional tab name in iparams         (Must)
+- Append a row on ticket create: requester, subject, status, priority, tags, created date        (Must)
+- Optional logging on ticket update (status/priority change)        
+- Columns: Ticket ID, Subject, Requester Email, Status, Priority, Tags, Created At, Link (Must)
+- Use Sheets API v4 with OAuth token
+- Handle OAuth token refresh","- Each new ticket adds a row to the configured sheet
+- All defined columns populated with correct data
+- OAuth flow completes and token is refreshed when needed
+- App passes fdk validate
+- Configurable sheet/tab used correctly","OAuth (Google)
+Serverless events
+Request templates (Sheets API)
+iparams (sheet ID, tab name)","Medium","Sheets API v4
+Sheets API Guides
+Google OAuth","Dhanjeet"
+"46","WSHOP-04","","Universal Webhook Connector","Freshdesk
+Freshservice","Sends ticket/contact events to any webhook URL (Zapier, Make, n8n, custom); event type and payload filters
+
+Goals
+- Integrate with automation tools using webhooks.
+- Work with any service that accepts HTTP webhooks.
+
+User Stories
+- As a user, I want ticket events sent to my Zapier/Make/n8n workflows.
+- As an admin, I want to choose which events trigger the webhook.
+- As a developer, I want a JSON payload I can parse.","config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named Universal Webhook Connector. Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- Store webhook URL in iparams
+- Support events: onTicketCreate, onTicketUpdate (optionally onContactCreate)
+- Multi-select event types in iparams
+- POST JSON payload with ticket/contact fields and event type
+- Payload shape: 
+   { 
+     eventType, 
+     timestamp, 
+     ticket: { 
+         id,
+         subject,
+         status,
+         priority,
+         requester_email 
+     }
+   }
+- Retry on 5xx or network failure (e.g. 2 retries)
+- Optional custom headers (e.g. auth) in iparams","- Selected events trigger webhook POST
+- Target receives valid JSON with defined structure
+- Event type filter matches configuration
+- App passes fdk validate
+- Retry occurs on failure","Serverless events
+Request templates
+iparams (webhook URL, event types)","Low","Zapier Webhooks
+Make (Integromat) Webhooks
+n8n Webhook Node","Annamalai"
+"47","WSHOP-05","","GitHub Issue from Ticket","Freshdesk
+Freshservice","Creates a GitHub issue from a ticket; optional manual create and link
+
+Goals
+- Link support tickets to GitHub issues.
+- Reduce manual copy-paste and context loss.
+
+User Stories
+- As an agent, I want to create a GitHub issue from a ticket with one click.
+- As an engineer, I want ticket details and link in the issue.
+- As an admin, I want to choose repo and labels.","app,config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named GitHub Issue from Ticket. Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- OAuth with GitHub during install
+- Ticket sidebar UI with “Create GitHub Issue” button
+- On click: create issue with title = ticket subject, body = description + requester + link
+- iparams: default repo (org/repo), optional labels
+- Show created issue URL and number in sidebar
+- Store issue ID in ticket notes or custom field (optional)
+- Loading state and error messaging in UI
+- Use Crayons components","- Issue is created with correct title and body
+- Ticket link present in issue body
+- UI shows success with issue URL
+- OAuth flow works and token is used for API calls
+- App passes fdk validate
+- Error states shown clearly","OAuth (GitHub)
+hybrid app
+SMI
+Request templates
+Data Methods
+Crayons UI","Medium","GitHub REST API – Issues
+GitHub REST API Docs
+GitHub OAuth Apps",""
+"48","WSHOP-06","","Airtable Ticket Log","Freshdesk
+Freshservice","Writes ticket records to an Airtable base; configurable base/table and field mapping
+
+Goals
+- Use Airtable as a ticket log and dashboard source.
+- Keep setup simple with API key.
+
+User Stories
+- As a manager, I want tickets in Airtable for views and filters.
+- As an admin, I want to specify base and table.
+- As a user, I want no OAuth, just API key.","config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named Airtable Ticket Log. Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- iparams: API key, base ID, table ID (or name)
+- On ticket create, create Airtable record with ticket fields
+- Map: 
+       Ticket ID → ID field, 
+       Subject → Subject, 
+       Requester → Email, 
+       Status, 
+       Priority, 
+       Created At
+- Optional mapping config for custom field names
+- Validate API key and base/table access on install
+- Honor Airtable rate limits
+- Optional logging on ticket close","- Each new ticket creates an Airtable record
+- Field mapping is correct
+- Install fails if API key or base/table invalid
+- App passes fdk validate
+- Rate limits handled without crashes","iparams (API key, base ID, table ID)
+Serverless events
+Request templates","Medium","Airtable API
+Web API Intro
+Airtable Developers",""
+"49","WSHOP-07","","Supabase Ticket Archive","Freshdesk
+Freshservice","Stores ticket snapshots in Supabase; optional views/reports
+
+Goals
+- Persist ticket data in a free DB (Supabase).
+- Support SQL-based reporting.
+
+User Stories
+- As a data analyst, I want tickets in Supabase for SQL reporting.
+- As an admin, I want minimal config (URL + key).
+- As a developer, I want a predictable schema.","config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named Supabase Ticket Archive. Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- iparams: Supabase project URL, anon/service key, table name
+- On ticket create, INSERT row with ticket snapshot
+- Schema: 
+     id, 
+     ticket_id, 
+     subject,
+     requester_email, 
+     status, 
+     priority,
+     tags, 
+     created_at, 
+     raw_json (optional)
+- Create table via migration or doc if not exists
+- Use Supabase REST API with API key","- Each new ticket inserts a row in Supabase
+- Row contains required fields
+- App passes fdk validate
+- Invalid credentials produce a clear error
+- No sensitive data leaked in logs","iparams (project URL, table name)
+Serverless events
+Request templates","Medium","Supabase REST API
+Auto-generated docs
+Supabase API reference","Megha Sanwaliya
+Dipankar Achinta"
+"50","WSHOP-08","","Email Alert Notifier (Resend)","Freshdesk
+Freshservice","Sends email alerts on new or escalated tickets; configurable recipients and subject
+
+Goals
+- Alert teams via email without depending on Freshworks email routing.
+- Use a free/low-cost provider (Resend).
+
+User Stories
+- As a manager, I want email alerts for new high-priority tickets.
+- As an admin, I want to set recipient list and filters.
+- As a user, I want clear subject and ticket link.","config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named Email Alert Notifier (Resend). Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- iparams: Resend API key, comma-separated recipient emails
+- On ticket create (or update to escalated), send email
+- Optional priority filter (e.g. high/urgent only)
+- Subject: “[Alert] Ticket #{id}: {subject}”        
+- Body: ticket details + link to ticket
+- Use Resend API for sending
+- Handle send failures and log","- Eligible tickets result in email to configured recipients
+- Email delivered within 2 minutes
+- Priority filter behaves as configured
+- App passes fdk validate
+- Invalid API key produces clear error","iparams (API key, recipient emails)
+Serverless events
+Request templates","Low","Resend API
+Send Email
+Resend Docs","Sandeep Bollu"
+"51","WSHOP-09","","Trello Card from Ticket","Freshdesk
+Freshservice","Creates a Trello card from a ticket; board/list selection; manual or auto on create/escalate
+
+Goals
+- Turn tickets into Trello cards for team workflows.
+- Support manual and automatic creation.
+
+User Stories
+- As an agent, I want to create a Trello card from a ticket.
+- As a manager, I want cards auto-created for escalated tickets.
+- As an admin, I want to choose board and list.","app,config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named Trello Card from Ticket. Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- OAuth with Trello or API key
+- iparams: board ID, list ID (or name)
+- Manual: ticket sidebar button “Create Card”
+- Auto: on ticket create or escalate, create card
+- Card title = ticket subject; description = ticket body + link
+- Show card URL in app after create
+- Use Trello REST API
+- Crayons UI for hybrid flow","- Card is created with correct title and description
+- Ticket link included in card description
+- Card appears in configured list
+- OAuth or API key flow works
+- App passes fdk validate","OAuth (Trello) or API key, 
+SMI
+Request templates
+iparams (board/list IDs)","Medium","Trello REST API  
+Trello API Reference
+Trello Authorization
+Trello Power-Ups","Rahul Ganesh Partheeban"
+"52","WSHOP-10","","Notion Ticket Logger","Freshdesk
+Freshservice","Adds rows to a Notion database for each new/closed ticket; configurable database and properties
+
+Goals
+- Build a ticket log inside Notion.
+- Use Notion as a light CRM/reporting layer.
+
+User Stories
+- As a team, we want a Notion DB of all tickets.
+- As an admin, I want to pick the database.
+- As a user, I want search and filters in Notion.","config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named Notion Ticket Logger. Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- iparams: Notion integration token, database ID
+- On ticket create, create Notion page in database
+- Map: 
+     Ticket ID → property, 
+     Subject → Title, 
+     Requester, 
+     Status, 
+     Priority, 
+     Created At
+- Use Notion API v1 with integration token
+- Handle parent page/database structure
+- Optional: log on ticket close
+- Validate token and database on install","- Each new ticket creates a Notion page
+- Properties populated with ticket data
+- App passes fdk validate
+- Invalid token or database produces clear error
+- Integration has required database permissions","iparams (integration token, database ID)
+Serverless events
+Request templates","Medium","Notion API Overview
+Notion API Reference
+Notion Authorization","Mohamed Zafraan
+Elango Ravikumar"
+"53","WSHOP-11","","Linear Issue from Ticket","Freshdesk
+Freshservice","Creates a Linear issue from a ticket; team/project selection; manual create and optional auto-create rules
+
+Goals
+- Connect support to Linear workflows.
+- Include enough context for dev to triage.
+
+User Stories
+- As an agent, I want to create a Linear issue from a ticket.
+- As an engineer, I want ticket details and link in the issue.
+- As an admin, I want to set team and project.","app,config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named Linear Issue from Ticket. Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- OAuth with Linear or API key
+- Ticket sidebar: “Create Linear Issue” button
+- iparams: default team ID, project ID (optional)
+- Issue title = ticket subject; description = ticket body + requester + link
+- Show created issue URL and identifier in sidebar
+- Optional: priority/state mapping
+- Loading and error states
+- Crayons UI components only","- Issue created with correct title and description
+- Ticket link present in issue
+- Issue appears in correct team/project
+- OAuth or API key works
+- App passes fdk validate","OAuth (Linear) or API key
+SMI
+Request templates
+Data Methods
+Crayons","Medium","Linear Developers
+Linear API & Webhooks
+Linear GraphQL","Naveen Nagaraj"
+"54","WSHOP-12","","Markdown Ticket Export","Freshdesk
+Freshservice","Exports ticket details as Markdown; copy to clipboard or send to webhook/file storage
+
+Goals
+- Allow agents to copy ticket details in Markdown.
+- Optional send to webhook for external storage.
+
+User Stories
+- As an agent, I want a Markdown export to paste into docs.
+- As a user, I want one-click copy to clipboard.
+- As an admin, I want optional webhook for storage.","app,config,server","Build a Freshworks Platform 3.0 app for Freshdesk
+Freshservice named Markdown Ticket Export. Implement per Functional Requirements and Success Criteria. Match Expected Platform Features.","- Ticket sidebar UI with export options
+- “Copy as Markdown” – format ticket as Markdown and copy to clipboard
+- Format: title, requester, status, priority, description, timestamps
+- Optional: “Send to webhook” to POST Markdown to URL
+- Use data methods to get ticket data
+- Crayons UI (button, loading)
+- Show success toast on copy with notify method","- Markdown output matches expected structure
+- Copy to clipboard works in target browser
+- Webhook receives Markdown when configured
+- App passes fdk validate
+- All key ticket fields present","Hybrid app, client.data.get(""ticket""), Crayons UI, optional request template for storage webhook","Low","Markdown Guide
+Clipboard API (MDN)","Jayamohan Kanniappan"
+"55","PRD-01","","Freshdesk → Slack thread + Google Calendar event (OAuth)","Freshdesk","On ticket creation, create a Slack message (thread anchor) and a Google Calendar event, with OAuth to Slack and Google, secure tokens, and idempotent execution.
+
+Goals
+- Automate ticket-to-collaboration handoff.
+- Give agents links to Slack and Calendar from the ticket context.
+- Prevent duplicate Slack posts or duplicate calendar events.
+
+User Stories
+- As an admin, I want OAuth for Slack and Google configured at install.
+- As an agent, I want one Slack thread and one calendar event per new ticket.
+- As an operator, I want token refresh and clear errors when APIs fail.","app, config, server","Build a Freshworks Platform app for Freshdesk (Freshdesk → Slack thread + Google Calendar event (OAuth)). Package reference: N/A. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Trigger on ticket creation (Must)
+- Create Slack message with ticket id, subject, requester, priority, ticket URL (Must)
+- Create Calendar event titled with ticket id + subject; link ticket URL + Slack in description (Must)
+- Store OAuth tokens securely; refresh when expired (Must)
+- Idempotency: duplicate ticket-create payloads do not create duplicate Slack/Calendar resources (Must)
+- Admin/settings surface shows connection health (Should)","- One ticket create produces exactly one Slack message and one Calendar event
+- Duplicate delivery of the same ticket-create event does not duplicate Slack or Calendar resources
+- Slack and Google OAuth complete independently; token failures are recoverable
+- Partial failures (e.g. Slack OK, Google fail) are logged and surfaced per policy
+- App passes fdk validate
+- No secrets committed in source","OAuth (Slack, Google Calendar)
+Serverless events (ticket create)
+Request templates (Slack Web API, Google Calendar API)
+iparams / secure storage for tokens and channel defaults","High","Slack API · Google Calendar API · Freshworks serverless",""
+"56","PRD-02","","Support Intelligence Hub (Crayons UI)","Freshdesk","Full-page dashboard for queue health and trends plus ticket sidebar for contextual insights, using Crayons and secure data access.
+
+Goals
+- In-product visibility for managers and agents.
+- Consistent, accessible UI aligned to Freshworks patterns.
+
+User Stories
+- As a manager, I want KPIs, filters, and tables on a full-page app.
+- As an agent, I want ticket summary, related tickets, and a playbook in the sidebar.
+- As a user, I want clear loading and error states.","app, config, server","Build a Freshworks Platform app for Freshdesk (Support Intelligence Hub (Crayons UI)). Package reference: N/A. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Full-page dashboard: filters, KPI cards, at least one trend view and one data table (Must)
+- Ticket sidebar: ticket summary, related tickets for requester, optional company-level tickets (Must)
+- Playbook / checklist in sidebar (Must)
+- Crayons components for primary UI; keyboard-accessible controls (Must)
+- Server-side data access for privileged operations (Must)
+- Admin configuration for defaults where required (Should)","- Dashboard loads with filters, KPIs, and table within acceptable time
+- Sidebar renders on ticket detail with summary, related tickets, and playbook
+- Loading and error states are user-visible and actionable
+- App passes fdk validate
+- No secrets in frontend bundles","App locations (full_page_app, ticket_sidebar)
+Crayons UI
+Data methods / secure server routes for Freshdesk data
+Request templates or platform APIs as needed for metrics","Medium","Crayons · Freshdesk data methods · Full-page app",""
+"57","PRD-03","","Shopify multi-shop order sidebar (Freshdesk)","Freshdesk","Ticket sidebar federates Shopify orders for the requester across multiple shops with pagination, per-shop errors, and guarded actions (refund, cancel, follow-up ticket).
+
+Goals
+- Single-pane order context for agents.
+- Safe, auditable actions with private notes.
+
+User Stories
+- As an agent, I want orders from all active shops with shop badges.
+- As a lead, I want confirmation before refund/cancel and an audit note on the ticket.
+- As an admin, I want per-shop tokens and allowed actions configurable.","app, config, server","Build a Freshworks Platform app for Freshdesk (Shopify multi-shop order sidebar (Freshdesk)). Package reference: N/A. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Sidebar loads only when requester email exists (Must)
+- Parallel queries per shop with isolated loading/error states (Must)
+- Unified timeline sorted newest first; load-more pagination (Must)
+- Refund and cancel: confirmation modal, API call, private note with actor/time/shop/outcome (Must)
+- Follow-up ticket pre-filled with order + shop context (Must)
+- Hide actions based on allowed_actions; disable while in-flight (Must)
+- Tokens only in secure storage / iparams — never client localStorage (Must)","- Valid requester shows orders from all configured shops; partial shop failures stay isolated
+- Refund/cancel completes and writes the required private note
+- Follow-up ticket creation succeeds with pre-filled context
+- No API tokens in repo or UI
+- App passes fdk validate","App locations (ticket_sidebar)
+Request templates (Shopify Admin API per shop, Freshdesk API)
+iparams (multi-shop domains, tokens, allowed actions)
+Crayons UI (modals, lists, badges)","High","Shopify Admin API · Freshdesk API",""
+"58","PRD-04","","Bulk ticket creation with rate-limit handling","Freshdesk","Sidebar action creates many tickets via Freshdesk API in batches with explicit 429 handling, backoff, and concurrency limits.
+
+Goals
+- Reliable bulk create under real API limits.
+- Observable progress and failures.
+
+User Stories
+- As an agent, I want to trigger bulk create from the ticket view.
+- As an operator, I want rate limits to backoff and resume safely.
+- As an admin, I want clear logs when batches fail.","app, config, server","Build a Freshworks Platform app for Freshdesk (Bulk ticket creation with rate-limit handling). Package reference: N/A. Match folder layout: app, config, server. Implement Functional Requirements and Success Criteria verbatim intent; materialize Expected Platform Features using manifest-safe patterns.","- Primary UI control triggers batched ticket creation (Must)
+- Respect Freshdesk rate limits: detect 429, backoff, retry with jitter (Must)
+- Cap concurrency; no unbounded parallel creates (Must)
+- Summarize successes/failures to the user; structured server logs (Must)
+- Idempotent client action where possible to avoid duplicate bulk runs (Should)","- Under simulated 429s, app retries with backoff and completes or surfaces terminal failure clearly
+- Batch progress is visible; no silent partial completion
+- App passes fdk validate
+- No API keys in frontend","App locations (ticket_sidebar)
+Request templates (Freshdesk tickets API)
+Server-side batching and retry logic
+iparams for API key / domain if required","High","Freshdesk API rate limits · Bulk operations",""

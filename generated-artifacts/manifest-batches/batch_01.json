@@ -1,0 +1,439 @@
+[
+  {
+    "app_id": "493",
+    "zip_file": "app_493_v711945.zip",
+    "error": null,
+    "platform_version": "2.3",
+    "engines": {
+      "node": "18.20.8",
+      "fdk": "9.8.2"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshsales",
+        "freshworks_crm"
+      ],
+      "locations_by_product": {
+        "freshsales": [],
+        "freshworks_crm": []
+      },
+      "events_by_product": {
+        "freshsales": [
+          "onAppUninstall"
+        ],
+        "freshworks_crm": [
+          "onAppUninstall"
+        ]
+      },
+      "requests_by_product": {
+        "freshsales": [],
+        "freshworks_crm": []
+      },
+      "functions_by_product": {
+        "freshsales": [
+          "generateEncryptedParams",
+          "getAppUrl"
+        ],
+        "freshworks_crm": [
+          "generateEncryptedParams",
+          "getAppUrl"
+        ]
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": "## Hubspot Frontend app with all pod support Based on the region value from app args,this app will route the request to pod based IPaaS Url ### Folder structure explained . ├── README.md This file ├── server │ ├── server.js JS to encrypt the installation data that has to be passed to IPaaS. Also to determine the podBased URL ├── config │ ├── iparams.html Contains the parameters that will be collected during installation or initialization.Also the rendering logic of IPaaS's UI in the marketplace iframe. │ └── iparam_test_data.json Contains sample Iparam values that will used during testing └── manifest.json Contains app meta data and configuration information"
+    }
+  },
+  {
+    "app_id": "1033",
+    "zip_file": "app_1033_v711914.zip",
+    "error": null,
+    "platform_version": "2.3",
+    "engines": {
+      "node": "18.20.8",
+      "fdk": "9.8.2"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshsales",
+        "freshworks_crm"
+      ],
+      "locations_by_product": {
+        "freshsales": [],
+        "freshworks_crm": []
+      },
+      "events_by_product": {
+        "freshsales": [
+          "onAppUninstall"
+        ],
+        "freshworks_crm": [
+          "onAppUninstall"
+        ]
+      },
+      "requests_by_product": {
+        "freshsales": [],
+        "freshworks_crm": []
+      },
+      "functions_by_product": {
+        "freshsales": [
+          "generateEncryptedParams",
+          "getAppUrl"
+        ],
+        "freshworks_crm": [
+          "generateEncryptedParams",
+          "getAppUrl"
+        ]
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": "## Mailchimp Frontend app with all pod support Based on the region value from app args,this app will route the request to pod based IPaaS Url ### Folder structure explained . ├── README.md This file ├── server │ ├── server.js JS to encrypt the installation data that has to be passed to IPaaS. Also to determine the podBased URL ├── config │ ├── iparams.html Contains the parameters that will be collected during installation or initialization.Also the rendering logic of IPaaS's UI in the marketplace iframe. │ └── iparam_test_data.json Contains sample Iparam values that will used during testing └── manifest.json Contains app meta data and configuration information"
+    }
+  },
+  {
+    "app_id": "1844",
+    "zip_file": "app_1844_v618481.zip",
+    "error": null,
+    "platform_version": "3.0",
+    "engines": {
+      "node": "18.16.0",
+      "fdk": "9.4.2"
+    },
+    "manifest_summary": {
+      "products": [],
+      "locations_by_product": {},
+      "events_by_product": {},
+      "requests_by_product": {},
+      "functions_by_product": {},
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [
+        "support_ticket",
+        "common"
+      ],
+      "locations_by_module": {
+        "support_ticket": [
+          "ticket_sidebar"
+        ],
+        "common": []
+      },
+      "events_by_module": {
+        "support_ticket": [
+          "onConversationCreate",
+          "onTicketCreate",
+          "onTicketUpdate"
+        ],
+        "common": []
+      },
+      "requests_by_module": {
+        "support_ticket": [],
+        "common": [
+          "FDAgents",
+          "FDCSAT",
+          "FDContactById",
+          "FDConversations",
+          "FDSurveys",
+          "FDTicket",
+          "HSAccount",
+          "HSContactProfileEmail",
+          "HSCreateContact",
+          "HSCreateDeal",
+          "HSDealById",
+          "HSDealForContact",
+          "HSList",
+          "HSOwner",
+          "HSOwners",
+          "HSPipeLineDeals",
+          "HSTimeLine"
+        ]
+      },
+      "functions_by_module": {
+        "support_ticket": [],
+        "common": []
+      },
+      "scheduled_events_by_module": {
+        "common": [
+          "onScheduledEvent"
+        ]
+      }
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": "## Hubspot Latest App 2020 Dec 11 App timeline templates changed to display correct date."
+    }
+  },
+  {
+    "app_id": "1915",
+    "zip_file": "app_1915_v116852.zip",
+    "error": null,
+    "platform_version": "2.0",
+    "engines": null,
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": []
+      },
+      "events_by_product": {
+        "freshdesk": []
+      },
+      "requests_by_product": {
+        "freshdesk": []
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": "## Freshdesk App Project Congratulations on creating your App Project! Feel free to replace this text with your project description. ### Project folder structure explained . ├── README.md This file. ├── config Installation parameter configs. │ ├── iparams.json Installation parameter config in English language. │ └── iparam_test_data.json Installation parameter data for local testing. └── manifest.json Project manifest. └── server Business logic for remote request and event handlers. ├── lib │ └── handle-response.js ├── server.js └── test_data ├── onAppInstall.json ├── onAppUninstall.json ├── onContactCreate.json ├── onContactUpdate.json ├── onConversationCreate.json ├── onExternalEvent.json ├── onTicketCreate.json └── onTicketUpdate.json"
+    }
+  },
+  {
+    "app_id": "1996",
+    "zip_file": "app_1996_v162374.zip",
+    "error": null,
+    "platform_version": "2.2",
+    "engines": {
+      "node": "12.22.7",
+      "fdk": "7.1.0"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "ticket_background",
+          "ticket_sidebar"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": [
+          "onConversationCreate",
+          "onTicketCreate"
+        ]
+      },
+      "requests_by_product": {
+        "freshdesk": []
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": [
+        "https://*.freshdesk.com"
+      ],
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": true,
+    "has_iparams_html": false,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "2627",
+    "zip_file": "app_2627_v78560.zip",
+    "error": null,
+    "platform_version": "2.2",
+    "engines": {
+      "node": "14.18.1",
+      "fdk": "8.6.7"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "ticket_background",
+          "ticket_conversation_editor"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": []
+      },
+      "requests_by_product": {
+        "freshdesk": []
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": [
+        "https://*.freshdesk.com"
+      ],
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "2634",
+    "zip_file": "app_2634_v7381.zip",
+    "error": null,
+    "platform_version": "2.0",
+    "engines": null,
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "ticket_background"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": []
+      },
+      "requests_by_product": {
+        "freshdesk": []
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": [
+        "https://*.freshdesk.com"
+      ],
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "3105",
+    "zip_file": "app_3105_v627396.zip",
+    "error": null,
+    "platform_version": "2.3",
+    "engines": {
+      "node": "18.13.0",
+      "fdk": "9.0.1"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "ticket_background"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": [
+          "onAppInstall",
+          "onExternalEvent"
+        ]
+      },
+      "requests_by_product": {
+        "freshdesk": [
+          "ticketFields",
+          "updateTimer",
+          "viewTimer"
+        ]
+      },
+      "functions_by_product": {
+        "freshdesk": [
+          "stopTimer"
+        ]
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": "# FD-Custom-3189-AutoTimer-SDK-Backend ## Getting started To make it easy for you to get started with GitLab, here's a list of recommended next steps. Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)! ## Add your files - [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files - [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command: ``` cd existing_repo git remote add origin https://code.spritle.com/freshdesk/fd-custom-3189-autotimer-sdk-backend.git git branch -M main git push -uf origin main ``` ## Integrate with your tools - [ ] [Set up project integrations](https://code.spritle.com/freshdesk/fd-custom-3189-autotimer-sdk-backend/-/settings/integrations) ## Collaborate with your team - [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/) - ["
+    }
+  }
+]

@@ -1,0 +1,477 @@
+[
+  {
+    "app_id": "3385",
+    "zip_file": "app_3385_v145212.zip",
+    "error": null,
+    "platform_version": "2.2",
+    "engines": {
+      "node": "12.18.3",
+      "fdk": "7.1.0"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "ticket_sidebar"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": []
+      },
+      "requests_by_product": {
+        "freshdesk": []
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": [
+        "https://webapi.teamviewer.com"
+      ],
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": true,
+    "has_iparams_html": false,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "3832",
+    "zip_file": "app_3832_v566126.zip",
+    "error": null,
+    "platform_version": "3.0",
+    "engines": {
+      "node": "18.19.0",
+      "fdk": "9.3.0"
+    },
+    "manifest_summary": {
+      "products": [],
+      "locations_by_product": {},
+      "events_by_product": {},
+      "requests_by_product": {},
+      "functions_by_product": {},
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [
+        "common",
+        "support_ticket"
+      ],
+      "locations_by_module": {
+        "common": [],
+        "support_ticket": []
+      },
+      "events_by_module": {
+        "common": [],
+        "support_ticket": [
+          "onConversationCreate",
+          "onTicketUpdate"
+        ]
+      },
+      "requests_by_module": {
+        "common": [
+          "getAssociatedTickets",
+          "getTicketDetails",
+          "getTickets",
+          "updateConversation",
+          "updateTicket"
+        ],
+        "support_ticket": []
+      },
+      "functions_by_module": {
+        "common": [],
+        "support_ticket": []
+      },
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": true,
+    "has_iparams_html": false,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": "## Parent Child Synchronization Synchronize the Notes and Replies between parent and child ticket(s) and vice versa. ### Description Missing conversations when dealing with parent and child tickets? Worry not! This application synchronizes all notes and replies from a parent to child ticket and vice versa as a private note."
+    }
+  },
+  {
+    "app_id": "4139",
+    "zip_file": "app_4139_v689758.zip",
+    "error": null,
+    "platform_version": "3.0",
+    "engines": {
+      "node": "18.16.0",
+      "fdk": "9.7.0"
+    },
+    "manifest_summary": {
+      "products": [],
+      "locations_by_product": {},
+      "events_by_product": {},
+      "requests_by_product": {},
+      "functions_by_product": {},
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [
+        "common",
+        "support_ticket"
+      ],
+      "locations_by_module": {
+        "common": [],
+        "support_ticket": []
+      },
+      "events_by_module": {
+        "common": [],
+        "support_ticket": [
+          "onTicketCreate",
+          "onTicketUpdate"
+        ]
+      },
+      "requests_by_module": {
+        "common": [
+          "getTicket",
+          "mergeTickets"
+        ],
+        "support_ticket": []
+      },
+      "functions_by_module": {
+        "common": [],
+        "support_ticket": []
+      },
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": "# Auto ticket merger This app merges tickets that were raised by the same customer within a configured window of time into the first ticket raised by the customer during the same window. It merges these tickets by 1. Adding a private note to the first ticket with the contents of the second ticket. 2. Adding a private note to the second ticket stating that its been merged with first ticket. 3. Closing the second ticket. It needs the following installation parameters. 1. Freshdesk API Key - needed to make the api calls to add notes and close tickets. 2. Time Window - The time window in minutes within which all tickets will be merged to the first ticket. 3. Include Emails - set of comma separated emails of customers whose tickets will always be merged irrespective of the Time Window configuration. 4. Exclude Emails - set of comma separated emails of customers whose tickets will never be merged irrespective of the Time Window configuration. 5. Include Domains - set of comma separated domains of customers whose tickets will always be merged irrespective of the Time Window configuration. 6. Exclude Domains - set of comma separated domains of customers whose tickets will never be merg"
+    }
+  },
+  {
+    "app_id": "4239",
+    "zip_file": "app_4239_v3992.zip",
+    "error": null,
+    "platform_version": "2.0",
+    "engines": null,
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "ticket_conversation_editor"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": []
+      },
+      "requests_by_product": {
+        "freshdesk": []
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": true,
+    "has_iparams_html": false,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "5416",
+    "zip_file": "app_5416_v20763.zip",
+    "error": null,
+    "platform_version": "2.0",
+    "engines": null,
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "new_ticket_background",
+          "ticket_background"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": []
+      },
+      "requests_by_product": {
+        "freshdesk": []
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": [
+        "https://*.freshdesk.com"
+      ],
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": false,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "7016",
+    "zip_file": "app_7016_v220066.zip",
+    "error": null,
+    "platform_version": "2.2",
+    "engines": {
+      "node": "14.21.3",
+      "fdk": "8.6.7"
+    },
+    "manifest_summary": {
+      "products": [
+        "freshservice"
+      ],
+      "locations_by_product": {
+        "freshservice": [
+          "ticket_background"
+        ]
+      },
+      "events_by_product": {
+        "freshservice": []
+      },
+      "requests_by_product": {
+        "freshservice": []
+      },
+      "functions_by_product": {
+        "freshservice": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": true,
+    "has_iparams_html": false,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "7656",
+    "zip_file": "app_7656_v711097.zip",
+    "error": null,
+    "platform_version": "3.0",
+    "engines": {
+      "node": "24.11.0",
+      "fdk": "10.0.0"
+    },
+    "manifest_summary": {
+      "products": [],
+      "locations_by_product": {},
+      "events_by_product": {},
+      "requests_by_product": {},
+      "functions_by_product": {},
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [
+        "common",
+        "support_ticket"
+      ],
+      "locations_by_module": {
+        "common": [],
+        "support_ticket": [
+          "ticket_sidebar"
+        ]
+      },
+      "events_by_module": {
+        "common": [
+          "onAppInstall",
+          "onAppUninstall",
+          "onExternalEvent"
+        ],
+        "support_ticket": [
+          "onConversationCreate",
+          "onTicketUpdate"
+        ]
+      },
+      "requests_by_module": {
+        "common": [
+          "addAttachment",
+          "addComment",
+          "addNote",
+          "agentDetails",
+          "allProjectsIssueTypes",
+          "assignableUsers",
+          "autoComplete",
+          "bulkUserDetails",
+          "commentProperties",
+          "contactDetails",
+          "contactsDetails",
+          "createConfigWebhook",
+          "createContact",
+          "createIssue",
+          "createWebhook",
+          "createWebhookLegacy",
+          "customTicketFieldsDetails",
+          "deleteIssue",
+          "deletedContacts",
+          "domainExists",
+          "fieldsDetailsWithDefaultStatus",
+          "getAgent",
+          "getAllJiraStatus",
+          "getContact",
+          "getFreshdeskRoles",
+          "getIssue",
+          "getJiraIssueCf",
+          "getJiraIssueTypes",
+          "getJiraPriority",
+          "getJiraProject",
+          "getJiraProjectById",
+          "getJiraProjectFields",
+          "getJiraProjectFieldsById",
+          "getJiraStatusTypes",
+          "getTicketDetails",
+          "getTicketFields",
+          "groupValues",
+          "issueTransitions",
+          "jiraPriority",
+          "jiraProjects",
+          "jiraSearch",
+          "jiraSearchNew",
+          "makeTransitions",
+          "projectFields",
+          "projectStatus",
+          "removeFDOnJira",
+          "removeWebhook",
+          "restoreContact",
+          "sendReply",
+          "serverInfo",
+          "ticketDetailsWithRequester",
+          "ticketFieldValue",
+          "ticketFieldsDetails",
+          "updateFDTicket",
+          "updateIssue",
+          "updateNote",
+          "updatePriority",
+          "updateWebhook",
+          "upmToken"
+        ],
+        "support_ticket": []
+      },
+      "functions_by_module": {
+        "common": [
+          "CreateJiraIssue",
+          "CreateJiraWebhook",
+          "DeleteJiraIssue",
+          "GetAllProjectsIssueTypesFields",
+          "GetAssignableUsers",
+          "JiraAddAttachmentOnIssueLink",
+          "RemoveWebhookURL",
+          "SearchJiraIssue",
+          "UpdateFDTicket",
+          "UpdateWebhookEvents",
+          "ValidateAndFixWebhooks",
+          "getEpicLinks",
+          "getGroupValues",
+          "getSprintDetails",
+          "makeAutoCompleteApi",
+          "syncMappedFieldsToCreateIssue",
+          "updateJiraFieldsOnSync"
+        ],
+        "support_ticket": []
+      },
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": false,
+    "has_iparams_html": true,
+    "has_config_requests_json": true,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": false,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  },
+  {
+    "app_id": "8033",
+    "zip_file": "app_8033_v12045.zip",
+    "error": null,
+    "platform_version": "2.0",
+    "engines": null,
+    "manifest_summary": {
+      "products": [
+        "freshdesk"
+      ],
+      "locations_by_product": {
+        "freshdesk": [
+          "ticket_background"
+        ]
+      },
+      "events_by_product": {
+        "freshdesk": []
+      },
+      "requests_by_product": {
+        "freshdesk": []
+      },
+      "functions_by_product": {
+        "freshdesk": []
+      },
+      "scheduled_events_by_product": {},
+      "whitelisted_domains": null,
+      "modules": [],
+      "locations_by_module": {},
+      "events_by_module": {},
+      "requests_by_module": {},
+      "functions_by_module": {},
+      "scheduled_events_by_module": {}
+    },
+    "has_iparams_json": true,
+    "has_iparams_html": false,
+    "has_config_requests_json": false,
+    "text_hints": {
+      "has_crayons_mention": true,
+      "has_client_data": true,
+      "has_smi": false,
+      "readme_excerpt": ""
+    }
+  }
+]

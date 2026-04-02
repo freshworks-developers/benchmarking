@@ -1,0 +1,342 @@
+Sl. No,App Name,Product,App Features,Functional Requirements,Success Criteria,Platform Features,Complexity,Reference Links,Picked By
+1,Discord Ticket Notifier,"Freshdesk
+Freshservice","Sends ticket create/update events to a Discord channel; configurable webhook per install; optional filters (e.g. high-priority)
+
+Goals
+ - Improve ticket visibility for support and ops teams via Discord.
+ - Enable real-time ticket updates without leaving Discord.
+
+User Stories
+- As a team lead, I want new tickets posted in Discord so the team can triage quickly.
+ - As an agent, I want escalated tickets in Discord so I can react in time.
+ - As an admin, I want to configure which events and channels receive notifications.","- On ticket create, send a Discord webhook with subject, requester, priority, status (Must)
+- On ticket update, send a webhook when status or priority changes (Must)
+- Configure Discord webhook URL in iparams during install (Must)
+- Optionally filter by priority (e.g. only high/urgent) (Should)
+- Include ticket ID and link to ticket in Freshdesk/FS (Must)
+- Embed format: subject, requester email, priority, status, created date(Must)
+- Handle webhook failures (log, optional retry) (Should)","- All configured ticket create events result in Discord message
+- Webhook delivers within 30 seconds of event
+- Configurable webhook URL saved and used correctly
+- App passes fdk validate
+- App installs and runs without runtime errors","Serverless events
+Request templates
+iparams (webhook URL)
+App Setup event - onAppInstall",Low,"Webhook Resource
+Intro to Discord Apps",
+2,Telegram Ticket Alerts,"Freshdesk
+Freshservice","Sends high-priority or all ticket alerts to a Telegram group/channel; optional daily digest; bot replies
+
+Goals
+- Enable mobile-first ticket alerts via Telegram.
+- Support both instant alerts and optional daily digest.
+
+User Stories
+- As an on-call agent, I want ticket alerts on my phone via Telegram.
+- As a team, we want a daily digest of new tickets.
+- As an admin, I want to configure priority/type filters.","- Send Telegram message for new tickets using Bot API (Must)
+- Store bot token and chat ID in iparams (Must)
+- Message includes subject, requester, priority, link to ticket (Must)
+- Optional filter by priority (high/urgent only)
+- Optional daily digest of new tickets in last 24h
+- Validate bot token on install (Custom Iparam)","- Each new ticket results in Telegram message
+- Message appears in Telegram within 60 seconds
+- Invalid bot token surfaced at install time, Install fails with clear error
+- App passes fdk validate
+- Priority filter works when configured. Only high/urgent sent when filter enabled","Serverless events
+Request templates (Telegram Bot API)
+iparams (bot token, chat ID)",Low,"Telegram Bot API
+Bot Tutorial
+@BotFather",
+3,Google Sheets Ticket Logger,"Freshdesk
+Freshservice","Logs ticket data (requester, subject, status, tags, created date) to a configurable Sheet tab; runs on create and/or update
+
+Goals
+- Create a simple ticket log in Google Sheets.
+- Support light reporting and auditing without a data warehouse.
+
+User Stories
+- As a manager, I want a Sheet of all new tickets for reporting.
+- As an auditor, I want a timestamped record of ticket changes.
+- As an admin, I want to choose the sheet and tab.","- OAuth with Google during install (Must)
+- Store sheet ID and optional tab name in iparams         (Must)
+- Append a row on ticket create: requester, subject, status, priority, tags, created date        (Must)
+- Optional logging on ticket update (status/priority change)        
+- Columns: Ticket ID, Subject, Requester Email, Status, Priority, Tags, Created At, Link (Must)
+- Use Sheets API v4 with OAuth token
+- Handle OAuth token refresh","- Each new ticket adds a row to the configured sheet
+- All defined columns populated with correct data
+- OAuth flow completes and token is refreshed when needed
+- App passes fdk validate
+- Configurable sheet/tab used correctly","OAuth (Google)
+Serverless events
+Request templates (Sheets API)
+iparams (sheet ID, tab name)",Medium,"Sheets API v4
+Sheets API Guides
+Google OAuth",Dhanjeet
+4,Universal Webhook Connector,"Freshdesk
+Freshservice","Sends ticket/contact events to any webhook URL (Zapier, Make, n8n, custom); event type and payload filters
+
+Goals
+- Integrate with automation tools using webhooks.
+- Work with any service that accepts HTTP webhooks.
+
+User Stories
+- As a user, I want ticket events sent to my Zapier/Make/n8n workflows.
+- As an admin, I want to choose which events trigger the webhook.
+- As a developer, I want a JSON payload I can parse.","- Store webhook URL in iparams
+- Support events: onTicketCreate, onTicketUpdate (optionally onContactCreate)
+- Multi-select event types in iparams
+- POST JSON payload with ticket/contact fields and event type
+- Payload shape: 
+   { 
+     eventType, 
+     timestamp, 
+     ticket: { 
+         id,
+         subject,
+         status,
+         priority,
+         requester_email 
+     }
+   }
+- Retry on 5xx or network failure (e.g. 2 retries)
+- Optional custom headers (e.g. auth) in iparams","- Selected events trigger webhook POST
+- Target receives valid JSON with defined structure
+- Event type filter matches configuration
+- App passes fdk validate
+- Retry occurs on failure","Serverless events
+Request templates
+iparams (webhook URL, event types)",Low,"Zapier Webhooks
+Make (Integromat) Webhooks
+n8n Webhook Node",Annamalai
+5,GitHub Issue from Ticket,"Freshdesk
+Freshservice","Creates a GitHub issue from a ticket; optional manual create and link
+
+Goals
+- Link support tickets to GitHub issues.
+- Reduce manual copy-paste and context loss.
+
+User Stories
+- As an agent, I want to create a GitHub issue from a ticket with one click.
+- As an engineer, I want ticket details and link in the issue.
+- As an admin, I want to choose repo and labels.","- OAuth with GitHub during install
+- Ticket sidebar UI with “Create GitHub Issue” button
+- On click: create issue with title = ticket subject, body = description + requester + link
+- iparams: default repo (org/repo), optional labels
+- Show created issue URL and number in sidebar
+- Store issue ID in ticket notes or custom field (optional)
+- Loading state and error messaging in UI
+- Use Crayons components","- Issue is created with correct title and body
+- Ticket link present in issue body
+- UI shows success with issue URL
+- OAuth flow works and token is used for API calls
+- App passes fdk validate
+- Error states shown clearly","OAuth (GitHub)
+hybrid app
+SMI
+Request templates
+Data Methods
+Crayons UI",Medium,"GitHub REST API – Issues
+GitHub REST API Docs
+GitHub OAuth Apps",
+6,Airtable Ticket Log,"Freshdesk
+Freshservice","Writes ticket records to an Airtable base; configurable base/table and field mapping
+
+Goals
+- Use Airtable as a ticket log and dashboard source.
+- Keep setup simple with API key.
+
+User Stories
+- As a manager, I want tickets in Airtable for views and filters.
+- As an admin, I want to specify base and table.
+- As a user, I want no OAuth, just API key.","- iparams: API key, base ID, table ID (or name)
+- On ticket create, create Airtable record with ticket fields
+- Map: 
+       Ticket ID → ID field, 
+       Subject → Subject, 
+       Requester → Email, 
+       Status, 
+       Priority, 
+       Created At
+- Optional mapping config for custom field names
+- Validate API key and base/table access on install
+- Honor Airtable rate limits
+- Optional logging on ticket close","- Each new ticket creates an Airtable record
+- Field mapping is correct
+- Install fails if API key or base/table invalid
+- App passes fdk validate
+- Rate limits handled without crashes","iparams (API key, base ID, table ID)
+Serverless events
+Request templates",Medium,"Airtable API
+Web API Intro
+Airtable Developers",
+7,Supabase Ticket Archive,"Freshdesk
+Freshservice","Stores ticket snapshots in Supabase; optional views/reports
+
+Goals
+- Persist ticket data in a free DB (Supabase).
+- Support SQL-based reporting.
+
+User Stories
+- As a data analyst, I want tickets in Supabase for SQL reporting.
+- As an admin, I want minimal config (URL + key).
+- As a developer, I want a predictable schema.","- iparams: Supabase project URL, anon/service key, table name
+- On ticket create, INSERT row with ticket snapshot
+- Schema: 
+     id, 
+     ticket_id, 
+     subject,
+     requester_email, 
+     status, 
+     priority,
+     tags, 
+     created_at, 
+     raw_json (optional)
+- Create table via migration or doc if not exists
+- Use Supabase REST API with API key
+","- Each new ticket inserts a row in Supabase
+- Row contains required fields
+- App passes fdk validate
+- Invalid credentials produce a clear error
+- No sensitive data leaked in logs","iparams (project URL, table name)
+Serverless events
+Request templates",Medium,"Supabase REST API
+Auto-generated docs
+Supabase API reference","Megha Sanwaliya
+Dipankar Achinta"
+8,Email Alert Notifier (Resend),"Freshdesk
+Freshservice","Sends email alerts on new or escalated tickets; configurable recipients and subject
+
+Goals
+- Alert teams via email without depending on Freshworks email routing.
+- Use a free/low-cost provider (Resend).
+
+User Stories
+- As a manager, I want email alerts for new high-priority tickets.
+- As an admin, I want to set recipient list and filters.
+- As a user, I want clear subject and ticket link.","- iparams: Resend API key, comma-separated recipient emails
+- On ticket create (or update to escalated), send email
+- Optional priority filter (e.g. high/urgent only)
+- Subject: “[Alert] Ticket #{id}: {subject}”        
+- Body: ticket details + link to ticket
+- Use Resend API for sending
+- Handle send failures and log        ","- Eligible tickets result in email to configured recipients
+- Email delivered within 2 minutes
+- Priority filter behaves as configured
+- App passes fdk validate
+- Invalid API key produces clear error","iparams (API key, recipient emails)
+Serverless events
+Request templates",Low,"Resend API
+Send Email
+Resend Docs",Sandeep Bollu
+9,Trello Card from Ticket,"Freshdesk
+Freshservice","Creates a Trello card from a ticket; board/list selection; manual or auto on create/escalate
+
+Goals
+- Turn tickets into Trello cards for team workflows.
+- Support manual and automatic creation.
+
+User Stories
+- As an agent, I want to create a Trello card from a ticket.
+- As a manager, I want cards auto-created for escalated tickets.
+- As an admin, I want to choose board and list.","- OAuth with Trello or API key
+- iparams: board ID, list ID (or name)
+- Manual: ticket sidebar button “Create Card”
+- Auto: on ticket create or escalate, create card
+- Card title = ticket subject; description = ticket body + link
+- Show card URL in app after create
+- Use Trello REST API
+- Crayons UI for hybrid flow","- Card is created with correct title and description
+- Ticket link included in card description
+- Card appears in configured list
+- OAuth or API key flow works
+- App passes fdk validate","OAuth (Trello) or API key, 
+SMI
+Request templates
+iparams (board/list IDs)",Medium,"Trello REST API  
+Trello API Reference
+Trello Authorization
+Trello Power-Ups",Rahul Ganesh Partheeban
+10,Notion Ticket Logger,"Freshdesk
+Freshservice","Adds rows to a Notion database for each new/closed ticket; configurable database and properties
+
+Goals
+- Build a ticket log inside Notion.
+- Use Notion as a light CRM/reporting layer.
+
+User Stories
+- As a team, we want a Notion DB of all tickets.
+- As an admin, I want to pick the database.
+- As a user, I want search and filters in Notion.","- iparams: Notion integration token, database ID
+- On ticket create, create Notion page in database
+- Map: 
+     Ticket ID → property, 
+     Subject → Title, 
+     Requester, 
+     Status, 
+     Priority, 
+     Created At
+- Use Notion API v1 with integration token
+- Handle parent page/database structure
+- Optional: log on ticket close
+- Validate token and database on install","- Each new ticket creates a Notion page
+- Properties populated with ticket data
+- App passes fdk validate
+- Invalid token or database produces clear error
+- Integration has required database permissions","iparams (integration token, database ID)
+Serverless events
+Request templates",Medium,"Notion API Overview
+Notion API Reference
+Notion Authorization","Mohamed Zafraan
+Elango Ravikumar"
+11,Linear Issue from Ticket,"Freshdesk
+Freshservice","Creates a Linear issue from a ticket; team/project selection; manual create and optional auto-create rules
+
+Goals
+- Connect support to Linear workflows.
+- Include enough context for dev to triage.
+
+User Stories
+- As an agent, I want to create a Linear issue from a ticket.
+- As an engineer, I want ticket details and link in the issue.
+- As an admin, I want to set team and project.","- OAuth with Linear or API key
+- Ticket sidebar: “Create Linear Issue” button
+- iparams: default team ID, project ID (optional)
+- Issue title = ticket subject; description = ticket body + requester + link
+- Show created issue URL and identifier in sidebar
+- Optional: priority/state mapping
+- Loading and error states
+- Crayons UI components only","- Issue created with correct title and description
+- Ticket link present in issue
+- Issue appears in correct team/project
+- OAuth or API key works
+- App passes fdk validate","OAuth (Linear) or API key
+SMI
+Request templates
+Data Methods
+Crayons",Medium,"Linear Developers
+Linear API & Webhooks
+Linear GraphQL",Naveen Nagaraj
+12,Markdown Ticket Export,"Freshdesk
+Freshservice","Exports ticket details as Markdown; copy to clipboard or send to webhook/file storage
+
+Goals
+- Allow agents to copy ticket details in Markdown.
+- Optional send to webhook for external storage.
+
+User Stories
+- As an agent, I want a Markdown export to paste into docs.
+- As a user, I want one-click copy to clipboard.
+- As an admin, I want optional webhook for storage.","- Ticket sidebar UI with export options
+- “Copy as Markdown” – format ticket as Markdown and copy to clipboard
+- Format: title, requester, status, priority, description, timestamps
+- Optional: “Send to webhook” to POST Markdown to URL
+- Use data methods to get ticket data
+- Crayons UI (button, loading)
+- Show success toast on copy with notify method","- Markdown output matches expected structure
+- Copy to clipboard works in target browser
+- Webhook receives Markdown when configured
+- App passes fdk validate
+- All key ticket fields present","Hybrid app, client.data.get(""ticket""), Crayons UI, optional request template for storage webhook",Low,"Markdown Guide
+Clipboard API (MDN)",Jayamohan Kanniappan
