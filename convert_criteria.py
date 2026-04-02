@@ -34,6 +34,11 @@ Features:
 - Data methods
 - Custom iParams
 
+Platform features:
+- OAuth
+- Request templates
+- Serverless events
+
 Expected Files:
 - manifest.json
 - server/server.js
@@ -61,6 +66,7 @@ def convert_to_json(lines):
     """Convert plain text lines to JSON criteria"""
     criteria = {
         "requirements": [],
+        "expected_platform_features": [],
         "expected_files": [],
         "description": ""
     }
@@ -84,6 +90,11 @@ def convert_to_json(lines):
         elif line_lower.startswith('expected files:') or line_lower.startswith('files:'):
             current_section = 'files'
             continue
+        elif line_lower.startswith('platform features:') or line_lower.startswith(
+            'expected platform features:'
+        ):
+            current_section = 'platform_features'
+            continue
         elif line_lower.startswith('description:'):
             current_section = 'description'
             continue
@@ -101,6 +112,10 @@ def convert_to_json(lines):
             item = line.lstrip('•-*').strip()
             if item and item not in criteria['expected_files']:
                 criteria['expected_files'].append(item)
+        elif current_section == 'platform_features':
+            item = line.lstrip('•-*').strip()
+            if item and item not in criteria['expected_platform_features']:
+                criteria['expected_platform_features'].append(item)
         elif current_section == 'description':
             description_lines.append(line)
         else:

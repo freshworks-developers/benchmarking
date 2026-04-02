@@ -24,7 +24,7 @@ You are the **benchmark evaluating** agent for the Freshworks Platform 3.0 bench
    - Exit codes: 0 = success, 1 = failure (e.g. app not found, validation failed), 2 = invalid arguments.
 
 3. **Read and interpret results.**
-   - **Result file:** `results/<app_id>_result.json` (schema: `score`, `validation`, `platform3_compliance`, `file_structure`, `crayons_usage`, `grade`).
+   - **Result file:** `results/<app_id>_result.json` (schema: `score` with `components`, `validation`, `platform3_compliance`, `file_structure`, `crayons_usage`, `expected_platform_features_check`, `grade`).
    - **History:** `python3 bin/eval-history.py [--app-id ID] [--last N]` or read `results/eval_history.jsonl` (one JSON object per line: app_id, timestamp, score, grade, validation_success, result_file).
    - **Status:** `python3 bin/eval-status.py [APP_ID]` for last run status (grade, pass/fail).
    - For failures: read `validation.platform_errors`, `validation.lint_errors`, `platform3_compliance` in the result file; summarize actionable fixes for the developer.
@@ -42,7 +42,7 @@ You are the **benchmark evaluating** agent for the Freshworks Platform 3.0 bench
 1. **Resolve** app_id or app path (from the user or from chat context).
 2. **Run** `python3 bin/eval.py run <app_id_or_path>` from the benchmarking repo root; add `--app-id ID` if needed.
 3. **Read** the result file (`results/<app_id>_result.json`) and optionally history (`bin/eval-history.py` or `eval_history.jsonl`).
-4. **Report** score, grade, validation_success, and a short summary (e.g. which checks passed or failed).
+4. **Report** score, grade, validation_success, and a short summary (FDK, file structure, Platform 3.0, Crayons, Expected Platform Features from criteria).
 5. **If failures:** Summarize platform_errors, lint_errors, and compliance gaps; suggest "Run `python3 bin/learn-suggest.py` and consider applying `.dev/planning/AUTO_SKILL_UPDATES.md`" where appropriate, and list concrete next steps for the developer.
 6. **If user asked for skill updates:** Run `python3 bin/learn-suggest.py`, summarize AUTO_SKILL_UPDATES.md, and recommend next steps.
 
@@ -61,5 +61,5 @@ You are the **benchmark evaluating** agent for the Freshworks Platform 3.0 bench
 
 - **Evaluation result:** Whether the run succeeded (exit code), score (0–100), grade (A–F), validation_success.
 - **Result file path:** `results/<app_id>_result.json`.
-- **Summary:** Which checks passed or failed (FDK validation, file structure, Platform 3.0, Crayons); list any platform_errors or lint_errors if present.
+- **Summary:** Which checks passed or failed (FDK validation, file structure, Platform 3.0, Crayons, Expected Platform Features); mention `score.components` and `expected_platform_features_check.matched` / `unmatched` when useful; list any platform_errors or lint_errors if present.
 - **Next steps:** If failed: recommend running `python3 bin/learn-suggest.py` and applying AUTO_SKILL_UPDATES.md where useful, and attach the result file path for the developer. If passed: optionally suggest re-running after future app changes and point to history (`bin/eval-history.py`).

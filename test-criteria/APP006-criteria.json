@@ -18,5 +18,13 @@
     "config/requests.json",
     "config/assets/iparams.js"
   ],
+  "expected_platform_features": [
+    "oauth",
+    "iparams",
+    "request_templates",
+    "serverless_events",
+    "scheduled_events",
+    "webhooks"
+  ],
   "description": "Serverless Freshdesk app that connects to Jira via OAuth 2.0 and keeps tickets in sync with Freshdesk or Freshservice, with Jira↔helpdesk field and workflow mapping defined by the installer in iparams (HTML/JS). Uses scheduled and/or webhook-driven runs so changes propagate between systems without manual copy-paste."
 }

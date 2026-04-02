@@ -5,6 +5,14 @@
     "Platform 3.0",
     "Crayons UI"
   ],
+  "expected_platform_features": [
+    "oauth",
+    "serverless_events",
+    "request_templates",
+    "iparams",
+    "crayons_ui",
+    "data_methods"
+  ],
   "expected_files": [
     "manifest.json",
     "server/server.js",
@@ -12,5 +20,5 @@
     "config/oauth_config.json",
     "config/requests.json"
   ],
-  "description": "Example criteria for testing setup script"
+  "description": "Example criteria for testing setup and evaluation. The expected_platform_features list uses snake_case slugs (e.g. request_templates, oauth, crayons_ui) and drives the 20-point Expected Platform Features score. Prose lines still match via legacy heuristics. Leave the list empty or omit it only if you want full credit for that bucket without a rubric."
 }

@@ -8,7 +8,7 @@ This document describes how the benchmarking project works and the main flows, w
 
 The **Benchmarking Suite** is an automated testing and validation system for **Freshworks Platform 3.0 marketplace apps**. It:
 
-- **Validates** apps with FDK and custom checks (Platform 3.0, Crayons UI, file structure).
+- **Validates** apps with FDK and custom checks (Platform 3.0, Crayons UI, file structure, Expected Platform Features from criteria).
 - **Scores** apps on a 100-point scale with letter grades (A–F).
 - **Learns** from FDK validation failures and suggests skill/rule updates to avoid repeating the same mistakes.
 
@@ -112,7 +112,7 @@ sequenceDiagram
 1. Run `automate_test.py --app <APP_ID>`.
 2. Script loads use case from `use-cases/use_cases.json`, creates app folder under benchmark dir, writes `PROMPT.txt`.
 3. You open that folder in another Cursor window, generate the app from the prompt, then come back and press ENTER.
-4. Script runs `fdk validate`, then file structure, Platform 3.0 compliance, and Crayons checks, computes score, and writes `results/<APP_ID>_result.json`.
+4. Script runs `fdk validate`, then file structure, Platform 3.0 compliance, Crayons, Expected Platform Features (criteria), computes score, and writes `results/<APP_ID>_result.json`.
 5. If FDK reported errors, the error learner records them and updates the error database.
 
 ---
@@ -141,7 +141,7 @@ flowchart LR
     end
 
     subgraph run["Run"]
-        I[FDK validate + compliance + Crayons]
+        I[FDK validate + compliance + Crayons + EPF]
         J[Score + results/APP001_result.json]
         K[Error learning if errors]
     end
@@ -181,7 +181,7 @@ flowchart TB
     G --> H[FDK validate]
     H --> I[File structure check]
     I --> J[Platform 3.0 compliance]
-    J --> K[Crayons usage]
+    J --> K[Crayons + Expected platform features]
     K --> L[Calculate score]
     L --> M[Save results/ID_result.json]
     M --> N{Errors?}
@@ -210,9 +210,10 @@ flowchart LR
 
     subgraph checks["Checks"]
         V[FDK validate\n20 pts]
-        FS[File structure\n20 pts]
+        FS[File structure\n15 pts]
         P3[Platform 3.0\n40 pts]
-        CRAYONS[Crayons usage\n20 pts]
+        CRAYONS[Crayons usage\n5 pts]
+        EPF[Expected platform features\n20 pts]
     end
 
     subgraph scoring["Scoring"]
@@ -229,10 +230,12 @@ flowchart LR
     APP_PATH --> FS
     APP_PATH --> P3
     APP_PATH --> CRAYONS
+    APP_PATH --> EPF
     V --> SUM
     FS --> SUM
     P3 --> SUM
     CRAYONS --> SUM
+    EPF --> SUM
     SUM --> PCT --> GRADE
     GRADE --> RESULT
 ```
@@ -242,9 +245,10 @@ flowchart LR
 | Check | Points | Description |
 |-------|--------|-------------|
 | **FDK validation** | 20 | `fdk validate` in app directory; pass/fail. |
-| **File structure** | 20 | Proportional to how many of the expected files exist (from use case or criteria). |
+| **File structure** | 15 | Proportional to how many of the expected files exist (from use case or criteria). |
 | **Platform 3.0** | 40 | 5 × 8 pts: platform-version 3.0, `modules` structure, no whitelisted-domains, `engines` present, correct location placement (or serverless/background-only). |
-| **Crayons usage** | 20 | CDN (10), fw-button (5), no plain HTML buttons (5). |
+| **Crayons usage** | 5 | Same signals as the former 20-pt bucket (CDN, fw-button, plain button), scaled to 5 points. |
+| **Expected platform features** | 20 | Criteria list `expected_platform_features` (snake_case slugs preferred, e.g. `request_templates`, `oauth`): proportional match vs manifest + server + app assets; empty list ⇒ full credit. Legacy `expected_features` if `expected_platform_features` omitted. |
 
 **Grade:** A 90–100, B 80–89, C 70–79, D 60–69, F &lt; 60.
 

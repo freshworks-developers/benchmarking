@@ -5,8 +5,10 @@ Automates setup, validation, and scoring of generated Freshworks apps
 
 INCLUDES: Automatic skill learning from FDK validation failures
 """
+from __future__ import annotations
 
 import os
+import re
 import sys
 import json
 import subprocess
@@ -358,47 +360,328 @@ class BenchmarkAutomation:
             print("❌ Plain HTML elements found (should use Crayons)")
         
         return crayons_usage
-    
-    def calculate_score(self, validation, file_structure, compliance, crayons):
-        """Calculate overall quality score"""
-        score = 0
-        max_score = 0
-        
-        # Validation (20 points)
+
+    @staticmethod
+    def infer_expected_platform_features_from_criteria(criteria: dict) -> list[str]:
+        """Return expected_platform_features lines, or legacy expected_features slugs if epf omitted."""
+        epf = criteria.get("expected_platform_features")
+        if isinstance(epf, list) and epf:
+            return [str(x).strip() for x in epf if str(x).strip()]
+        ef = criteria.get("expected_features")
+        if isinstance(ef, list) and ef:
+            return [str(x).strip() for x in ef if str(x).strip()]
+        return []
+
+    _PLATFORM_FEATURE_SLUG_ALIASES: dict[str, str] = {
+        "oauth_config": "oauth",
+        "custom_iparam": "iparams",
+        "crayons": "crayons_ui",
+        "ms_graph": "microsoft_graph",
+        "smi_functions": "functions",
+        "app_locations": "locations",
+    }
+
+    @classmethod
+    def _normalize_platform_feature_slug(cls, raw: str) -> str | None:
+        s = raw.strip().lower().replace("-", "_")
+        s = re.sub(r"\s+", "_", s)
+        s = re.sub(r"_+", "_", s).strip("_")
+        if not s:
+            return None
+        if re.fullmatch(r"[a-z0-9_]+", s):
+            return cls._PLATFORM_FEATURE_SLUG_ALIASES.get(s, s)
+        return None
+
+    def _slug_matches_platform_feature(
+        self,
+        slug: str,
+        hay: str,
+        signals: dict,
+        has_oauth_file: bool,
+        has_req_file: bool,
+        has_ip: bool,
+        has_smi: bool,
+    ) -> bool:
+        if slug == "request_templates":
+            return has_req_file or signals["has_requests"]
+        if slug == "iparams":
+            return has_ip
+        if slug == "scheduled_events":
+            return signals["has_scheduled"]
+        if slug == "serverless_events":
+            return signals["has_events"] or signals["has_scheduled"]
+        if slug == "oauth":
+            return has_oauth_file or "oauth" in hay
+        if slug == "data_methods":
+            return "client.data" in hay or "client.interface" in hay
+        if slug == "crayons_ui":
+            return "crayons" in hay or "fw-button" in hay or "fw-" in hay
+        if slug == "smi":
+            return has_smi
+        if slug == "functions":
+            return signals["has_functions"]
+        if slug == "locations":
+            return signals["has_locations"]
+        if slug == "webhooks":
+            return "webhook" in hay
+        if slug == "whitelisted_domains":
+            return signals["has_whitelisted"]
+        if slug == "hybrid_app":
+            return "hybrid" in hay
+        if slug in ("microsoft_graph", "graph_api"):
+            return "graph" in hay or "microsoft" in hay or "teams" in hay
+        if slug == "jira":
+            return "jira" in hay
+        if slug == "zendesk":
+            return "zendesk" in hay
+        if slug == "ticket_sidebar":
+            return "ticket_sidebar" in hay
+        if slug == "full_page_app":
+            return "full_page" in hay or "full page" in hay
+        if slug == "placeholder":
+            return "placeholder" in hay
+        if slug == "on_app_install" or slug == "app_install":
+            return "onappinstall" in hay or "on_app_install" in hay
+        return False
+
+    def _platform_signals_from_manifest(self, manifest: dict) -> dict:
+        out = {
+            "has_events": False,
+            "has_scheduled": False,
+            "has_requests": False,
+            "has_functions": False,
+            "has_locations": False,
+            "has_whitelisted": bool(
+                manifest.get("whitelisted-domains") or manifest.get("whitelisted_domains")
+            ),
+        }
+
+        def scan_block(block: dict) -> None:
+            if not isinstance(block, dict):
+                return
+            ev = block.get("events") or {}
+            if isinstance(ev, dict):
+                for k in ev:
+                    if k == "onScheduledEvent":
+                        out["has_scheduled"] = True
+                    else:
+                        out["has_events"] = True
+            req = block.get("requests")
+            if isinstance(req, dict) and req:
+                out["has_requests"] = True
+            fn = block.get("functions")
+            if isinstance(fn, dict) and fn:
+                out["has_functions"] = True
+            loc = block.get("location")
+            if isinstance(loc, dict) and loc:
+                out["has_locations"] = True
+
+        for key in ("modules", "product"):
+            container = manifest.get(key)
+            if isinstance(container, dict):
+                for _name, block in container.items():
+                    scan_block(block if isinstance(block, dict) else {})
+        return out
+
+    def _line_matches_platform_feature(
+        self,
+        raw: str,
+        hay: str,
+        signals: dict,
+        has_oauth_file: bool,
+        has_req_file: bool,
+        has_ip: bool,
+        has_smi: bool,
+    ) -> bool:
+        slug = self._normalize_platform_feature_slug(raw)
+        if slug:
+            return self._slug_matches_platform_feature(
+                slug, hay, signals, has_oauth_file, has_req_file, has_ip, has_smi
+            )
+        # Legacy human-readable lines (e.g. prose from CSV or old criteria)
+        s = raw.strip().lower()
+        if len(s) >= 3 and s in hay:
+            return True
+        tokens = [t for t in re.findall(r"[a-z0-9._]+", s) if len(t) >= 3]
+        if len(tokens) >= 2 and all(t in hay for t in tokens):
+            return True
+        if "oauth" in s and (has_oauth_file or "oauth" in hay):
+            return True
+        if "iparam" in s and has_ip:
+            return True
+        if ("request" in s and "template" in s) or "requests.json" in s:
+            if has_req_file or signals["has_requests"]:
+                return True
+        if "scheduled" in s and signals["has_scheduled"]:
+            return True
+        if "serverless" in s and (signals["has_events"] or signals["has_scheduled"]):
+            return True
+        if "smi" in s and has_smi:
+            return True
+        if "function" in s and signals["has_functions"]:
+            return True
+        if any(
+            k in s
+            for k in ("location", "sidebar", "full_page", "full page", "placeholder")
+        ):
+            if signals["has_locations"]:
+                return True
+        if "data method" in s or "client.data" in s:
+            if "client.data" in hay or "client.interface" in hay:
+                return True
+        if "crayon" in s:
+            if "crayons" in hay or "fw-button" in hay or "fw-" in hay:
+                return True
+        if "webhook" in s and "webhook" in hay:
+            return True
+        if ("graph" in s or "microsoft" in s or "teams" in s) and (
+            "graph" in hay or "microsoft" in hay or "teams" in hay
+        ):
+            return True
+        if "jira" in s and "jira" in hay:
+            return True
+        if "zendesk" in s and "zendesk" in hay:
+            return True
+        return False
+
+    def check_expected_platform_features(
+        self, app_path, expected_lines: list[str] | str | None
+    ):
+        """
+        Score against criteria.expected_platform_features (20 pt bucket).
+        Prefer snake_case slugs (request_templates, oauth, …); prose lines still match via heuristics.
+        Proportional: matched_lines / total_lines * 20. Empty criteria => full 20 (no rubric).
+        """
+        app_path = Path(app_path)
+        raw = expected_lines
+        if isinstance(raw, str):
+            raw = [ln.strip() for ln in raw.splitlines() if ln.strip()]
+        elif raw is None:
+            raw = []
+        lines = [str(x).strip() for x in raw if str(x).strip()]
+        print(f"\n📋 Checking Expected Platform Features ({len(lines)} criteria lines)...")
+        if not lines:
+            print("   (none in criteria — full credit for this bucket)")
+            return {
+                "criteria_lines": [],
+                "matched": [],
+                "unmatched": [],
+                "score": 20.0,
+                "max_score": 20.0,
+                "full_credit_no_criteria": True,
+            }
+
+        manifest: dict = {}
+        mp = app_path / "manifest.json"
+        if mp.exists():
+            try:
+                manifest = json.loads(mp.read_text(encoding="utf-8", errors="replace"))
+            except (json.JSONDecodeError, OSError):
+                manifest = {}
+
+        hay_parts = [json.dumps(manifest, default=str).lower()]
+        srv = app_path / "server" / "server.js"
+        if srv.exists():
+            try:
+                hay_parts.append(srv.read_text(encoding="utf-8", errors="replace").lower()[:80000])
+            except OSError:
+                pass
+        for p in list(app_path.glob("app/**/*.html"))[:15] + list(app_path.glob("app/**/*.js"))[:15]:
+            try:
+                hay_parts.append(p.read_text(encoding="utf-8", errors="replace").lower()[:20000])
+            except OSError:
+                pass
+        hay = "\n".join(hay_parts)
+
+        cfg_oauth = app_path / "config" / "oauth_config.json"
+        cfg_req = app_path / "config" / "requests.json"
+        cfg_ip_j = app_path / "config" / "iparams.json"
+        cfg_ip_h = app_path / "config" / "iparams.html"
+        has_oauth_file = cfg_oauth.exists()
+        has_req_file = cfg_req.exists()
+        has_ip = cfg_ip_j.exists() or cfg_ip_h.exists()
+        has_smi = (app_path / "smi.json").exists()
+        signals = self._platform_signals_from_manifest(manifest)
+
+        matched = []
+        unmatched = []
+        for raw in lines:
+            ok = self._line_matches_platform_feature(
+                raw, hay, signals, has_oauth_file, has_req_file, has_ip, has_smi
+            )
+            if ok:
+                matched.append(raw)
+                disp = raw[:77] + "…" if len(raw) > 80 else raw
+                print(f"   ✅ {disp}")
+            else:
+                unmatched.append(raw)
+                disp = raw[:77] + "…" if len(raw) > 80 else raw
+                print(f"   ❌ {disp}")
+
+        per = 20.0 * len(matched) / len(lines) if lines else 20.0
+        return {
+            "criteria_lines": lines,
+            "matched": matched,
+            "unmatched": unmatched,
+            "score": round(per, 2),
+            "max_score": 20.0,
+            "full_credit_no_criteria": False,
+        }
+
+    def calculate_score(self, validation, file_structure, compliance, crayons, epf_check):
+        """Calculate overall quality score (100-point scale when all buckets apply)."""
+        score = 0.0
+        max_score = 0.0
+        components: dict[str, float] = {}
+
+        # FDK validation (20 points)
         max_score += 20
-        if validation.get('success'):
-            score += 20
-        
-        # File structure (20 points)
+        v_pts = 20 if validation.get("success") else 0
+        score += v_pts
+        components["fdk_validation"] = float(v_pts)
+
+        # File structure (15 points; was 20 — 5 moved to Expected Platform Features bucket)
         if file_structure:
             total_files = len(file_structure)
             present_files = sum(1 for exists in file_structure.values() if exists)
-            score += (present_files / total_files) * 20
-            max_score += 20
-        
+            fs_pts = (present_files / total_files) * 15
+            max_score += 15
+            score += fs_pts
+            components["file_structure"] = round(fs_pts, 2)
+
         # Platform 3.0 compliance (40 points - 8 per item)
         max_score += 40
         compliance_score = sum(8 for v in compliance.values() if v)
         score += compliance_score
-        
-        # Crayons usage (20 points)
+        components["platform3_compliance"] = float(compliance_score)
+
+        # Crayons usage (5 points; was 20 — 15 moved to Expected Platform Features rubric)
+        max_score += 5
+        cray_raw = 0
+        if crayons.get("cdn_included"):
+            cray_raw += 10
+        if crayons.get("fw_button_used"):
+            cray_raw += 5
+        if not crayons.get("plain_html_found"):
+            cray_raw += 5
+        cray_pts = (cray_raw / 20.0) * 5.0
+        score += cray_pts
+        components["crayons_usage"] = round(cray_pts, 2)
+
+        # Expected platform features from criteria (20 points)
         max_score += 20
-        crayons_score = 0
-        if crayons.get('cdn_included'):
-            crayons_score += 10
-        if crayons.get('fw_button_used'):
-            crayons_score += 5
-        if not crayons.get('plain_html_found'):
-            crayons_score += 5
-        score += crayons_score
-        
+        epf_pts = float(epf_check.get("score", 20))
+        score += epf_pts
+        components["expected_platform_features"] = round(epf_pts, 2)
+
         percentage = (score / max_score) * 100 if max_score > 0 else 0
-        
+
         return {
-            'total_score': score,
-            'max_score': max_score,
-            'percentage': round(percentage, 2),
-            'grade': self._get_grade(percentage)
+            "total_score": round(score, 2),
+            "max_score": max_score,
+            "percentage": round(percentage, 2),
+            "grade": self._get_grade(percentage),
+            "components": components,
         }
     
     def _get_grade(self, percentage):
@@ -468,10 +751,12 @@ class BenchmarkAutomation:
         file_structure = self.check_file_structure(app_path, use_case['expected_files'])
         compliance = self.check_platform3_compliance(app_path)
         crayons = self.check_crayons_usage(app_path)
-        
+        epf_lines = use_case.get("expected_platform_features") or []
+        epf_check = self.check_expected_platform_features(app_path, epf_lines)
+
         # Calculate score
-        score = self.calculate_score(validation, file_structure, compliance, crayons)
-        
+        score = self.calculate_score(validation, file_structure, compliance, crayons, epf_check)
+
         # Compile results
         results = {
             'app_id': app_id,
@@ -480,7 +765,8 @@ class BenchmarkAutomation:
             'file_structure': file_structure,
             'platform3_compliance': compliance,
             'crayons_usage': crayons,
-            'score': score
+            'expected_platform_features_check': epf_check,
+            'score': score,
         }
         
         # Save results
@@ -538,7 +824,8 @@ class BenchmarkAutomation:
         # Parse requirements if provided
         requirements_list = []
         expected_files_from_criteria = []
-        
+        expected_platform_lines: list[str] = []
+
         if requirements:
             # Check if requirements is a file path
             requirements_path = Path(requirements)
@@ -550,17 +837,46 @@ class BenchmarkAutomation:
                         criteria = json.load(f)
                         requirements_list = criteria.get('requirements', [])
                         expected_files_from_criteria = criteria.get('expected_files', [])
-                        # Backward compatibility: TEST001-style (expected_features / expected_instances)
-                        if not expected_files_from_criteria and 'expected_features' in criteria:
-                            expected_files_from_criteria = ['manifest.json']
-                            if criteria.get('expected_instances', {}).get('request_templates'):
-                                expected_files_from_criteria.append('config/requests.json')
-                            if criteria.get('expected_instances', {}).get('iparams') or criteria.get('expected_instances', {}).get('custom_iparam'):
-                                expected_files_from_criteria.append('config/iparams.json')
-                            if criteria.get('expected_instances', {}).get('scheduled_events'):
-                                expected_files_from_criteria.append('server/server.js')
-                        if not requirements_list and 'expected_features' in criteria:
-                            requirements_list = list(criteria.get('expected_features', []))
+                        expected_platform_lines = (
+                            criteria.get("expected_platform_features") or []
+                        )
+                        if not expected_platform_lines:
+                            expected_platform_lines = (
+                                self.infer_expected_platform_features_from_criteria(
+                                    criteria
+                                )
+                            )
+                        # Infer minimal expected_files from expected_instances and/or platform slugs
+                        if not expected_files_from_criteria:
+                            inst = criteria.get("expected_instances") or {}
+                            slugs: list[str] = []
+                            for x in criteria.get("expected_platform_features") or []:
+                                n = self._normalize_platform_feature_slug(str(x))
+                                if n:
+                                    slugs.append(n)
+                            for x in criteria.get("expected_features") or []:
+                                n = self._normalize_platform_feature_slug(str(x))
+                                if n:
+                                    slugs.append(n)
+                            if inst or slugs:
+                                expected_files_from_criteria = ["manifest.json"]
+                                if inst.get("request_templates") or "request_templates" in slugs:
+                                    expected_files_from_criteria.append("config/requests.json")
+                                if (
+                                    inst.get("iparams")
+                                    or inst.get("custom_iparam")
+                                    or "iparams" in slugs
+                                ):
+                                    expected_files_from_criteria.append("config/iparams.json")
+                                if inst.get("scheduled_events") or "scheduled_events" in slugs:
+                                    expected_files_from_criteria.append("server/server.js")
+                        if not requirements_list:
+                            if criteria.get("expected_platform_features"):
+                                requirements_list = [
+                                    str(x) for x in criteria["expected_platform_features"]
+                                ]
+                            elif criteria.get("expected_features"):
+                                requirements_list = list(criteria["expected_features"])
                         if requirements_list:
                             print(f"📋 Requirements ({len(requirements_list)}):")
                             for req in requirements_list:
@@ -601,10 +917,15 @@ class BenchmarkAutomation:
         file_structure = self.check_file_structure(app_path, expected_files)
         compliance = self.check_platform3_compliance(app_path)
         crayons = self.check_crayons_usage(app_path)
-        
+        epf_check = self.check_expected_platform_features(
+            app_path, expected_platform_lines
+        )
+
         # Calculate score
-        score = self.calculate_score(validation, file_structure, compliance, crayons)
-        
+        score = self.calculate_score(
+            validation, file_structure, compliance, crayons, epf_check
+        )
+
         # Compile results
         results = {
             'app_id': app_id,
@@ -615,8 +936,9 @@ class BenchmarkAutomation:
             'file_structure': file_structure,
             'platform3_compliance': compliance,
             'crayons_usage': crayons,
+            'expected_platform_features_check': epf_check,
             'score': score,
-            'evaluation_mode': True
+            'evaluation_mode': True,
         }
         
         # Save results

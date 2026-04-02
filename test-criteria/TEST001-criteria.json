@@ -1,7 +1,7 @@
 {
   "id": "TEST001",
   "prompt": "Create a Freshdesk app to sync contacts with Zapier using scheduled events",
-  "expected_features": [
+  "expected_platform_features": [
     "request_templates",
     "iparams",
     "scheduled_events"

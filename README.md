@@ -35,20 +35,21 @@ This repo documents **running and interpreting the benchmark**.
 
 ## 3. How evaluation and scoring work
 
-A run executes the same pipeline used by **`automate_test.py`** (invoked via **`bin/eval.py run`**): FDK validation on the app directory, checks against expected files, Platform 3.0 manifest rules, and Crayons usage signals in `app/**/*.html`. The outcome is written to **`results/<app_id>_result.json`** with `validation`, `file_structure`, `platform3_compliance`, `crayons_usage`, and **`score`**.
+A run executes the same pipeline used by **`automate_test.py`** (invoked via **`bin/eval.py run`**): FDK validation on the app directory, checks against expected files, Platform 3.0 manifest rules, Crayons usage signals in `app/**/*.html`, and **Expected Platform Features** from criteria (`expected_platform_features`: **snake_case** slugs such as `request_templates`, `oauth`, `scheduled_events`). Legacy criteria may still use **`expected_features`** only when **`expected_platform_features`** is omitted. The outcome is written to **`results/<app_id>_result.json`** with `validation`, `file_structure`, `platform3_compliance`, `crayons_usage`, `expected_platform_features_check`, and **`score`** (including per-bucket `components`).
 
 ### Weights (points on a 100-point scale)
 
-When all four buckets apply, **maximum raw score is 100**. **`percentage`** = `(total_score / max_score) × 100` (see result JSON). **`grade`** is derived from **percentage** only.
+When all buckets apply, **maximum raw score is 100**. **`percentage`** = `(total_score / max_score) × 100` (see result JSON). **`grade`** is derived from **percentage** only.
 
 | Category | Max points | % of total | How it is scored |
 |----------|------------|------------|------------------|
 | **FDK validation** | 20 | 20% | **20** if `fdk validate` succeeds; **0** if it fails. |
-| **File structure** | 20 | 20% | **Proportional:** `(files present / expected files) × 20`. Expected files come from criteria JSON, a matching use case, or auto-detection from the app layout (`manifest.json`, `app/`, `server/`, `config/`, etc.). |
+| **File structure** | 15 | 15% | **Proportional:** `(files present / expected files) × 15`. Expected files come from criteria JSON, a matching use case, or auto-detection from the app layout (`manifest.json`, `app/`, `server/`, `config/`, etc.). |
 | **Platform 3.0 compliance** | 40 | 40% | **8 points each** (up to five checks), all from `manifest.json`: `platform-version` **3.0**, **`modules`** present, **no** `whitelisted-domains` / `whitelisted_domains`, **`engines`** present, **correct location placement** (serverless/background vs UI locations per implementation rules). |
-| **Crayons usage** | 20 | 20% | **10** if Crayons CDN pattern is detected (`cdn.jsdelivr.net` + crayons); **+5** if `<fw-button` appears; **+5** if no “plain” `<button>` without `fw-button` in the same file logic (implementation detail in `automate_test.py`). |
+| **Crayons usage** | 5 | 5% | Same signals as before (CDN, `fw-button`, plain `<button>`), scaled to **5** points: `(legacy 0–20 subscore / 20) × 5` (see `automate_test.py`). |
+| **Expected Platform Features** | 20 | 20% | Criteria field **`expected_platform_features`** (list of **snake_case** slugs, e.g. `request_templates`, `iparams`, `crayons_ui`). Each entry is matched via explicit slug rules plus manifest + `server/server.js` + sampled `app/**`; human-readable lines still work as a fallback. **Proportional:** `(matched lines / total lines) × 20`. If the list is **empty or omitted**, the bucket awards **full 20** (no rubric). If **`expected_platform_features`** is missing, **`expected_features`** (legacy) is used the same way. |
 
-If the file-structure check has **no expected file list**, that **20**-point block may not be added to **`max_score`** (see `calculate_score` in `automate_test.py`); in typical evaluate flows a list is always derived.
+If the file-structure check has **no expected file list**, that **15**-point block may not be added to **`max_score`** (see `calculate_score` in `automate_test.py`); in typical evaluate flows a list is always derived.
 
 ### Letter grades
 
@@ -60,7 +61,7 @@ If the file-structure check has **no expected file list**, that **20**-point blo
 | **D** | 60–69% |
 | **F** | below 60% |
 
-**Custom requirements** from criteria (when provided) are tracked in the result payload (e.g. `requirements_met`); they do not change the numeric breakdown above unless extended in code.
+**Custom requirements** from criteria (when provided) are tracked in the result payload (e.g. `requirements`); **`expected_platform_features`** is scored in its own bucket as above. See **`example-criteria.json`** for a full sample.
 
 ---
 
